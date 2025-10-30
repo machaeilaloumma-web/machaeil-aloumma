@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>لوحة التحكم - مشاعل الأمة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Kufi Arabic', sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .dashboard-container {
+      background: #1a1a25;
+      padding: 20px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 24px;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(0, 255, 128, 0.25);
+    }
+
+    p {
+      color: #ccc;
+      margin-bottom: 30px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: #252535;
+      color: #fff;
+      font-weight: 500;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 12px;
+      font-size: 16px;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .logout-link {
+      display: block;
+      margin-top: 10px;
+      color: #00ff80;
+      text-decoration: none;
+      font-size: 14px;
+      transition: opacity 0.3s;
+    }
+
+    .logout-link:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1 id="welcomeMessage">لوحة التحكم</h1>
+    <p>مرحبًا بك في مشروع <strong>مشاعل الأمة – سفراء القيم</strong>.  
+       من هنا يمكنك إدارة حسابك والاطلاع على معلوماتك الشخصية.</p>
+
+    <a href="profile.html" class="btn">ملفي الشخصي</a>
+    <a href="results.html" class="btn">نتائجي</a>
+    <a href="signin.html" class="btn" id="logoutBtn">تسجيل الخروج</a>
+  </div>
+
+  <script>
+    // ✅ التحقق من وجود جلسة نشطة
+    document.addEventListener('DOMContentLoaded', function () {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        document.getElementById('welcomeMessage').textContent = 'مرحبًا، ' + user.fullName;
+      } else {
+        alert('يرجى تسجيل الدخول أولًا.');
+        window.location.href = 'login.html';
+      }
+    });
+
+    // ✅ تسجيل الخروج: لا يحذف الحساب — فقط يعيد التوجيه
+    document.getElementById('logoutBtn').addEventListener('click', function (e) {
+      e.preventDefault();
+      if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
+        // لا نحذف localStorage — نحتفظ بالحساب
+        alert('تم تسجيل الخروج بنجاح.');
+        window.location.href = 'login.html';
+      }
+    });
+  </script>
+</body>
+</html>
+
+

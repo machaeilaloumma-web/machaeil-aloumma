@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ملفي الشخصي - مشاعل الأمة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Kufi Arabic', sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .register-container {
+      background: #1a1a25;
+      padding: 20px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 16px;
+      font-size: 24px;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(0, 255, 128, 0.25);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 500;
+      text-align: right;
+      color: #aaa;
+      font-size: 14px;
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      pointer-events: none;
+      z-index: 2;
+      transition: all 0.2s;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 14px;
+      background: #252535;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      color: white;
+      outline: none;
+      font-size: 16px;
+      padding-right: 56px;
+    }
+
+    input:focus, select:focus {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+    }
+
+    input:not(:placeholder-shown) + label,
+    input:focus + label,
+    select:not(:placeholder-shown) + label,
+    select:focus + label {
+      top: -10px;
+      right: 14px;
+      font-size: 12px;
+      color: #00ff80;
+      background: #1a1a25;
+      padding: 0 5px;
+      border-radius: 4px;
+    }
+
+    .input-with-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-with-icon .icon {
+      position: absolute;
+      left: 14px;
+      color: #00ff80;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .input-with-icon input {
+      padding-left: 44px;
+    }
+
+    .password-field {
+      position: relative;
+    }
+
+    .password-field input {
+      padding-right: 44px;
+      padding-bottom: 28px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      bottom: 6px;
+      cursor: pointer;
+      color: #aaa;
+      font-size: 16px;
+      z-index: 2;
+    }
+
+    .password-input {
+      background: #e0e0e0 !important;
+      color: #000;
+    }
+
+    button#registerBtn {
+      width: 100%;
+      padding: 10px;
+      background: #252535;
+      color: #fff;
+      font-weight: 500;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 6px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    button#registerBtn:hover {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+      transform: translateY(-2px);
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .login-link a {
+      color: #00ff80;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .login-link a:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    #qrResult {
+      margin-top: 24px;
+      padding-top: 24px;
+      border-top: 1px solid #2a2a35;
+      display: none;
+    }
+
+    #qrImage {
+      width: 240px;
+      height: 240px;
+      margin: 0 auto 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    #copyBtn {
+      width: 100%;
+      padding: 10px;
+      background: #252535;
+      color: #00ff80;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 8px;
+    }
+
+    #printBtn {
+      width: 100%;
+      padding: 10px;
+      background: #252535;
+      color: #ffcc00;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 8px;
+    }
+
+    #shareBtn {
+      width: 100%;
+      padding: 10px;
+      background: #252535;
+      color: #00ff80;
+      border: 1px solid #00ff80;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .info-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #2a2a35;
+    }
+
+    .info-label {
+      color: #aaa;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    .info-value {
+      color: #fff;
+      font-weight: bold;
+      font-size: 15px;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h1>ملفي الشخصي</h1>
+
+    <!-- رسالة عدم وجود حساب -->
+    <div id="noAccountMessage" class="login-link" style="display:block;">
+      لم تُنشئ حسابًا بعد. <a href="register.html">انضم كـ "نجم"</a>
+    </div>
+
+    <!-- منطقة عرض QR -->
+    <div id="qrResult">
+      <h3 style="color:#00ff80; margin-bottom:12px; text-align:center;">✅ حسابك جاهز!</h3>
+      <p style="color:#ccc; margin-bottom:16px; text-align:center;">شارك هذا الرمز مع أستاذك لتقييمك:</p>
+      <img id="qrImage" src="" alt="رمز QR" />
+
+      <!-- معلومات الطالب -->
+      <div class="info-item">
+        <span class="info-label">الاسم الكامل:</span>
+        <span class="info-value" id="fullNameDisplay"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">البريد الإلكتروني:</span>
+        <span class="info-value" id="emailDisplay"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">المستوى الدراسي:</span>
+        <span class="info-value" id="levelDisplay"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">اسم المؤسسة:</span>
+        <span class="info-value" id="institutionDisplay"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">الولاية:</span>
+        <span class="info-value" id="provinceDisplay"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">البلدية:</span>
+        <span class="info-value" id="cityDisplay"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">الجنس:</span>
+        <span class="info-value" id="genderDisplay"></span>
+      </div>
+
+      <button id="copyBtn" onclick="copyQRLink()">نسخ الرابط</button>
+      <button id="printBtn" onclick="printQRCard()">طباعة بطاقة النجم</button>
+      <button id="shareBtn" onclick="shareQR()">مشاركة</button>
+    </div>
+  </div>
+
+  <script>
+    function loadProfile() {
+      const userData = JSON.parse(localStorage.getItem('user'));
+      const noAccountMessage = document.getElementById('noAccountMessage');
+      const qrResult = document.getElementById('qrResult');
+
+      if (!userData || !userData.formUrl) {
+        noAccountMessage.style.display = 'block';
+        qrResult.style.display = 'none';
+        return;
+      }
+
+      // عرض معلومات الطالب
+      document.getElementById('fullNameDisplay').textContent = userData.fullName || 'غير متوفر';
+      document.getElementById('emailDisplay').textContent = userData.email || 'غير متوفر';
+      document.getElementById('levelDisplay').textContent = userData.level || 'غير متوفر';
+      document.getElementById('institutionDisplay').textContent = userData.institution || 'غير متوفر';
+      document.getElementById('provinceDisplay').textContent = userData.province || 'غير متوفر';
+      document.getElementById('cityDisplay').textContent = userData.city || 'غير متوفر';
+      document.getElementById('genderDisplay').textContent = userData.gender === 'ذكر' ? 'ذكر' : 'أنثى';
+
+      // توليد QR عالي الجودة (400x400)
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(userData.formUrl)}&qzone=1&margin=0`;
+      document.getElementById('qrImage').src = qrUrl;
+
+      // إعداد الأزرار
+      document.getElementById('copyBtn').setAttribute('data-url', userData.formUrl);
+      qrResult.style.display = 'block';
+      noAccountMessage.style.display = 'none';
+
+      // إظهار زر المشاركة إذا مدعوم
+      if (navigator.share) {
+        document.getElementById('shareBtn').style.display = 'block';
+      }
+    }
+
+    function copyQRLink() {
+      const url = document.getElementById('copyBtn').getAttribute('data-url');
+      if (url) {
+        navigator.clipboard.writeText(url).then(() => {
+          alert('تم نسخ رابط التقييم! أرسله لأستاذك.');
+        });
+      }
+    }
+
+    function printQRCard() {
+      const fullName = document.getElementById('fullNameDisplay').textContent || 'طالب';
+      const qrImageSrc = document.getElementById('qrImage').src;
+      if (!qrImageSrc) return;
+
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+        <head><title>بطاقة نجم - مشاعل الأمة</title></head>
+        <body style="font-family:'Noto Kufi Arabic',sans-serif;text-align:center;padding:20px;background:#000;color:#fff;">
+          <h2 style="color:#ffcc00;">🌟 مشاعل الأمة – سفراء القيم</h2>
+          <h3 style="color:#fff;margin:20px 0;">الطالب: ${fullName}</h3>
+          <img src="${qrImageSrc}" style="width:240px;height:240px;margin:20px 0;" />
+          <p style="color:#aaa;font-size:14px;">امسح الرمز لتقييم الطالب</p>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    }
+
+    function shareQR() {
+      const url = document.getElementById('copyBtn').getAttribute('data-url');
+      if (navigator.share && url) {
+        navigator.share({
+          title: 'تقييم نجم - مشاعل الأمة',
+          text: 'من فضلك قيّم طالبي في مشروع "مشاعل الأمة"',
+          url: url
+        });
+      }
+    }
+
+    // تحميل عند الفتح
+    loadProfile();
+  </script>
+</body>
+</html>
+

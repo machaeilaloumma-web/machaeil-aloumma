@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>تسجيل الدخول - مشاعل الأمة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Kufi Arabic', sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+   .logo {
+      width: 250px;
+      height: 250px;
+      margin-bottom: 16px;
+    }
+   .login-container {
+      background: #1a1a25;
+      padding: 20px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 16px;
+      font-size: 24px;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(0, 255, 128, 0.25);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 4px;
+      font-weight: 500;
+      text-align: right;
+      color: #aaa;
+      font-size: 14px;
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      pointer-events: none;
+      z-index: 2;
+      transition: all 0.2s;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 14px;
+      background: #252535;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      color: white;
+      outline: none;
+      font-size: 16px;
+      padding-right: 56px;
+    }
+
+    input:focus {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+    }
+
+    input:not(:placeholder-shown) + label,
+    input:focus + label {
+      top: -10px;
+      right: 14px;
+      font-size: 12px;
+      color: #00ff80;
+      background: #1a1a25;
+      padding: 0 5px;
+      border-radius: 4px;
+    }
+
+    .input-with-icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-with-icon .icon {
+      position: absolute;
+      left: 14px;
+      color: #00ff80;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .input-with-icon input {
+      padding-left: 44px;
+    }
+
+    .password-field {
+      position: relative;
+    }
+
+    .password-field input {
+      padding-right: 44px;
+      padding-bottom: 28px;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      bottom: 6px;
+      cursor: pointer;
+      color: #aaa;
+      font-size: 16px;
+      z-index: 2;
+    }
+
+    .password-input {
+      background: #e0e0e0 !important;
+      color: #000;
+    }
+
+    button#loginBtn {
+      width: 100%;
+      padding: 10px;
+      background: #252535;
+      color: #fff;
+      font-weight: 500;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 6px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    button#loginBtn:hover {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+      transform: translateY(-2px);
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+
+    .register-link a {
+      color: #00ff80;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .register-link a:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>تسجيل الدخول</h1>
+    <form id="loginForm">
+      <div class="form-group">
+        <div class="input-with-icon">
+          <span class="icon">✉️</span>
+          <input type="email" id="email" required placeholder=" " />
+          <label for="email">البريد الإلكتروني</label>
+        </div>
+      </div>
+      <div class="form-group password-field">
+        <div class="input-with-icon">
+          <span class="icon">🔒</span>
+          <input type="password" id="password" class="password-input" required minlength="6" placeholder=" " />
+          <label for="password">كلمة المرور</label>
+          <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+        </div>
+      </div>
+      <button type="submit" id="loginBtn">دخول</button>
+    </form>
+    <div class="register-link">
+      لا تملك حساب؟ <a href="register.html">أنشئ واحدًا الآن</a>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword(fieldId) {
+      const field = document.getElementById(fieldId);
+      if (field.type === "password") {
+        field.type = "text";
+      } else {
+        field.type = "password";
+      }
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        alert('يرجى ملء جميع الحقول.');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('البريد الإلكتروني غير صالح.');
+        return;
+      }
+
+      if (password.length < 6) {
+        alert('كلمة المرور قصيرة جداً. يجب أن تحتوي على 6 أحرف على الأقل.');
+        return;
+      }
+
+      // ✅ التحقق من وجود المستخدم وكلمة المرور في localStorage
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.email === email && user.password === password) {
+        alert('تم تسجيل الدخول بنجاح!');
+        window.location.href = 'dashboard.html';
+      } else {
+        alert('البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى التسجيل أولًا.');
+      }
+    });
+  </script>
+</body>
+</html>
+

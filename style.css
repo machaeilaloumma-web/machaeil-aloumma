@@ -1,0 +1,97 @@
+/* التصميم العام */
+body {
+  background: #0a0a0a;
+  color: white;
+  font-family: 'Noto Kufi Arabic', sans-serif;
+  margin: 0;
+  padding: 0;
+  direction: rtl;
+}
+
+.card {
+  background: rgba(20, 20, 20, 0.9);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+  max-width: 500px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.8em;
+  margin-bottom: 25px;
+  color: #FFD700;
+  text-align: center;
+}
+
+.input-group {
+  position: relative;
+  width: 100%;
+  margin: 12px 0;
+}
+
+.input-group input,
+.input-group select {
+  width: 100%;
+  padding: 14px 12px 14px 48px;
+  border-radius: 12px;
+  border: 1px solid #333;
+  background: #111;
+  color: white;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+.input-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 1.2em;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 16px;
+  bottom: 8px; /* أسفل الحقل، لكن داخله */
+  transform: translateY(0);
+  cursor: pointer;
+  color: #aaa;
+  font-size: 16px;
+  z-index: 2;
+}
+
+button {
+  background: #FFD700;
+  color: #006233;
+  border: none;
+  padding: 14px;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.error {
+  color: #ff6b6b;
+  font-size: 0.9em;
+  margin-top: 10px;
+  text-align: center;
+  display: none;
+}
+
+.footer-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.95em;
+}
+
+.footer-link a {
+  color: #FFD700;
+  text-decoration: none;
+}
+

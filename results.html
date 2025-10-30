@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>رمز QR - مشاعل الأمة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Kufi Arabic', sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #1a1a25;
+      padding: 24px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 24px;
+      text-shadow: 0 0 10px rgba(0, 255, 128, 0.25);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      background: #252535;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      color: white;
+      outline: none;
+      font-size: 16px;
+    }
+
+    input:focus {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #252535;
+      color: #fff;
+      font-weight: 500;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+      transform: translateY(-2px);
+    }
+
+    #qrCode {
+      margin: 20px auto;
+      display: none;
+    }
+
+    #qrCode img {
+      width: 250px;
+      height: 250px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    #copyBtn {
+      margin-top: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>أنشئ رمز QR لاسمك</h1>
+    <div class="form-group">
+      <input type="text" id="studentName" placeholder="أدخل الاسم الكامل" />
+    </div>
+    <button onclick="generateQR()">توليد رمز QR</button>
+
+    <div id="qrCode">
+      <img id="qrImage" src="" alt="رمز QR" />
+    </div>
+    <button id="copyBtn" onclick="copyLink()">نسخ الرابط</button>
+  </div>
+
+  <script>
+    function generateQR() {
+      const name = document.getElementById('studentName').value.trim();
+      if (!name) {
+        alert('يرجى إدخال الاسم.');
+        return;
+      }
+
+      // ترميز الاسم لاستخدامه في الرابط
+      const encodedName = encodeURIComponent(name);
+      const formUrl = `https://docs.google.com/forms/d/e/1FAIpQLSf63f9pq4b8INZIO1mGEX8EuRiwDSQY8nEv7GSs6WrEfRLroA/viewform?entry.1568567776=${encodedName}`;
+      
+      // استخدام خدمة QR Server
+      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(formUrl)}`;
+
+      document.getElementById('qrImage').src = qrUrl;
+      document.getElementById('qrCode').style.display = 'block';
+      document.getElementById('copyBtn').style.display = 'block';
+      document.getElementById('copyBtn').setAttribute('data-url', formUrl);
+    }
+
+    function copyLink() {
+      const url = document.getElementById('copyBtn').getAttribute('data-url');
+      navigator.clipboard.writeText(url).then(() => {
+        alert('تم نسخ الرابط إلى الحافظة!');
+      }).catch(err => {
+        alert('فشل نسخ الرابط. حاول يدويًا.');
+        console.error(err);
+      });
+    }
+  </script>
+</body>
+</html>

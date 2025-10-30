@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مشاعل الأمة - سفراء القيم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Noto Kufi Arabic', sans-serif;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* صورة الجزائر في الأعلى */
+    .hero-image {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      display: block;
+      margin: 0 auto 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    /* شعار تحت الصورة */
+    .logo {
+      width: 300px;
+      height: 300px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 12px;
+      font-size: 30px;
+      text-align: center;
+      text-shadow: 0 0 10px rgba(0, 255, 128, 0.25);
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    .tagline {
+      color: #ccc;
+      font-size: 15px;
+      margin-bottom: 24px;
+      text-align: center;
+      animation: fadeIn 2s ease-out;
+    }
+
+    .index-container {
+      background: #1a1a25;
+      padding: 24px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      text-align: center;
+      animation: fadeUp 2s ease;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      background: #252535;
+      color: #fff;
+      font-weight: 500;
+      border: 1px solid #2e2e3d;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 12px;
+      font-size: 16px;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+      transform: translateY(-2px);
+    }
+
+    .secondary-link {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #00ff80;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .secondary-link:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 5px;
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      width: 100%;
+      padding-top: 8px;
+      border-top: 1px solid #2a2a35;
+      background: transparent;
+    }
+
+    footer a {
+      color: #00ff80;
+      text-decoration: none;
+      margin: 0 8px;
+      transition: opacity 0.3s;
+    }
+
+    footer a:hover {
+      opacity: 0.8;
+      text-decoration: underline;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- صورة الجزائر في الأعلى -->
+  <img src="file:///C:/Users/MrRobot/Downloads/machaeil%20oumma1/machaeil-oumma/alger.jpg" 
+       alt="الجزائر" class="hero-image" />
+
+  <!-- شعار مشاعل الأمة تحت الصورة مباشرة -->
+  <img src="file:///C:/Users/MrRobot/Downloads/machaeil%20oumma1/machaeil-oumma/%D9%85%D8%B4%D8%A7%D8%B9%D9%84%20%D8%A7%D9%84%D8%A3%D9%85%D8%A9.gif" 
+       alt="شعار مشاعل الأمة" class="logo" />
+
+  <!-- العنوان -->
+  <h1>مشاعل الأمة - سفراء القيم</h1>
+
+  <!-- الوصف القصير -->
+  <p class="tagline">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال.</p>
+
+  <!-- الأزرار -->
+  <div class="index-container">
+    <a href="register.html" class="btn">إنشاء حساب جديد</a>
+    <a href="login.html" class="btn">تسجيل الدخول</a>
+    <a href="about.html" class="secondary-link">تعرف أكثر عن المشروع</a>
+  </div>
+
+  <!-- التذييل -->
+  <footer>
+    © 2025 مشاعل الأمة – جميع الحقوق محفوظة · 
+    <a href="about.html">من نحن</a> · 
+    <a href="contact.html">اتصل بنا</a>
+  </footer>
+
+</body>
+</html>
+
+
