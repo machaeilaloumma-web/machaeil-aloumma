@@ -578,6 +578,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const provinceSelect = document.getElementById('province');
   const citySelect = document.getElementById('city');
 
+(function () {
+  const provinceSelect = document.getElementById('province');
+  const citySelect = document.getElementById('city');
+
+  if (!provinceSelect || !citySelect) return;
+
   // ملء قائمة الولايات
   for (const province in algeriaData) {
     const option = document.createElement('option');
@@ -594,17 +600,20 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (selectedProvince && algeriaData[selectedProvince]) {
       algeriaData[selectedProvince].forEach(municipality => {
-        const option = document.createElement('option');
-        option.value = municipality;
-        option.textContent = municipality;
-        citySelect.appendChild(option);
+        if (municipality.trim() !== "") {
+          const option = document.createElement('option');
+          option.value = municipality;
+          option.textContent = municipality;
+          citySelect.appendChild(option);
+        }
       });
     }
   });
-});
+})();
   </script>
 </body>
 </html>
+
 
 
 
