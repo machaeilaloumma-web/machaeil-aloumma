@@ -573,11 +573,7 @@ const algeriaData = {
   "المنيعة": ["المنيعة", "حاسي القارة", "المنصورة", "حاسي لفحل"]
 };
 
-// ✅ تحميل الولايات عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', function () {
-  const provinceSelect = document.getElementById('province');
-  const citySelect = document.getElementById('city');
-
+// ✅ تحميل القوائم فوراً عند تحميل الصفحة
 (function () {
   const provinceSelect = document.getElementById('province');
   const citySelect = document.getElementById('city');
@@ -600,6 +596,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (selectedProvince && algeriaData[selectedProvince]) {
       algeriaData[selectedProvince].forEach(municipality => {
+        // تجنب القيم الفارغة (مثل آخر عنصر في النعامة)
         if (municipality.trim() !== "") {
           const option = document.createElement('option');
           option.value = municipality;
@@ -613,6 +610,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </script>
 </body>
 </html>
+
 
 
 
