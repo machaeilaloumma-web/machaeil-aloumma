@@ -69,7 +69,6 @@
       color: white;
       outline: none;
       font-size: 16px;
-      padding-right: 56px;
     }
 
     input:focus, select:focus {
@@ -127,11 +126,6 @@
       z-index: 2;
     }
 
-    .password-input {
-      background: #e0e0e0 !important;
-      color: #000;
-    }
-
     button#registerBtn {
       width: 100%;
       padding: 10px;
@@ -184,11 +178,10 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
 
-    #copyBtn {
+    #copyBtn, #printBtn, #shareBtn {
       width: 100%;
       padding: 10px;
       background: #252535;
-      color: #00ff80;
       border: 1px solid #2e2e3d;
       border-radius: 8px;
       cursor: pointer;
@@ -196,30 +189,9 @@
       margin-top: 8px;
     }
 
-    #printBtn {
-      width: 100%;
-      padding: 10px;
-      background: #252535;
-      color: #ffcc00;
-      border: 1px solid #2e2e3d;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      margin-top: 8px;
-    }
-
-    #shareBtn {
-      width: 100%;
-      padding: 10px;
-      background: #252535;
-      color: #00ff80;
-      border: 1px solid #00ff80;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      margin-top: 8px;
-      display: none;
-    }
+    #copyBtn { color: #00ff80; }
+    #printBtn { color: #ffcc00; }
+    #shareBtn { color: #00ff80; border-color: #00ff80; display: none; }
 
     .info-item {
       display: flex;
@@ -228,18 +200,8 @@
       border-bottom: 1px solid #2a2a35;
     }
 
-    .info-label {
-      color: #aaa;
-      font-weight: 500;
-      font-size: 15px;
-    }
-
-    .info-value {
-      color: #fff;
-      font-weight: bold;
-      font-size: 15px;
-      text-align: left;
-    }
+    .info-label { color: #aaa; font-weight: 500; font-size: 15px; }
+    .info-value { color: #fff; font-weight: bold; font-size: 15px; text-align: left; }
   </style>
 </head>
 <body>
@@ -263,7 +225,7 @@
       <div class="form-group">
         <div class="input-with-icon">
           <span class="icon">🎓</span>
-          <select id="level" required style="width: 100%; padding: 10px; background: #252535; border: 1px solid #2e2e3d; border-radius: 8px; color: white;">
+          <select id="level" required>
             <option value="" disabled selected>اختر...</option>
             <option value="الأولى ثانوي">الأولى ثانوي</option>
             <option value="الثانية ثانوي">الثانية ثانوي</option>
@@ -294,7 +256,7 @@
         </div>
       </div>
       <div class="form-group">
-        <select id="gender" required style="width: 100%; padding: 10px; background: #252535; border: 1px solid #2e2e3d; border-radius: 8px; color: white;">
+        <select id="gender" required>
           <option value="" disabled selected>اختر...</option>
           <option value="ذكر">ذكر</option>
           <option value="أنثى">أنثى</option>
@@ -304,7 +266,7 @@
       </div>
       <div class="form-group">
         <label for="stars" style="top: -10px; right: 14px; font-size: 12px; color: #00ff80; background: #1a1a25; padding: 0 5px; border-radius: 4px;">عدد النجوم</label>
-        <select id="stars" required style="width: 100%; padding: 10px; background: #252535; border: 1px solid #2e2e3d; border-radius: 8px; color: white;">
+        <select id="stars" required>
           <option value="" disabled selected>اختر...</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -316,7 +278,7 @@
       <div class="form-group password-field">
         <div class="input-with-icon">
           <span class="icon">🔒</span>
-          <input type="password" id="password" class="password-input" required minlength="6" placeholder=" " />
+          <input type="password" id="password" required minlength="6" placeholder=" " />
           <label for="password">كلمة المرور</label>
           <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
         </div>
@@ -335,45 +297,19 @@
       لديك حساب؟ <a href="login.html">سجل دخولك</a>
     </div>
 
-    <!-- منطقة عرض QR -->
     <div id="qrResult">
       <h3 style="color:#00ff80; margin-bottom:12px; text-align:center;">✅ تم إنشاء حسابك!</h3>
       <p style="color:#ccc; margin-bottom:16px; text-align:center;">شارك هذا الرمز مع أستاذك لتقييمك:</p>
       <img id="qrImage" src="" alt="رمز QR" />
-
-      <!-- معلومات الطالب -->
-      <div class="info-item">
-        <span class="info-label">الاسم الكامل:</span>
-        <span class="info-value" id="fullNameDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">اسم الأستاذ:</span>
-        <span class="info-value" id="teacherNameDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">المستوى الدراسي:</span>
-        <span class="info-value" id="levelDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">اسم المؤسسة:</span>
-        <span class="info-value" id="institutionDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">الولاية:</span>
-        <span class="info-value" id="provinceDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">البلدية:</span>
-        <span class="info-value" id="cityDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">الجنس:</span>
-        <span class="info-value" id="genderDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">عدد النجوم:</span>
-        <span class="info-value" id="starsDisplay"></span>
-      </div>
+      
+      <div class="info-item"><span class="info-label">الاسم الكامل:</span><span class="info-value" id="fullNameDisplay"></span></div>
+      <div class="info-item"><span class="info-label">اسم الأستاذ:</span><span class="info-value" id="teacherNameDisplay"></span></div>
+      <div class="info-item"><span class="info-label">المستوى الدراسي:</span><span class="info-value" id="levelDisplay"></span></div>
+      <div class="info-item"><span class="info-label">اسم المؤسسة:</span><span class="info-value" id="institutionDisplay"></span></div>
+      <div class="info-item"><span class="info-label">الولاية:</span><span class="info-value" id="provinceDisplay"></span></div>
+      <div class="info-item"><span class="info-label">البلدية:</span><span class="info-value" id="cityDisplay"></span></div>
+      <div class="info-item"><span class="info-label">الجنس:</span><span class="info-value" id="genderDisplay"></span></div>
+      <div class="info-item"><span class="info-label">عدد النجوم:</span><span class="info-value" id="starsDisplay"></span></div>
 
       <button id="copyBtn" onclick="copyQRLink()">نسخ الرابط</button>
       <button id="printBtn" onclick="printQRCard()">طباعة بطاقة النجم</button>
@@ -384,22 +320,14 @@
   <script>
     function togglePassword(fieldId) {
       const field = document.getElementById(fieldId);
-      if (field.type === "password") {
-        field.type = "text";
-      } else {
-        field.type = "password";
-      }
+      field.type = field.type === "password" ? "text" : "password";
     }
 
     document.getElementById('registerForm').addEventListener('submit', function (e) {
       e.preventDefault();
 
       const fullName = document.getElementById('fullName').value.trim();
-      const teacherName = "سعيد"; // ثابت
       const level = document.getElementById('level').value;
-      const institution = "ابن تيمية"; // ثابت
-      const province = "الجزائر"; // ثابت
-      const city = "براقي"; // ثابت
       const gender = document.getElementById('gender').value;
       const stars = document.getElementById('stars').value;
       const password = document.getElementById('password').value;
@@ -409,96 +337,78 @@
         alert('يرجى ملء جميع الحقول المطلوبة.');
         return;
       }
-
       if (password !== confirmPassword) {
         alert('كلمتا المرور غير متطابقتين!');
         return;
       }
 
-      // ✅ رابط Google Forms الصحيح
+      // ✅ الترميز الصحيح لكل قيمة
+      const data = {
+        'entry.500102530': encodeURIComponent(fullName),
+        'entry.1295909734': encodeURIComponent("سعيد"),
+        'entry.1782792963': encodeURIComponent(level),
+        'entry.7598977': encodeURIComponent("ابن تيمية"),
+        'entry.1504285967': encodeURIComponent("براقي"),
+        'entry.141302358': encodeURIComponent("الجزائر"),
+        'entry.1987444241': encodeURIComponent(gender),
+        'entry.1151276187': encodeURIComponent(stars)
+      };
+
       const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdfBDs6Ta8vt3AAM7aKGCaUymXWRNhW-9GFTmbhjnBTuuLvCg/viewform";
-
-      // ✅ المعرّفات الصحيحة من النموذج الفعلي
-      const params = new URLSearchParams({
-        'entry.500102530': fullName,         // الاسم الكامل
-        'entry.1295909734': teacherName,     // اسم الأستاذ
-        'entry.1782792963': level,           // المستوى الدراسي
-        'entry.7598977': institution,        // اسم المؤسسة
-        'entry.1504285967': city,            // البلدية
-        'entry.141302358': province,         // الولاية
-        'entry.1987444241': gender,          // الجنس
-        'entry.1151276187': stars            // عدد النجوم
-      });
-
+      const params = new URLSearchParams(data);
       const fullUrl = `${baseUrl}?${params.toString()}`;
 
-      // ✅ حفظ البيانات
-      const userData = { fullName, teacherName, level, institution, province, city, gender, stars, password, formUrl: fullUrl };
-      localStorage.setItem('user', JSON.stringify(userData));
-
-      // ✅ توليد QR
+      // ✅ حفظ وعرض
+      localStorage.setItem('user', JSON.stringify({ fullName, level, gender, stars, formUrl: fullUrl }));
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(fullUrl)}&qzone=1&margin=0`;
 
-      // ✅ عرض النتائج
       document.getElementById('qrImage').src = qrUrl;
       document.getElementById('qrResult').style.display = 'block';
       document.getElementById('copyBtn').setAttribute('data-url', fullUrl);
 
       // ✅ عرض البيانات
       document.getElementById('fullNameDisplay').textContent = fullName;
-      document.getElementById('teacherNameDisplay').textContent = teacherName;
+      document.getElementById('teacherNameDisplay').textContent = "سعيد";
       document.getElementById('levelDisplay').textContent = level;
-      document.getElementById('institutionDisplay').textContent = institution;
-      document.getElementById('provinceDisplay').textContent = province;
-      document.getElementById('cityDisplay').textContent = city;
+      document.getElementById('institutionDisplay').textContent = "ابن تيمية";
+      document.getElementById('provinceDisplay').textContent = "الجزائر";
+      document.getElementById('cityDisplay').textContent = "براقي";
       document.getElementById('genderDisplay').textContent = gender;
       document.getElementById('starsDisplay').textContent = stars;
 
-      // ✅ إخفاء النموذج
       document.getElementById('registerForm').style.display = 'none';
       document.querySelector('.login-link').style.display = 'none';
 
-      if (navigator.share) {
-        document.getElementById('shareBtn').style.display = 'block';
-      }
+      if (navigator.share) document.getElementById('shareBtn').style.display = 'block';
     });
 
     function copyQRLink() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
-      navigator.clipboard.writeText(url).then(() => {
-        alert('تم نسخ رابط التقييم! أرسله لأستاذك.');
-      });
+      navigator.clipboard.writeText(url).then(() => alert('تم نسخ رابط التقييم!'));
     }
 
     function printQRCard() {
-      const fullName = document.getElementById('fullNameDisplay').textContent || 'طالب';
+      const fullName = document.getElementById('fullNameDisplay').textContent;
       const qrImageSrc = document.getElementById('qrImage').src;
-      if (!qrImageSrc) return;
-
-      const printWindow = window.open('', '_blank');
-      printWindow.document.write(`
-        <html>
-        <head><title>بطاقة نجم - مشاعل الأمة</title></head>
-        <body style="font-family:'Noto Kufi Arabic',sans-serif;text-align:center;padding:20px;background:#000;color:#fff;">
+      const w = window.open();
+      w.document.write(`
+        <html><head><title>بطاقة نجم - مشاعل الأمة</title>
+        <style>body{font-family:'Noto Kufi Arabic',sans-serif;text-align:center;padding:20px;background:#000;color:#fff;}</style>
+        </head><body>
           <h2 style="color:#ffcc00;">🌟 مشاعل الأمة – سفراء القيم</h2>
-          <h3 style="color:#fff;margin:20px 0;">الطالب: ${fullName}</h3>
+          <h3>الطالب: ${fullName}</h3>
           <img src="${qrImageSrc}" style="width:240px;height:240px;margin:20px 0;" />
-          <p style="color:#aaa;font-size:14px;">امسح الرمز لتقييم الطالب</p>
-        </body>
-        </html>
+          <p style="color:#aaa;">امسح الرمز لتقييم الطالب</p>
+        </body></html>
       `);
-      printWindow.document.close();
-      printWindow.print();
+      w.document.close();
+      w.print();
     }
 
     function shareQR() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
       if (navigator.share && url) {
-        navigator.share({
-          title: 'تقييم نجم - مشاعل الأمة',
-          text: 'من فضلك قيّم طالبي في مشروع "مشاعل الأمة"',
-          url: url
-        });
+        navigator.share({ title: 'تقييم نجم - مشاعل الأمة', text: 'من فضلك قيّم طالبي', url });
       }
     }
   </script>
