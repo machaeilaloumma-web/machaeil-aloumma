@@ -604,7 +604,6 @@ const algeriaData = {
 
     if (selectedProvince && algeriaData[selectedProvince]) {
       algeriaData[selectedProvince].forEach(municipality => {
-        // تجنب القيم الفارغة (مثل آخر عنصر في النعامة)
         if (municipality.trim() !== "") {
           const option = document.createElement('option');
           option.value = municipality;
@@ -618,6 +617,7 @@ const algeriaData = {
   </script>
 </body>
 </html>
+
 
 
 
