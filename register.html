@@ -597,8 +597,35 @@ const algeriaData = {
   "المنيعة": ["المنيعة", "حاسي القارة", "المنصورة", "حاسي لفحل"]
 };
 
+<!-- ✅ ربط Firebase مع type="module" -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+// إعداد Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyDiypCTp31wIc5MR3FhClKobeQTeK-vaFs",
+  authDomain: "machaeil-aloumma.firebaseapp.com",
+  projectId: "machaeil-aloumma",
+  storageBucket: "machaeil-aloumma.firebasestorage.app",
+  messagingSenderId: "678363443395",
+  appId: "1:678363443395:web:b604b002d4e8fd430d3276"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ✅ قائمة الولايات والبلديات
+const algeriaData = {
+  "الجزائر": ["المرادية","باب الزوار","براقي"],
+  "وهران": ["وهران","عين الترك","سانتا كروز"]
+  // ... أكمل بقية الولايات والبلديات
+};
+
 // ✅ تحميل القوائم فوراً عند تحميل الصفحة
-(function () {
+document.addEventListener('DOMContentLoaded', () => {
   const provinceSelect = document.getElementById('province');
   const citySelect = document.getElementById('city');
 
@@ -629,16 +656,69 @@ const algeriaData = {
       });
     }
   });
-})();
-    function goToEditProfile() {
-  const studentData = localStorage.getItem("studentData");
-  if (!studentData) {
-    alert("لا توجد بيانات لتعديلها.");
+});
+
+// ✅ عند الضغط على زر التسجيل
+document.getElementById("registerForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // جمع البيانات
+  const fullName = document.getElementById('fullName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const password = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+  const level = document.getElementById('level').value;
+  const institution = document.getElementById('institution').value.trim();
+  const province = document.getElementById('province').value;
+  const city = document.getElementById('city').value;
+  const gender = document.getElementById('gender').value;
+
+  // ✅ التحقق من الحقول
+  if (!fullName || !email || !password || !level || !gender) {
+    alert("يرجى ملء جميع الحقول المطلوبة.");
     return;
   }
-  window.location.href = "edit-profile.html";
-}
+  if (password !== confirmPassword) {
+    alert("كلمتا المرور غير متطابقتين!");
+    return;
+  }
 
-  </script>
-</body>
-</html>
+  try {
+    // إنشاء المستخدم في Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+
+    // تحديث الاسم في الحساب
+    await updateProfile(user, { displayName: fullName });
+
+    // حفظ بيانات المستخدم في Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      fullName,
+      email,
+      level,
+      institution,
+      province,
+      city,
+      gender,
+      createdAt: new Date().toISOString()
+    });
+
+    alert("🎉 تم إنشاء الحساب بنجاح!");
+    window.location.href = "profile.html";
+  } catch (error) {
+    console.error("خطأ أثناء التسجيل:", error);
+    if (error.code === "auth/email-already-in-use") {
+      alert("البريد الإلكتروني مسجل مسبقًا.");
+    } else if (error.code === "auth/weak-password") {
+      alert("كلمة المرور ضعيفة جدًا. يجب أن تكون 6 أحرف على الأقل.");
+    } else {
+      alert("❌ حدث خطأ أثناء التسجيل. حاول لاحقًا.");
+    }
+  }
+});
+
+// ✅ زر تعديل الملف الشخصي (لاحقًا)
+function goToEditProfile() {
+  alert("ميزة تعديل الملف الشخصي قيد التطوير ❤️");
+}
+</script>
