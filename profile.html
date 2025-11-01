@@ -217,28 +217,55 @@
           <h3 style="color:#fff;margin:20px 0;">الطالب: ${fullName}</h3>
           <img src="${qrImageSrc}" style="width:240px;height:240px;margin:20px 0;" />
           <p style="color:#aaa;font-size:14px;">امسح الرمز لتقييم الطالب</p>
-        </body>
-        </html>
-      `);
-      printWindow.document.close();
-      printWindow.print();
+       </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+  }
+
+  function shareQR() {
+    const url = document.getElementById('copyBtn').getAttribute('data-url');
+    if (navigator.share && url) {
+      navigator.share({
+        title: 'تقييم نجم - مشاعل الأمة',
+        text: 'من فضلك قيّم طالبي في مشروع "مشاعل الأمة"',
+        url: url
+      }).catch(err => {
+        console.error('فشل في المشاركة: ', err);
+      });
+    } else {
+      alert('المشاركة غير مدعومة في متصفحك أو لا يوجد رابط.');
     }
-    function shareQR() {
-      const url = document.getElementById('copyBtn').getAttribute('data-url');
-      if (navigator.share && url) {
-        navigator.share({
-          title: 'تقييم نجم - مشاعل الأمة',
-          text: 'من فضلك قيّم طالبي في مشروع "مشاعل الأمة"',
-          url: url
-        }).catch(err => {
-          console.error('فشل في المشاركة: ', err);
-        });
-      } else {
-        alert('المشاركة غير مدعومة في متصفحك أو لا يوجد رابط.');
-      }
+  }
+
+  // ✅ تحميل بيانات المستخدم عند الفتح
+  function loadProfile() {
+    const userData = JSON.parse(localStorage.getItem('user'));
+
+    if (!userData) {
+      document.body.innerHTML = `
+        <h2>ملفي الشخصي</h2>
+        <p>لم تُنشئ حسابًا بعد. انضم كـ "نجم"</p>
+        <a href="register.html" class="btn">العودة إلى التسجيل</a>
+      `;
+      return;
     }
-    // تحميل عند الفتح
-    window.addEventListener('load', loadProfile);
+
+    // ✅ عرض بيانات المستخدم في الصفحة
+    document.getElementById('fullNameDisplay').textContent = userData.fullName;
+    document.getElementById('emailDisplay').textContent = userData.email;
+    document.getElementById('levelDisplay').textContent = userData.level;
+    document.getElementById('institutionDisplay').textContent = userData.institution;
+    document.getElementById('provinceDisplay').textContent = userData.province;
+    document.getElementById('cityDisplay').textContent = userData.city;
+    document.getElementById('genderDisplay').textContent = userData.gender === 'ذكر' ? 'ذكر' : 'أنثى';
+  }
+
+  // تحميل عند الفتح
+  window.addEventListener('load', loadProfile);
   </script>
 </body>
 </html>
+
+
