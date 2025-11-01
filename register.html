@@ -397,6 +397,7 @@
   <button onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
   <button onclick="editProfile()">تعديل المعلومات</button>
   <button onclick="regenerateQR()">تحديث QR</button>
+  <button id="editBtn" onclick="goToEditProfile()">تعديل المعلومات</button>
 </div>
 </div> <!-- إغلاق الحاوية الأساسية -->
 </div>
@@ -629,9 +630,19 @@ const algeriaData = {
     }
   });
 })();
+    function goToEditProfile() {
+  const studentData = localStorage.getItem("studentData");
+  if (!studentData) {
+    alert("لا توجد بيانات لتعديلها.");
+    return;
+  }
+  window.location.href = "edit-profile.html";
+}
+
   </script>
 </body>
 </html>
+
 
 
 
