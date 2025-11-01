@@ -446,11 +446,40 @@ if (password !== confirmPassword) {
   return;
 }
 
-// ✅ التحقق من البريد الإلكتروني
+// ✅ التحقق من البريد الإلكتروني (قبل الإرسال)
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 if (!emailRegex.test(email)) {
   alert('يرجى إدخال بريد إلكتروني صحيح.');
   return;
+}
+
+// ✅ إرسال البيانات إلى الخادم (API)
+try {
+  const response = await fetch("https://machaeil-aloumma.vercel.app/api/register", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      fullName,
+      email,
+      level,
+      institution,
+      province,
+      city,
+      gender,
+      password,
+    }),
+  });
+
+  const result = await response.json();
+
+  // ✅ عرض رسالة النجاح
+  alert(result.message);
+
+  // ✅ الانتقال إلى الملف التالي بعد النجاح
+  window.location.href = "profile.html";
+} catch (error) {
+  console.error("حدث خطأ أثناء التسجيل:", error);
+  alert("❌ حدث خطأ أثناء التسجيل، يرجى المحاولة لاحقًا.");
 }
 
 // ✅ إعداد الرابط الصحيح لـ Google Forms
@@ -467,7 +496,6 @@ const params = new URLSearchParams({
 });
 
 const fullUrl = `${baseUrl}?${params.toString()}`;
-
 
 // ✅ حفظ الحساب
 const userData = { fullName, email, level, institution, province, city, gender, password, formUrl: fullUrl };
@@ -642,5 +670,6 @@ const algeriaData = {
   </script>
 </body>
 </html>
+
 
 
