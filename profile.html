@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ملفي الشخصي - مشاعل الأمة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
@@ -11,7 +12,6 @@
       box-sizing: border-box;
       font-family: 'Noto Kufi Arabic', sans-serif;
     }
-
     body {
       background: #000;
       color: #fff;
@@ -21,8 +21,7 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
-    .register-container {
+    .profile-container {
       background: #1a1a25;
       padding: 20px;
       border-radius: 16px;
@@ -30,7 +29,6 @@
       max-width: 420px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
     }
-
     h1 {
       color: #fff;
       margin-bottom: 16px;
@@ -38,151 +36,34 @@
       text-align: center;
       text-shadow: 0 0 10px rgba(0, 255, 128, 0.25);
     }
-
-    .form-group {
-      margin-bottom: 12px;
-      position: relative;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 4px;
-      font-weight: 500;
-      text-align: right;
-      color: #aaa;
-      font-size: 14px;
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      pointer-events: none;
-      z-index: 2;
-      transition: all 0.2s;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px 14px;
-      background: #252535;
-      border: 1px solid #2e2e3d;
-      border-radius: 8px;
-      color: white;
-      outline: none;
-      font-size: 16px;
-      padding-right: 56px;
-    }
-
-    input:focus, select:focus {
-      border-color: #00ff80;
-      box-shadow: 0 0 12px rgba(0,255,128,0.3);
-    }
-
-    input:not(:placeholder-shown) + label,
-    input:focus + label,
-    select:not(:placeholder-shown) + label,
-    select:focus + label {
-      top: -10px;
-      right: 14px;
-      font-size: 12px;
-      color: #00ff80;
-      background: #1a1a25;
-      padding: 0 5px;
-      border-radius: 4px;
-    }
-
-    .input-with-icon {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-with-icon .icon {
-      position: absolute;
-      left: 14px;
-      color: #00ff80;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .input-with-icon input {
-      padding-left: 44px;
-    }
-
-    .password-field {
-      position: relative;
-    }
-
-    .password-field input {
-      padding-right: 44px;
-      padding-bottom: 28px;
-    }
-
-    .toggle-password {
-      position: absolute;
-      right: 14px;
-      bottom: 6px;
-      cursor: pointer;
-      color: #aaa;
-      font-size: 16px;
-      z-index: 2;
-    }
-
-    .password-input {
-      background: #e0e0e0 !important;
-      color: #000;
-    }
-
-    button#registerBtn {
-      width: 100%;
-      padding: 10px;
-      background: #252535;
-      color: #fff;
-      font-weight: 500;
-      border: 1px solid #2e2e3d;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 6px;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    button#registerBtn:hover {
-      border-color: #00ff80;
-      box-shadow: 0 0 12px rgba(0,255,128,0.3);
-      transform: translateY(-2px);
-    }
-
     .login-link {
       text-align: center;
       margin-top: 12px;
       font-size: 14px;
     }
-
     .login-link a {
       color: #00ff80;
       text-decoration: none;
       transition: opacity 0.3s;
     }
-
     .login-link a:hover {
       opacity: 0.8;
       text-decoration: underline;
     }
-
     #qrResult {
       margin-top: 24px;
       padding-top: 24px;
       border-top: 1px solid #2a2a35;
       display: none;
     }
-
     #qrImage {
       width: 240px;
       height: 240px;
+      display: block;
       margin: 0 auto 16px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-
     #copyBtn {
       width: 100%;
       padding: 10px;
@@ -193,8 +74,13 @@
       cursor: pointer;
       font-size: 15px;
       margin-top: 8px;
+      transition: all 0.3s ease;
     }
-
+    #copyBtn:hover {
+      border-color: #00ff80;
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+      transform: translateY(-2px);
+    }
     #printBtn {
       width: 100%;
       padding: 10px;
@@ -205,8 +91,13 @@
       cursor: pointer;
       font-size: 15px;
       margin-top: 8px;
+      transition: all 0.3s ease;
     }
-
+    #printBtn:hover {
+      border-color: #ffcc00;
+      box-shadow: 0 0 12px rgba(255,204,0,0.3);
+      transform: translateY(-2px);
+    }
     #shareBtn {
       width: 100%;
       padding: 10px;
@@ -218,44 +109,49 @@
       font-size: 15px;
       margin-top: 8px;
       display: none;
+      transition: all 0.3s ease;
     }
-
+    #shareBtn:hover {
+      box-shadow: 0 0 12px rgba(0,255,128,0.3);
+      transform: translateY(-2px);
+    }
     .info-item {
       display: flex;
       justify-content: space-between;
       padding: 10px 0;
       border-bottom: 1px solid #2a2a35;
     }
-
     .info-label {
       color: #aaa;
       font-weight: 500;
       font-size: 15px;
     }
-
     .info-value {
       color: #fff;
       font-weight: bold;
       font-size: 15px;
       text-align: left;
     }
+    .button-group {
+      margin-top: 16px;
+    }
+    .button-group button {
+      margin-bottom: 8px;
+    }
   </style>
 </head>
 <body>
-  <div class="register-container">
+  <div class="profile-container">
     <h1>ملفي الشخصي</h1>
-
     <!-- رسالة عدم وجود حساب -->
-    <div id="noAccountMessage" class="login-link" style="display:block;">
+    <div id="noAccountMessage" class="login-link" style="display: block;">
       لم تُنشئ حسابًا بعد. <a href="register.html">انضم كـ "نجم"</a>
     </div>
-
     <!-- منطقة عرض QR -->
     <div id="qrResult">
       <h3 style="color:#00ff80; margin-bottom:12px; text-align:center;">✅ حسابك جاهز!</h3>
       <p style="color:#ccc; margin-bottom:16px; text-align:center;">شارك هذا الرمز مع أستاذك لتقييمك:</p>
-      <img id="qrImage" src="" alt="رمز QR" />
-
+      <img id="qrImage" src="" alt="رمز QR لتقييم الطالب" />
       <!-- معلومات الطالب -->
       <div class="info-item">
         <span class="info-label">الاسم الكامل:</span>
@@ -284,78 +180,68 @@
       <div class="info-item">
         <span class="info-label">الجنس:</span>
         <span class="info-value" id="genderDisplay"></span>
-</div>
-
-<!-- ✅ الأزرار داخل نفس الحاوية -->
-<div class="button-group">
-  <button id="copyBtn" class="btn" onclick="copyQRLink()">نسخ الرابط</button>
-  <button id="printBtn" class="btn" onclick="printQRCard()">طباعة بطاقة النجم</button>
-  <button id="shareBtn1" class="btn" onclick="shareQR()">مشاركة</button>
-  <button id="shareBtn2" class="btn" onclick="shareQR()">مشاركة</button>
-  <button id="editBtn" class="btn" onclick="window.location.href='edit-profile.html'">تعديل المعلومات</button>
-</div>
-
-<!-- ✅ أزرار أسفل الصفحة -->
-<div class="bottom-buttons">
-  <button class="edit-btn">تعديل المعلومات</button>
-  <button class="home-btn">العودة إلى الصفحة الرئيسية</button>
-  <button class="refresh-btn">تحديث QR</button>
-</div>
-
-<!-- ✅ إغلاق الحاوية النهائي بعد كل الأزرار -->
-</div>
-
-<script>
-
+      </div>
+      <!-- الأزرار -->
+      <div class="button-group">
+        <button id="copyBtn" onclick="copyQRLink()">نسخ الرابط</button>
+        <button id="printBtn" onclick="printQRCard()">طباعة بطاقة النجم</button>
+        <button id="shareBtn" onclick="shareQR()">مشاركة</button>
+        <button id="editBtn" onclick="window.location.href='edit-profile.html'">تعديل المعلومات</button>
+        <button id="homeBtn" onclick="window.location.href='index.html'">العودة إلى الصفحة الرئيسية</button>
+        <button id="refreshBtn" onclick="loadProfile()">تحديث QR</button>
+      </div>
+    </div>
+  </div>
+  <script>
     function loadProfile() {
       const userData = JSON.parse(localStorage.getItem('user'));
       const noAccountMessage = document.getElementById('noAccountMessage');
       const qrResult = document.getElementById('qrResult');
-
       if (!userData || !userData.formUrl) {
         noAccountMessage.style.display = 'block';
         qrResult.style.display = 'none';
         return;
       }
-
-      // عرض معلومات الطالب
+      // عرض معلومات الطالب مع قيم افتراضية آمنة
       document.getElementById('fullNameDisplay').textContent = userData.fullName || 'غير متوفر';
       document.getElementById('emailDisplay').textContent = userData.email || 'غير متوفر';
       document.getElementById('levelDisplay').textContent = userData.level || 'غير متوفر';
       document.getElementById('institutionDisplay').textContent = userData.institution || 'غير متوفر';
       document.getElementById('provinceDisplay').textContent = userData.province || 'غير متوفر';
       document.getElementById('cityDisplay').textContent = userData.city || 'غير متوفر';
-      document.getElementById('genderDisplay').textContent = userData.gender === 'ذكر' ? 'ذكر' : 'أنثى';
-
+      document.getElementById('genderDisplay').textContent = userData.gender || 'غير متوفر';
       // توليد QR عالي الجودة (400x400)
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(userData.formUrl)}&qzone=1&margin=0`;
       document.getElementById('qrImage').src = qrUrl;
-
-      // إعداد الأزرار
+      // إعداد الزر copyBtn
       document.getElementById('copyBtn').setAttribute('data-url', userData.formUrl);
-      qrResult.style.display = 'block';
-      noAccountMessage.style.display = 'none';
-
       // إظهار زر المشاركة إذا مدعوم
       if (navigator.share) {
         document.getElementById('shareBtn').style.display = 'block';
       }
+      qrResult.style.display = 'block';
+      noAccountMessage.style.display = 'none';
     }
-
     function copyQRLink() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
       if (url) {
         navigator.clipboard.writeText(url).then(() => {
           alert('تم نسخ رابط التقييم! أرسله لأستاذك.');
+        }).catch(err => {
+          console.error('فشل في النسخ: ', err);
+          alert('فشل في نسخ الرابط. جرب يدويًا.');
         });
+      } else {
+        alert('لا يوجد رابط للنسخ.');
       }
     }
-
     function printQRCard() {
       const fullName = document.getElementById('fullNameDisplay').textContent || 'طالب';
       const qrImageSrc = document.getElementById('qrImage').src;
-      if (!qrImageSrc) return;
-
+      if (!qrImageSrc) {
+        alert('لا يوجد رمز QR للطباعة.');
+        return;
+      }
       const printWindow = window.open('', '_blank');
       printWindow.document.write(`
         <html>
@@ -371,7 +257,6 @@
       printWindow.document.close();
       printWindow.print();
     }
-
     function shareQR() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
       if (navigator.share && url) {
@@ -379,18 +264,18 @@
           title: 'تقييم نجم - مشاعل الأمة',
           text: 'من فضلك قيّم طالبي في مشروع "مشاعل الأمة"',
           url: url
+        }).catch(err => {
+          console.error('فشل في المشاركة: ', err);
         });
+      } else {
+        alert('المشاركة غير مدعومة في متصفحك أو لا يوجد رابط.');
       }
     }
-
     // تحميل عند الفتح
-    loadProfile();
+    window.addEventListener('load', loadProfile);
   </script>
 </body>
 </html>
-
-
-
 
 
 
