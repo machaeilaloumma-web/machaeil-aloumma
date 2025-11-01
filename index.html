@@ -202,8 +202,29 @@
     <a href="contact.html">اتصل بنا</a>
   </footer>
 
+  <!-- كود Firebase يوضع هنا -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiypCTp31wIc5MR3FhClKobeQTeK-vaFs",
+      authDomain: "machaeil-aloumma.firebaseapp.com",
+      projectId: "machaeil-aloumma",
+      storageBucket: "machaeil-aloumma.firebasestorage.app",
+      messagingSenderId: "678363443395",
+      appId: "1:678363443395:web:b604b002d4e8fd430d3276"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+  </script>
 </body>
 </html>
+
+
 
 
 
