@@ -64,7 +64,6 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-    /* نمط موحد لجميع أزرار الإجراءات */
     .action-btn {
       width: 100%;
       padding: 10px;
@@ -110,16 +109,14 @@
 <body>
   <div class="profile-container">
     <h1>ملفي الشخصي</h1>
-    <!-- رسالة عدم وجود حساب -->
     <div id="noAccountMessage" class="login-link" style="display: block;">
       لم تُنشئ حسابًا بعد. <a href="register.html">انضم كـ "نجم"</a>
     </div>
-    <!-- منطقة عرض QR -->
+
     <div id="qrResult">
       <h3 style="color:#00ff80; margin-bottom:12px; text-align:center;">✅ حسابك جاهز!</h3>
       <p style="color:#ccc; margin-bottom:16px; text-align:center;">شارك هذا الرمز مع أستاذك لتقييمك:</p>
       <img id="qrImage" src="" alt="رمز QR لتقييم الطالب" />
-      <!-- معلومات الطالب -->
       <div class="info-item">
         <span class="info-label">الاسم الكامل:</span>
         <span class="info-value" id="fullNameDisplay"></span>
@@ -148,7 +145,6 @@
         <span class="info-label">الجنس:</span>
         <span class="info-value" id="genderDisplay"></span>
       </div>
-      <!-- الأزرار -->
       <div class="button-group">
         <button id="copyBtn" class="action-btn" onclick="copyQRLink()">نسخ الرابط</button>
         <button id="printBtn" class="action-btn" onclick="printQRCard()">طباعة بطاقة النجم</button>
@@ -158,17 +154,22 @@
       </div>
     </div>
   </div>
+
   <script>
     function loadProfile() {
       const userData = JSON.parse(localStorage.getItem('user'));
       const noAccountMessage = document.getElementById('noAccountMessage');
       const qrResult = document.getElementById('qrResult');
+
       if (!userData || !userData.formUrl) {
         noAccountMessage.style.display = 'block';
         qrResult.style.display = 'none';
         return;
       }
-      // عرض معلومات الطالب مع قيم افتراضية آمنة
+
+      noAccountMessage.style.display = 'none';
+      qrResult.style.display = 'block';
+
       document.getElementById('fullNameDisplay').textContent = userData.fullName || 'غير متوفر';
       document.getElementById('emailDisplay').textContent = userData.email || 'غير متوفر';
       document.getElementById('levelDisplay').textContent = userData.level || 'غير متوفر';
@@ -176,18 +177,16 @@
       document.getElementById('provinceDisplay').textContent = userData.province || 'غير متوفر';
       document.getElementById('cityDisplay').textContent = userData.city || 'غير متوفر';
       document.getElementById('genderDisplay').textContent = userData.gender || 'غير متوفر';
-      // توليد QR عالي الجودة (400x400)
+
+      // توليد QR
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(userData.formUrl)}&qzone=1&margin=0`;
       document.getElementById('qrImage').src = qrUrl;
-      // إعداد الزر copyBtn
+
       document.getElementById('copyBtn').setAttribute('data-url', userData.formUrl);
-      // إظهار زر المشاركة إذا مدعوم
-      if (navigator.share) {
-        document.getElementById('shareBtn').style.display = 'block';
-      }
-      qrResult.style.display = 'block';
-      noAccountMessage.style.display = 'none';
+
+      if (!navigator.share) document.getElementById('shareBtn').style.display = 'none';
     }
+
     function copyQRLink() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
       if (url) {
@@ -201,6 +200,7 @@
         alert('لا يوجد رابط للنسخ.');
       }
     }
+
     function printQRCard() {
       const fullName = document.getElementById('fullNameDisplay').textContent || 'طالب';
       const qrImageSrc = document.getElementById('qrImage').src;
@@ -239,33 +239,7 @@
     }
   }
 
-  // ✅ تحميل بيانات المستخدم عند الفتح
-  function loadProfile() {
-    const userData = JSON.parse(localStorage.getItem('user'));
-
-    if (!userData) {
-      document.body.innerHTML = `
-        <h2>ملفي الشخصي</h2>
-        <p>لم تُنشئ حسابًا بعد. انضم كـ "نجم"</p>
-        <a href="register.html" class="btn">العودة إلى التسجيل</a>
-      `;
-      return;
-    }
-
-    // ✅ عرض بيانات المستخدم في الصفحة
-    document.getElementById('fullNameDisplay').textContent = userData.fullName;
-    document.getElementById('emailDisplay').textContent = userData.email;
-    document.getElementById('levelDisplay').textContent = userData.level;
-    document.getElementById('institutionDisplay').textContent = userData.institution;
-    document.getElementById('provinceDisplay').textContent = userData.province;
-    document.getElementById('cityDisplay').textContent = userData.city;
-    document.getElementById('genderDisplay').textContent = userData.gender === 'ذكر' ? 'ذكر' : 'أنثى';
-  }
-
-  // تحميل عند الفتح
   window.addEventListener('load', loadProfile);
   </script>
 </body>
 </html>
-
-
