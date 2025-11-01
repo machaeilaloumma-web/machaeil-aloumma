@@ -419,11 +419,11 @@ if (existingUser) {
 
 // ✅ جمع البيانات
 const fullName = document.getElementById('fullName').value.trim();
-const email = document.getElementById('email').value.trim();     
+const email = document.getElementById('email').value.trim();
 const level = document.getElementById('level').value;
-const institution = "ابن تيمية"; // ثابت
-const province = "الجزائر"; // ثابت
-const city = "براقي"; // ثابت
+const institution = document.getElementById('institution').value.trim(); // ديناميكي من الحقل
+const province = document.getElementById('province').value.trim();       // ديناميكي من القائمة
+const city = document.getElementById('city').value.trim();               // ديناميكي من القائمة أو الحقل
 const gender = document.getElementById('gender').value;
 const password = document.getElementById('password').value;
 const confirmPassword = document.getElementById('confirmPassword').value;
@@ -625,6 +625,7 @@ const algeriaData = {
   </script>
 </body>
 </html>
+
 
 
 
