@@ -286,14 +286,15 @@
         <span class="info-label">الجنس:</span>
         <span class="info-value" id="genderDisplay"></span>
       </div>
-
-      <button id="copyBtn" onclick="copyQRLink()">نسخ الرابط</button>
-      <button id="printBtn" onclick="printQRCard()">طباعة بطاقة النجم</button>
-      <button id="shareBtn" onclick="shareQR()">مشاركة</button>
-      <button id="editBtn" onclick="window.location.href='edit-profile.html'">تعديل المعلومات</button>
-
-    </div>
-  </div>
+      
+<!-- ✅ الأزرار داخل نفس الحاوية -->
+<div class="button-group">
+  <button id="copyBtn" onclick="copyQRLink()">نسخ الرابط</button>
+  <button id="printBtn" onclick="printQRCard()">طباعة بطاقة النجم</button>
+  <button id="shareBtn" onclick="shareQR()">مشاركة</button>
+  <button id="editBtn" onclick="window.location.href='edit-profile.html'">تعديل المعلومات</button>
+</div>
+</div> <!-- ← أغلق الحاوية بعد الأزرار -->
 
   <script>
     function loadProfile() {
@@ -374,17 +375,10 @@
 
     // تحميل عند الفتح
     loadProfile();
-    document.addEventListener('DOMContentLoaded', () => {
-  const copyBtn = document.getElementById('copyBtn');
-  const editBtn = document.getElementById('editBtn');
-  if (copyBtn && editBtn) {
-    editBtn.style.cssText = copyBtn.style.cssText;
-  }
-});
-
   </script>
 </body>
 </html>
+
 
 
 
