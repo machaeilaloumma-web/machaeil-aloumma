@@ -447,17 +447,19 @@ if (!emailRegex.test(email)) {
 
 // ✅ إعداد الرابط الصحيح لـ Google Forms
 const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdfBDs6Ta8vt3AAM7aKGCaUymXWRNhW-9GFTmbhjnBTuuLvCg/viewform";
+
 const params = new URLSearchParams({
-  'entry.500102530': (fullName),         // الاسم الكامل
-  'entry.1295909734': ("سعيد"),        // اسم الأستاذ
-  'entry.1782792963': (level),           // المستوى الدراسي
-  'entry.7598977': ("ابن تيمية"),       // اسم المؤسسة
-  'entry.1504285967': ("براقي"),        // البلدية
-  'entry.141302358': ("الجزائر"),       // الولاية
-  'entry.1987444241': (gender)           // الجنس
+  'entry.500102530': fullName,     // الاسم الكامل
+  'entry.1295909734': '',          // اسم الأستاذ (فارغ)
+  'entry.1782792963': level,       // المستوى الدراسي
+  'entry.7598977': "ابن تيمية",   // اسم المؤسسة
+  'entry.1504285967': "براقي",    // البلدية
+  'entry.141302358': "الجزائر",   // الولاية
+  'entry.1987444241': gender       // الجنس
 });
 
 const fullUrl = `${baseUrl}?${params.toString()}`;
+
 
 // ✅ حفظ الحساب
 const userData = { fullName, email, level, institution, province, city, gender, password, formUrl: fullUrl };
@@ -623,6 +625,7 @@ const algeriaData = {
   </script>
 </body>
 </html>
+
 
 
 
