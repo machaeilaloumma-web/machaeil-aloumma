@@ -288,14 +288,20 @@
           <label for="level">المستوى الدراسي</label>
         </div>
       </div>
-<!-- خانة المؤسسة -->      
+<!-- خانة المؤسسة - استبدال كامل -->
 <div class="form-group">
   <div class="input-with-icon">
     <span class="icon">🏛️</span>
-    <input type="text" id="institution" name="institution" placeholder="المؤسسة" required style="width: 100%; padding: 10px; background: #252535; border: 1px solid #2e2e3d; border-radius: 8px; color: white;">
-    <label for="institution">اسم المؤسسة</label>
+    <input
+      type="text"
+      id="institution"
+      name="institution"
+      placeholder=" "            <!-- مهم: فراغ واحد لعمل floating label -->
+      required
+      style="width: 100%; padding: 10px; background: #252535; border: 1px solid #2e2e3d; border-radius: 8px; color: white;">
+    <label for="institution">المؤسسة</label>
   </div>
-</div>      
+</div>
 <!-- خانة الولاية -->
 <div class="form-group">
   <div class="input-with-icon">
@@ -617,6 +623,7 @@ const algeriaData = {
   </script>
 </body>
 </html>
+
 
 
 
