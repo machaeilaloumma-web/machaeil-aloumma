@@ -23,12 +23,12 @@
       overflow-x: hidden;
     }
     
-   .logo {
+    .logo {
       width: 250px;
       height: 250px;
       margin-bottom: 16px;
     }
-   .login-container {
+    .login-container {
       background: #1a1a25;
       padding: 20px;
       border-radius: 16px;
@@ -209,7 +209,7 @@
       }
     }
 
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
       e.preventDefault();
 
       const email = document.getElementById('email').value.trim();
@@ -231,16 +231,45 @@
         return;
       }
 
-      // ✅ التحقق من وجود المستخدم وكلمة المرور في localStorage
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user && user.email === email && user.password === password) {
-        alert('تم تسجيل الدخول بنجاح!');
-        window.location.href = 'dashboard.html';
-      } else {
-        alert('البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى التسجيل أولًا.');
+      try {
+        // ✅ إرسال بيانات تسجيل الدخول إلى الخادم
+        const response = await fetch("https://machaeil-aloumma.vercel.app/api/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert('تم تسجيل الدخول بنجاح!');
+
+          // ✅ حفظ بيانات المستخدم في localStorage بعد تسجيل الدخول
+          const userData = {
+            fullName: result.user?.fullName || "",
+            email: result.user?.email || email,
+            level: result.user?.level || "",
+            institution: result.user?.institution || "",
+            province: result.user?.province || "",
+            city: result.user?.city || "",
+            gender: result.user?.gender || "",
+            password: password,
+            formUrl: result.user?.formUrl || ""
+          };
+
+          localStorage.setItem('user', JSON.stringify(userData));
+
+          // ✅ الانتقال إلى الملف الشخصي
+          window.location.href = 'profile.html';
+        } else {
+          alert(result.message || 'البريد الإلكتروني أو كلمة المرور غير صحيحة. يرجى التسجيل أولًا.');
+        }
+
+      } catch (error) {
+        console.error("حدث خطأ أثناء تسجيل الدخول:", error);
+        alert("❌ حدث خطأ أثناء تسجيل الدخول. حاول مرة أخرى لاحقًا.");
       }
     });
   </script>
 </body>
 </html>
-
