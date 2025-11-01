@@ -105,6 +105,10 @@
     .button-group button {
       margin-bottom: 8px;
     }
+    /* إخفاء زر المشاركة افتراضيًا */
+    #shareBtn {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -158,16 +162,20 @@
       </div>
     </div>
   </div>
+
   <script>
     function loadProfile() {
       const userData = JSON.parse(localStorage.getItem('user'));
       const noAccountMessage = document.getElementById('noAccountMessage');
       const qrResult = document.getElementById('qrResult');
-      if (!userData || !userData.formUrl) {
+
+      // التحقق من وجود بيانات صحيحة
+      if (!userData || !userData.formUrl || !userData.formUrl.startsWith('http')) {
         noAccountMessage.style.display = 'block';
         qrResult.style.display = 'none';
         return;
       }
+
       // عرض معلومات الطالب مع قيم افتراضية آمنة
       document.getElementById('fullNameDisplay').textContent = userData.fullName || 'غير متوفر';
       document.getElementById('emailDisplay').textContent = userData.email || 'غير متوفر';
@@ -176,18 +184,23 @@
       document.getElementById('provinceDisplay').textContent = userData.province || 'غير متوفر';
       document.getElementById('cityDisplay').textContent = userData.city || 'غير متوفر';
       document.getElementById('genderDisplay').textContent = userData.gender || 'غير متوفر';
-      // توليد QR عالي الجودة (400x400)
+
+      // توليد رمز QR بدون مسافات زائدة
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(userData.formUrl)}&qzone=1&margin=0`;
       document.getElementById('qrImage').src = qrUrl;
-      // إعداد الزر copyBtn
+
+      // حفظ الرابط في الزر للنسخ
       document.getElementById('copyBtn').setAttribute('data-url', userData.formUrl);
-      // إظهار زر المشاركة إذا مدعوم
+
+      // إظهار زر المشاركة فقط إذا كان مدعومًا
       if (navigator.share) {
         document.getElementById('shareBtn').style.display = 'block';
       }
+
       qrResult.style.display = 'block';
       noAccountMessage.style.display = 'none';
     }
+
     function copyQRLink() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
       if (url) {
@@ -201,6 +214,7 @@
         alert('لا يوجد رابط للنسخ.');
       }
     }
+
     function printQRCard() {
       const fullName = document.getElementById('fullNameDisplay').textContent || 'طالب';
       const qrImageSrc = document.getElementById('qrImage').src;
@@ -208,21 +222,40 @@
         alert('لا يوجد رمز QR للطباعة.');
         return;
       }
+
       const printWindow = window.open('', '_blank');
       printWindow.document.write(`
+        <!DOCTYPE html>
         <html>
-        <head><title>بطاقة نجم - مشاعل الأمة</title></head>
-        <body style="font-family:'Noto Kufi Arabic',sans-serif;text-align:center;padding:20px;background:#000;color:#fff;">
-          <h2 style="color:#ffcc00;">🌟 مشاعل الأمة – سفراء القيم</h2>
-          <h3 style="color:#fff;margin:20px 0;">الطالب: ${fullName}</h3>
-          <img src="${qrImageSrc}" style="width:240px;height:240px;margin:20px 0;" />
-          <p style="color:#aaa;font-size:14px;">امسح الرمز لتقييم الطالب</p>
+        <head>
+          <meta charset="UTF-8">
+          <title>بطاقة نجم - مشاعل الأمة</title>
+          <style>
+            body {
+              font-family: 'Noto Kufi Arabic', sans-serif;
+              text-align: center;
+              padding: 20px;
+              background: #000;
+              color: #fff;
+            }
+            img { width: 240px; height: 240px; margin: 20px 0; }
+            h2 { color: #ffcc00; }
+            h3 { color: #fff; margin: 20px 0; }
+            p { color: #aaa; font-size: 14px; }
+          </style>
+        </head>
+        <body>
+          <h2>🌟 مشاعل الأمة – سفراء القيم</h2>
+          <h3>الطالب: ${fullName}</h3>
+          <img src="${qrImageSrc}" alt="رمز QR" />
+          <p>امسح الرمز لتقييم الطالب</p>
         </body>
         </html>
       `);
       printWindow.document.close();
       printWindow.print();
     }
+
     function shareQR() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
       if (navigator.share && url) {
@@ -237,7 +270,8 @@
         alert('المشاركة غير مدعومة في متصفحك أو لا يوجد رابط.');
       }
     }
-    // تحميل عند الفتح
+
+    // تحميل الملف عند الفتح
     window.addEventListener('load', loadProfile);
   </script>
 </body>
