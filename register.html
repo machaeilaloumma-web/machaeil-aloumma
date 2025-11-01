@@ -471,7 +471,7 @@ const fullUrl = `${baseUrl}?${params.toString()}`;
 // ✅ حفظ الحساب
 const userData = { fullName, email, level, institution, province, city, gender, password, formUrl: fullUrl };
 localStorage.setItem('user', JSON.stringify(userData));
-localStorage.setItem('studentData', JSON.stringify(userData)); // إضافة هذا السطر
+
 
 // ✅ توليد QR
 const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(fullUrl)}&qzone=1&margin=0`;
@@ -642,6 +642,7 @@ const algeriaData = {
   </script>
 </body>
 </html>
+
 
 
 
