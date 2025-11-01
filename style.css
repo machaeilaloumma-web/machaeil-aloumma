@@ -90,6 +90,55 @@
   background: #32CD32;
   color: white;
 }
+/* === توحيد أزرار تعديل المعلومات / العودة / تحديث QR === */
+input[type="button"],
+input[type="submit"] {
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+  width: 100%;
+  transition: 0.3s ease;
+}
+
+input[type="button"]:hover,
+input[type="submit"]:hover {
+  background: #222;
+}
+
+/* ألوان خاصة لكل زر حسب النص */
+input[value="تعديل المعلومات"] {
+  border-color: #1E90FF;
+  color: #1E90FF;
+}
+input[value="تعديل المعلومات"]:hover {
+  background: #1E90FF;
+  color: white;
+}
+
+input[value="العودة إلى الصفحة الرئيسية"] {
+  border-color: #FFD700;
+  color: #FFD700;
+}
+input[value="العودة إلى الصفحة الرئيسية"]:hover {
+  background: #FFD700;
+  color: #006233;
+}
+
+input[value="تحديث QR"] {
+  border-color: #32CD32;
+  color: #32CD32;
+}
+input[value="تحديث QR"]:hover {
+  background: #32CD32;
+  color: white;
+}
+
 
 
 
