@@ -6,171 +6,29 @@
   <title>تسجيل الدخول - مشاعل الأمة</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Noto Kufi Arabic', sans-serif;
-    }
-
-    body {
-      background: #000;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-    
-    .logo {
-      width: 250px;
-      height: 250px;
-      margin-bottom: 16px;
-    }
-    .login-container {
-      background: #1a1a25;
-      padding: 20px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-    }
-
-    h1 {
-      color: #fff;
-      margin-bottom: 16px;
-      font-size: 24px;
-      text-align: center;
-      text-shadow: 0 0 10px rgba(0, 255, 128, 0.25);
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-      position: relative;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 4px;
-      font-weight: 500;
-      text-align: right;
-      color: #aaa;
-      font-size: 14px;
-      position: absolute;
-      top: 10px;
-      right: 14px;
-      pointer-events: none;
-      z-index: 2;
-      transition: all 0.2s;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px 14px;
-      background: #252535;
-      border: 1px solid #2e2e3d;
-      border-radius: 8px;
-      color: white;
-      outline: none;
-      font-size: 16px;
-      padding-right: 56px;
-    }
-
-    input:focus {
-      border-color: #00ff80;
-      box-shadow: 0 0 12px rgba(0,255,128,0.3);
-    }
-
-    input:not(:placeholder-shown) + label,
-    input:focus + label {
-      top: -10px;
-      right: 14px;
-      font-size: 12px;
-      color: #00ff80;
-      background: #1a1a25;
-      padding: 0 5px;
-      border-radius: 4px;
-    }
-
-    .input-with-icon {
-      position: relative;
-      display: flex;
-      align-items: center;
-    }
-
-    .input-with-icon .icon {
-      position: absolute;
-      left: 14px;
-      color: #00ff80;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .input-with-icon input {
-      padding-left: 44px;
-    }
-
-    .password-field {
-      position: relative;
-    }
-
-    .password-field input {
-      padding-right: 44px;
-      padding-bottom: 28px;
-    }
-
-    .toggle-password {
-      position: absolute;
-      right: 14px;
-      bottom: 6px;
-      cursor: pointer;
-      color: #aaa;
-      font-size: 16px;
-      z-index: 2;
-    }
-
-    .password-input {
-      background: #e0e0e0 !important;
-      color: #000;
-    }
-
-    button#loginBtn {
-      width: 100%;
-      padding: 10px;
-      background: #252535;
-      color: #fff;
-      font-weight: 500;
-      border: 1px solid #2e2e3d;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 6px;
-      font-size: 16px;
-      transition: all 0.3s ease;
-    }
-
-    button#loginBtn:hover {
-      border-color: #00ff80;
-      box-shadow: 0 0 12px rgba(0,255,128,0.3);
-      transform: translateY(-2px);
-    }
-
-    .register-link {
-      text-align: center;
-      margin-top: 12px;
-      font-size: 14px;
-    }
-
-    .register-link a {
-      color: #00ff80;
-      text-decoration: none;
-      transition: opacity 0.3s;
-    }
-
-    .register-link a:hover {
-      opacity: 0.8;
-      text-decoration: underline;
-    }
+    /* لا تغيير في CSS، كما هو من النسخة السابقة */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Kufi Arabic', sans-serif; }
+    body { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
+    .logo { width: 250px; height: 250px; margin-bottom: 16px; }
+    .login-container { background: #1a1a25; padding: 20px; border-radius: 16px; width: 90%; max-width: 420px; box-shadow: 0 8px 24px rgba(0,0,0,0.5); }
+    h1 { color: #fff; margin-bottom: 16px; font-size: 24px; text-align: center; text-shadow: 0 0 10px rgba(0, 255, 128, 0.25); }
+    .form-group { margin-bottom: 12px; position: relative; }
+    label { display: block; margin-bottom: 4px; font-weight: 500; text-align: right; color: #aaa; font-size: 14px; position: absolute; top: 10px; right: 14px; pointer-events: none; z-index: 2; transition: all 0.2s; }
+    input { width: 100%; padding: 10px 14px; background: #252535; border: 1px solid #2e2e3d; border-radius: 8px; color: white; outline: none; font-size: 16px; padding-right: 56px; }
+    input:focus { border-color: #00ff80; box-shadow: 0 0 12px rgba(0,255,128,0.3); }
+    input:not(:placeholder-shown) + label, input:focus + label { top: -10px; right: 14px; font-size: 12px; color: #00ff80; background: #1a1a25; padding: 0 5px; border-radius: 4px; }
+    .input-with-icon { position: relative; display: flex; align-items: center; }
+    .input-with-icon .icon { position: absolute; left: 14px; color: #00ff80; pointer-events: none; z-index: 1; }
+    .input-with-icon input { padding-left: 44px; }
+    .password-field { position: relative; }
+    .password-field input { padding-right: 44px; padding-bottom: 28px; }
+    .toggle-password { position: absolute; right: 14px; bottom: 6px; cursor: pointer; color: #aaa; font-size: 16px; z-index: 2; }
+    .password-input { background: #e0e0e0 !important; color: #000; }
+    button#loginBtn { width: 100%; padding: 10px; background: #252535; color: #fff; font-weight: 500; border: 1px solid #2e2e3d; border-radius: 8px; cursor: pointer; margin-top: 6px; font-size: 16px; transition: all 0.3s ease; }
+    button#loginBtn:hover { border-color: #00ff80; box-shadow: 0 0 12px rgba(0,255,128,0.3); transform: translateY(-2px); }
+    .register-link { text-align: center; margin-top: 12px; font-size: 14px; }
+    .register-link a { color: #00ff80; text-decoration: none; transition: opacity 0.3s; }
+    .register-link a:hover { opacity: 0.8; text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -200,9 +58,9 @@
   </div>
 
   <script type="module">
-    // ✅ إعداد Firebase
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDiypCTp31wIc5MR3FhClKobeQTeK-vaFs",
@@ -212,8 +70,10 @@
       messagingSenderId: "678363443395",
       appId: "1:678363443395:web:b604b002d4e8fd430d3276"
     };
+
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
     function togglePassword(fieldId) {
       const field = document.getElementById(fieldId);
@@ -243,18 +103,26 @@
       }
 
       try {
+        // ✅ تحقق أولًا من وجود المستخدم في Firestore
+        const userDocRef = doc(db, "users", email);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (!userDocSnap.exists()) {
+          alert("❌ المستخدم غير مسجل. يرجى إنشاء حساب أولاً.");
+          return;
+        }
+
+        // تسجيل الدخول باستخدام Firebase Auth
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
 
-        // ✅ حفظ بيانات المستخدم في localStorage
         const userData = {
-          fullName: user.displayName || "",
+          fullName: user.displayName || userDocSnap.data().fullName || "",
           email: user.email,
           uid: user.uid
         };
         localStorage.setItem('user', JSON.stringify(userData));
 
-        // ✅ الانتقال إلى الملف الشخصي
         alert('تم تسجيل الدخول بنجاح!');
         window.location.href = 'profile.html';
       } catch (error) {
