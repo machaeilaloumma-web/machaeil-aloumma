@@ -44,5 +44,52 @@
 .action-buttons .refresh-btn:hover {
   background: #28a428;
 }
+/* === توحيد شكل الأزرار السفلية (تعديل، عودة، تحديث QR) === */
+.bottom-buttons button {
+  width: 100%;
+  background: #111;
+  color: #fff;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 1em;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: 0.3s ease;
+}
+
+.bottom-buttons button:hover {
+  background: #222;
+}
+
+/* ألوان خاصة لكل زر */
+.bottom-buttons .edit-btn {
+  border: 1px solid #1E90FF;
+  color: #1E90FF;
+}
+.bottom-buttons .edit-btn:hover {
+  background: #1E90FF;
+  color: white;
+}
+
+.bottom-buttons .home-btn {
+  border: 1px solid #FFD700;
+  color: #FFD700;
+}
+.bottom-buttons .home-btn:hover {
+  background: #FFD700;
+  color: #006233;
+}
+
+.bottom-buttons .refresh-btn {
+  border: 1px solid #32CD32;
+  color: #32CD32;
+}
+.bottom-buttons .refresh-btn:hover {
+  background: #32CD32;
+  color: white;
+}
+
 
 
