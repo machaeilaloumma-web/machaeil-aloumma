@@ -64,7 +64,8 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-    #copyBtn {
+    /* نمط موحد لجميع أزرار الإجراءات */
+    .action-btn {
       width: 100%;
       padding: 10px;
       background: #252535;
@@ -76,42 +77,8 @@
       margin-top: 8px;
       transition: all 0.3s ease;
     }
-    #copyBtn:hover {
+    .action-btn:hover {
       border-color: #00ff80;
-      box-shadow: 0 0 12px rgba(0,255,128,0.3);
-      transform: translateY(-2px);
-    }
-    #printBtn {
-      width: 100%;
-      padding: 10px;
-      background: #252535;
-      color: #ffcc00;
-      border: 1px solid #2e2e3d;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      margin-top: 8px;
-      transition: all 0.3s ease;
-    }
-    #printBtn:hover {
-      border-color: #ffcc00;
-      box-shadow: 0 0 12px rgba(255,204,0,0.3);
-      transform: translateY(-2px);
-    }
-    #shareBtn {
-      width: 100%;
-      padding: 10px;
-      background: #252535;
-      color: #00ff80;
-      border: 1px solid #00ff80;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 15px;
-      margin-top: 8px;
-      display: none;
-      transition: all 0.3s ease;
-    }
-    #shareBtn:hover {
       box-shadow: 0 0 12px rgba(0,255,128,0.3);
       transform: translateY(-2px);
     }
@@ -183,12 +150,11 @@
       </div>
       <!-- الأزرار -->
       <div class="button-group">
-        <button id="copyBtn" onclick="copyQRLink()">نسخ الرابط</button>
-        <button id="printBtn" onclick="printQRCard()">طباعة بطاقة النجم</button>
-        <button id="shareBtn" onclick="shareQR()">مشاركة</button>
-        <button id="editBtn" onclick="window.location.href='edit-profile.html'">تعديل المعلومات</button>
-        <button id="homeBtn" onclick="window.location.href='index.html'">العودة إلى الصفحة الرئيسية</button>
-        <button id="refreshBtn" onclick="loadProfile()">تحديث QR</button>
+        <button id="copyBtn" class="action-btn" onclick="copyQRLink()">نسخ الرابط</button>
+        <button id="printBtn" class="action-btn" onclick="printQRCard()">طباعة بطاقة النجم</button>
+        <button id="shareBtn" class="action-btn" onclick="shareQR()">مشاركة</button>
+        <button id="editBtn" class="action-btn" onclick="window.location.href='edit-profile.html'">تعديل المعلومات</button>
+        <button id="homeBtn" class="action-btn" onclick="window.location.href='index.html'">العودة إلى الصفحة الرئيسية</button>
       </div>
     </div>
   </div>
@@ -276,17 +242,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
