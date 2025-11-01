@@ -284,26 +284,29 @@
       <div class="info-item">
         <span class="info-label">الجنس:</span>
         <span class="info-value" id="genderDisplay"></span>
-      </div>
-      
+</div>
+
 <!-- ✅ الأزرار داخل نفس الحاوية -->
 <div class="button-group">
   <button id="copyBtn" class="btn" onclick="copyQRLink()">نسخ الرابط</button>
   <button id="printBtn" class="btn" onclick="printQRCard()">طباعة بطاقة النجم</button>
-<button id="shareBtn1" class="btn" onclick="shareQR()">مشاركة</button>
-<button id="shareBtn2" class="btn" onclick="shareQR()">مشاركة</button>
+  <button id="shareBtn1" class="btn" onclick="shareQR()">مشاركة</button>
+  <button id="shareBtn2" class="btn" onclick="shareQR()">مشاركة</button>
   <button id="editBtn" class="btn" onclick="window.location.href='edit-profile.html'">تعديل المعلومات</button>
-  <div class="bottom-buttons">
+</div>
+
+<!-- ✅ أزرار أسفل الصفحة -->
+<div class="bottom-buttons">
   <button class="edit-btn">تعديل المعلومات</button>
   <button class="home-btn">العودة إلى الصفحة الرئيسية</button>
   <button class="refresh-btn">تحديث QR</button>
 </div>
 
+<!-- ✅ إغلاق الحاوية النهائي بعد كل الأزرار -->
 </div>
-      
-</div> <!-- ← أغلق الحاوية بعد الأزرار -->
 
-  <script>
+<script>
+
     function loadProfile() {
       const userData = JSON.parse(localStorage.getItem('user'));
       const noAccountMessage = document.getElementById('noAccountMessage');
@@ -385,6 +388,7 @@
   </script>
 </body>
 </html>
+
 
 
 
