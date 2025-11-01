@@ -1,19 +1,4 @@
-
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <style>
-                body {
-                  background-color: white; /* Ensure the iframe has a white background */
-                }
-    
-                
-              </style>
-                        </head>
-                        <body>
-                            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
@@ -79,6 +64,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
+    /* نمط موحد لجميع أزرار الإجراءات */
     .action-btn {
       width: 100%;
       padding: 10px;
@@ -119,21 +105,21 @@
     .button-group button {
       margin-bottom: 8px;
     }
-    #shareBtn {
-      display: none;
-    }
   </style>
 </head>
 <body>
   <div class="profile-container">
     <h1>ملفي الشخصي</h1>
+    <!-- رسالة عدم وجود حساب -->
     <div id="noAccountMessage" class="login-link" style="display: block;">
       لم تُنشئ حسابًا بعد. <a href="register.html">انضم كـ "نجم"</a>
     </div>
+    <!-- منطقة عرض QR -->
     <div id="qrResult">
       <h3 style="color:#00ff80; margin-bottom:12px; text-align:center;">✅ حسابك جاهز!</h3>
       <p style="color:#ccc; margin-bottom:16px; text-align:center;">شارك هذا الرمز مع أستاذك لتقييمك:</p>
       <img id="qrImage" src="" alt="رمز QR لتقييم الطالب" />
+      <!-- معلومات الطالب -->
       <div class="info-item">
         <span class="info-label">الاسم الكامل:</span>
         <span class="info-value" id="fullNameDisplay"></span>
@@ -162,6 +148,7 @@
         <span class="info-label">الجنس:</span>
         <span class="info-value" id="genderDisplay"></span>
       </div>
+      <!-- الأزرار -->
       <div class="button-group">
         <button id="copyBtn" class="action-btn" onclick="copyQRLink()">نسخ الرابط</button>
         <button id="printBtn" class="action-btn" onclick="printQRCard()">طباعة بطاقة النجم</button>
@@ -171,19 +158,17 @@
       </div>
     </div>
   </div>
-
   <script>
     function loadProfile() {
       const userData = JSON.parse(localStorage.getItem('user'));
       const noAccountMessage = document.getElementById('noAccountMessage');
       const qrResult = document.getElementById('qrResult');
-
-      if (!userData || !userData.formUrl || !userData.formUrl.startsWith('http')) {
+      if (!userData || !userData.formUrl) {
         noAccountMessage.style.display = 'block';
         qrResult.style.display = 'none';
         return;
       }
-
+      // عرض معلومات الطالب مع قيم افتراضية آمنة
       document.getElementById('fullNameDisplay').textContent = userData.fullName || 'غير متوفر';
       document.getElementById('emailDisplay').textContent = userData.email || 'غير متوفر';
       document.getElementById('levelDisplay').textContent = userData.level || 'غير متوفر';
@@ -191,20 +176,18 @@
       document.getElementById('provinceDisplay').textContent = userData.province || 'غير متوفر';
       document.getElementById('cityDisplay').textContent = userData.city || 'غير متوفر';
       document.getElementById('genderDisplay').textContent = userData.gender || 'غير متوفر';
-
+      // توليد QR عالي الجودة (400x400)
       const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(userData.formUrl)}&qzone=1&margin=0`;
       document.getElementById('qrImage').src = qrUrl;
-
+      // إعداد الزر copyBtn
       document.getElementById('copyBtn').setAttribute('data-url', userData.formUrl);
-
+      // إظهار زر المشاركة إذا مدعوم
       if (navigator.share) {
         document.getElementById('shareBtn').style.display = 'block';
       }
-
       qrResult.style.display = 'block';
       noAccountMessage.style.display = 'none';
     }
-
     function copyQRLink() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
       if (url) {
@@ -218,92 +201,28 @@
         alert('لا يوجد رابط للنسخ.');
       }
     }
-
     function printQRCard() {
       const fullName = document.getElementById('fullNameDisplay').textContent || 'طالب';
       const qrImageSrc = document.getElementById('qrImage').src;
-
       if (!qrImageSrc) {
         alert('لا يوجد رمز QR للطباعة.');
         return;
       }
-
-      const img = new Image();
-      img.crossOrigin = "Anonymous";
-
-      img.onload = function() {
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width;
-        canvas.height = img.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        const dataUrl = canvas.toDataURL('image/png');
-
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(`
-          <!DOCTYPE html>
-          <html dir="rtl" lang="ar">
-          <head>
-            <meta charset="UTF-8">
-            <title>بطاقة نجم - مشاعل الأمة</title>
-            <style>
-              body {
-                font-family: 'Noto Kufi Arabic', sans-serif;
-                text-align: center;
-                padding: 20px;
-                background: #000;
-                color: #fff;
-                margin: 0;
-              }
-              img {
-                width: 240px;
-                height: 240px;
-                margin: 20px 0;
-                border-radius: 12px;
-              }
-              h2 { color: #ffcc00; margin: 10px 0; }
-              h3 { color: #fff; margin: 15px 0; }
-              p { color: #aaa; font-size: 14px; }
-            </style>
-          </head>
-          <body>
-            <h2>🌟 مشاعل الأمة – سفراء القيم</h2>
-            <h3>الطالب: ${fullName}</h3>
-            <img src="${dataUrl}" alt="رمز QR لتقييم الطالب" />
-            <p>امسح الرمز لتقييم الطالب</p>
-          </body>
-          </html>
-        `);
-        printWindow.document.close();
-
-        // انتظر حتى يتم تحميل الصورة ثم اطبع
-        setTimeout(() => {
-          printWindow.focus();
-          printWindow.print();
-        }, 600);
-      };
-
-      img.onerror = function() {
-        // إذا فشل تحميل الصورة (مثلًا بسبب CORS)، جرّب الطباعة بالرابط الأصلي كحل بديل
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(`
-          <!DOCTYPE html>
-          <html dir="rtl" lang="ar">
-          <head><meta charset="UTF-8"><title>تنبيه</title></head>
-          <body style="font-family:'Noto Kufi Arabic',sans-serif;text-align:center;padding:30px;">
-            <h3>⚠️ لا يمكن طباعة رمز QR حاليًا</h3>
-            <p>يرجى مشاركة الرابط يدويًا مع الأستاذ:</p>
-            <p style="color:#00ff80; word-break:break-all;">${qrImageSrc}</p>
-            <button onclick="window.close()" style="margin-top:20px;padding:8px 16px;background:#252535;color:#00ff80;border:none;border-radius:6px;cursor:pointer;">إغلاق</button>
-          </body>
-          </html>
-        `);
-        printWindow.document.close();
-      };
-
-      img.src = qrImageSrc;
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+        <head><title>بطاقة نجم - مشاعل الأمة</title></head>
+        <body style="font-family:'Noto Kufi Arabic',sans-serif;text-align:center;padding:20px;background:#000;color:#fff;">
+          <h2 style="color:#ffcc00;">🌟 مشاعل الأمة – سفراء القيم</h2>
+          <h3 style="color:#fff;margin:20px 0;">الطالب: ${fullName}</h3>
+          <img src="${qrImageSrc}" style="width:240px;height:240px;margin:20px 0;" />
+          <p style="color:#aaa;font-size:14px;">امسح الرمز لتقييم الطالب</p>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
     }
-
     function shareQR() {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
       if (navigator.share && url) {
@@ -318,28 +237,8 @@
         alert('المشاركة غير مدعومة في متصفحك أو لا يوجد رابط.');
       }
     }
-
+    // تحميل عند الفتح
     window.addEventListener('load', loadProfile);
   </script>
 </body>
 </html>
-
-
-    
-              <script>
-                              localStorage.setItem('user', JSON.stringify({
-  fullName: "أحمد محمد",
-  email: "ahmed@example.com",
-  level: "الثالث ثانوي",
-  institution: "مدرسة النجاح",
-  province: "الرياض",
-  city: "الدرعية",
-  gender: "ذكر",
-  formUrl: "https://forms.example.com/12345"
-}));
-
-
-              </script>
-                        </body>
-                        </html>
-                    
