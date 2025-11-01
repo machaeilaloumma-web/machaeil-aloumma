@@ -374,9 +374,18 @@
 
     // تحميل عند الفتح
     loadProfile();
+    document.addEventListener('DOMContentLoaded', () => {
+  const copyBtn = document.getElementById('copyBtn');
+  const editBtn = document.getElementById('editBtn');
+  if (copyBtn && editBtn) {
+    editBtn.style.cssText = copyBtn.style.cssText;
+  }
+});
+
   </script>
 </body>
 </html>
+
 
 
 
