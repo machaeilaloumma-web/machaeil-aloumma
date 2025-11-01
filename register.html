@@ -384,21 +384,22 @@
       <div class="info-item">
         <span class="info-label">البلدية:</span>
         <span class="info-value" id="cityDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">الجنس:</span>
-        <span class="info-value" id="genderDisplay"></span>
-      </div>
+<div class="info-item">
+  <span class="info-label">الجنس:</span>
+  <span class="info-value" id="genderDisplay"></span>
+</div>
 
-<button id="copyBtn" onclick="copyQRLink()">نسخ الرابط</button>
-<button id="printBtn" onclick="printQRCard()">طباعة بطاقة النجم</button>
-<button id="shareBtn" onclick="shareQR()">مشاركة</button>
-<button onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
-<button onclick="editProfile()">تعديل المعلومات</button>
-<button onclick="regenerateQR()">تحديث QR</button>
-    </div>
-  </div>
-
+<!-- ✅ ضع الأزرار هنا داخل نفس الحاوية -->
+<div class="button-group">
+  <button id="copyBtn" onclick="copyQRLink()">نسخ الرابط</button>
+  <button id="printBtn" onclick="printQRCard()">طباعة بطاقة النجم</button>
+  <button id="shareBtn" onclick="shareQR()">مشاركة</button>
+  <button onclick="window.location.href='index.html'">العودة للصفحة الرئيسية</button>
+  <button onclick="editProfile()">تعديل المعلومات</button>
+  <button onclick="regenerateQR()">تحديث QR</button>
+</div>
+</div> <!-- إغلاق الحاوية الأساسية -->
+</div>
   <script>
     function togglePassword(fieldId) {
       const field = document.getElementById(fieldId);
@@ -631,6 +632,7 @@ const algeriaData = {
   </script>
 </body>
 </html>
+
 
 
 
