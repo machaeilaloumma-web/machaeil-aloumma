@@ -110,11 +110,18 @@
       padding: 8px;
       cursor: pointer;
       transition: 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .user-icon:hover {
       background-color: #222;
       transform: scale(1.05);
+    }
+
+    .user-icon.active {
+      transform: rotate(45deg) scale(1.05);
     }
 
     .user-menu {
@@ -133,10 +140,11 @@
     .user-menu a {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       color: #ddd;
-      padding: 10px 15px;
+      padding: 8px 12px;
       text-decoration: none;
+      font-size: 14px;
       transition: 0.2s;
     }
 
@@ -146,8 +154,8 @@
     }
 
     .user-menu a svg {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
       stroke: #fff;
     }
 
@@ -202,20 +210,21 @@
     }
 
     .hero-content h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      text-shadow: 0 3px 8px rgba(0,0,0,0.7);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #f1f1f1;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
     }
 
     .hero-content p {
-      font-size: 1.2rem;
+      font-size: 1.1rem;
       color: #ccc;
       margin-top: 10px;
     }
 
     @media (min-width: 768px) {
-      .hero-content h1 { font-size: 3.5rem; }
-      .hero-content p { font-size: 1.5rem; }
+      .hero-content h1 { font-size: 2.8rem; }
+      .hero-content p { font-size: 1.3rem; }
     }
   </style>
 </head>
@@ -270,7 +279,10 @@
 
     // عرض وإخفاء قائمة المستخدم
     function toggleUserMenu() {
-      document.getElementById("userMenu").classList.toggle("show");
+      const menu = document.getElementById("userMenu");
+      const icon = document.querySelector(".user-icon");
+      menu.classList.toggle("show");
+      icon.classList.toggle("active");
     }
 
     // إغلاق القائمة عند النقر خارجها
@@ -279,6 +291,7 @@
       const icon = document.querySelector(".user-icon");
       if (!menu.contains(event.target) && !icon.contains(event.target)) {
         menu.classList.remove("show");
+        icon.classList.remove("active");
       }
     }
 
