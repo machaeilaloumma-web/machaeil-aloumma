@@ -114,23 +114,35 @@
   <a href="contact.html">اتصل بنا</a>
 </footer>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script>
-  // حالة تسجيل الدخول (مثال)
-  let isLoggedIn = false; // true إذا كان مسجّل الدخول
+  // إعداد Firebase
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
 
+  // أيقونة الحساب
   const accountBtn = document.getElementById('accountBtn');
   accountBtn.addEventListener('click', () => {
-    if(isLoggedIn){
+    const user = firebase.auth().currentUser;
+    if(user){
       window.location.href = 'profile.html';
     } else {
-      window.location.href = 'register.html';
+      window.location.href = 'login.html';
     }
   });
 
   // الهامبرغر
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const hamburgerMenu = document.getElementById('hamburgerMenu');
-
   hamburgerBtn.addEventListener('click', () => {
     hamburgerMenu.classList.toggle('show');
   });
