@@ -19,21 +19,10 @@
   }
   .hamburger-btn:hover, .account-btn:hover { color:#00ff80; transform:scale(1.2); }
 
-  /* القائمة المنسدلة: بدون توهج، بدون ضبابية */
   .dropdown-content {
-    display:none;
-    position:fixed;
-    top:60px;
-    left:16px;
-    background: rgba(37,35,53,0.95);
-    border-radius:10px;
-    min-width:200px;
-    z-index:150;
-    overflow:hidden;
-    box-shadow: none;           /* تم حذف التوهج */
-    backdrop-filter: none;      /* تم حذف الضبابية */
-    transform:translateY(-10px);
-    opacity:0;
+    display:none; position:fixed; top:60px; left:16px;
+    background: rgba(37,35,53,0.95); border-radius:10px; min-width:200px; z-index:150;
+    overflow:hidden; box-shadow:none; transform:translateY(-10px); opacity:0;
     transition: all 0.3s ease;
   }
   .dropdown-content.show { display:block; transform:translateY(0); opacity:1; }
@@ -42,29 +31,32 @@
     transition: all 0.2s ease;
   }
   .dropdown-content a:hover { background:#00ff80; color:#000; }
-
-  .hero-image { width:100%; max-width:600px; height:auto; display:block; margin:80px auto 16px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.5); }
-  .logo { width:300px; height:300px; margin-bottom:16px; }
-  h1 { color:#fff; margin-bottom:12px; font-size:30px; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.25); }
-  .tagline { color:#ccc; font-size:15px; margin-bottom:24px; text-align:center; }
-
-  footer { text-align:center; font-size:13px; color:#aaa; width:100%; padding:8px 0; border-top:1px solid #2a2a35; margin-top:auto; }
-  footer a { color:#00ff80; text-decoration:none; margin:0 8px; }
-  footer a:hover { opacity:0.8; text-decoration:underline; }
+  
+  /* تسجيل الخروج باللون الأحمر */
+  .dropdown-content a.logout { color:#ff6b6b; }
+  .dropdown-content a.logout:hover { background:#ff6b6b; color:#fff; }
 </style>
 </head>
 <body>
 
+<!-- القائمة المنسدلة مع "تسجيل الخروج" -->
 <div class="hamburger-container">
-  <div class="hamburger-btn" id="hamburgerBtn"><i class="fa fa-bars"></i></div>
+  <div class="hamburger-btn" id="hamburgerBtn">
+    <i class="fa fa-bars"></i>
+  </div>
   <div class="dropdown-content" id="hamburgerMenu">
     <a href="about.html">من نحن</a>
     <a href="contact.html">اتصل بنا</a>
+    <a href="profile.html">الملف الشخصي</a>
+    <a href="#" id="logoutBtn" class="logout" style="display:none;">
+      <i class="fa fa-sign-out"></i> تسجيل الخروج
+    </a>
   </div>
 </div>
 
+<!-- أيقونة المستخدم (تذهب إلى profile.html من البداية) -->
 <div class="account-container">
-  <a href="login.html" id="accountLink" class="account-btn">
+  <a href="profile.html" id="accountLink" class="account-btn">
     <i class="fa fa-user"></i>
   </a>
 </div>
@@ -80,6 +72,7 @@
   <a href="contact.html">اتصل بنا</a>
 </footer>
 
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script>
@@ -93,7 +86,10 @@
   };
   firebase.initializeApp(firebaseConfig);
 
-  // الهامبرغر
+  const logoutBtn = document.getElementById('logoutBtn');
+  const accountLink = document.getElementById('accountLink');
+
+  // فتح وإغلاق القائمة
   document.getElementById('hamburgerBtn').onclick = () => {
     document.getElementById('hamburgerMenu').classList.toggle('show');
   };
@@ -103,11 +99,29 @@
     }
   };
 
-  // أيقونة الحساب: ذكية وفورية
+  // تحديث القائمة + أيقونة الحساب
   firebase.auth().onAuthStateChanged(user => {
-    document.getElementById('accountLink').href = user ? 'profile.html' : 'profile.html';
+    if (user) {
+      // مسجل الدخول
+      logoutBtn.style.display = 'block';
+      accountLink.href = 'profile.html';
+    } else {
+      // غير مسجل
+      logoutBtn.style.display = 'none';
+      accountLink.href = 'login.html';
+    }
   });
+
+  // زر تسجيل الخروج
+  logoutBtn.onclick = (e) => {
+    e.preventDefault();
+    firebase.auth().signOut().then(() => {
+      alert('تم تسجيل الخروج بنجاح');
+      window.location.href = 'login.html';
+    }).catch(err => {
+      alert('حدث خطأ: ' + err.message);
+    });
+  };
 </script>
 </body>
 </html>
-
