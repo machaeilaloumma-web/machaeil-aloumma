@@ -204,4 +204,24 @@ h1 { text-align:center; font-size:2rem; margin:10px 0; }
   const navItems = ["الصفحة الرئيسية","الدورات التدريبية","الورش والفعاليّات","المكتبة التعليمية","المشاريع الطلابية","المجتمع والتواصل","السجل والنشاط"];
   const icons = ["home","book-open","calendar","layers","users","users","clock"];
   const sidebar = document.getElementById("mySidebar");
-  navItems.for
+  navItems.forEach((item,index)=>{
+    const a = document.createElement("a");
+    a.href="#";
+    a.innerHTML = `<i data-lucide="${icons[index]}" class="w-5 h-5 inline-block ml-2"></i>${item}`;
+    sidebar.appendChild(a);
+  });
+  lucide.replace();
+
+  function openNav() {
+    sidebar.style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+  }
+
+  function closeNav() {
+    sidebar.style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+  }
+</script>
+
+</body>
+</html>
