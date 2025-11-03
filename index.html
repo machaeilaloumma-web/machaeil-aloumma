@@ -65,6 +65,31 @@
     color:#000;
   }
 
+  /* =================== أيقونة الحساب في أعلى يمين =================== */
+  .account-container {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 200;
+  }
+
+  .account-btn {
+    font-size: 24px;
+    background: #252535;
+    border: 1px solid #2e2e3d;
+    color: #fff;
+    padding: 10px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .account-btn:hover {
+    background: #00ff80;
+    color: #000;
+    transform: scale(1.1);
+  }
+
   /* =================== الصفحة الرئيسية =================== */
   .hero-image { width:100%; max-width:600px; height:auto; display:block; margin:80px auto 16px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.5);}
   .logo { width:300px; height:300px; margin-bottom:16px;}
@@ -84,10 +109,16 @@
     <i class="fa fa-bars"></i>
   </div>
   <div class="dropdown-content" id="hamburgerMenu">
-    <a href="register.html">إنشاء حساب جديد</a>
-    <a href="login.html">تسجيل الدخول</a>
     <a href="about.html">من نحن</a>
     <a href="contact.html">اتصل بنا</a>
+    <!-- يمكن إضافة روابط أخرى هنا -->
+  </div>
+</div>
+
+<!-- أيقونة الحساب في أعلى يمين -->
+<div class="account-container">
+  <div class="account-btn" id="accountBtn">
+    <i class="fa fa-user"></i>
   </div>
 </div>
 
@@ -106,6 +137,19 @@
 </footer>
 
 <script>
+  // مثال: حالة تسجيل الدخول
+  let isLoggedIn = false; // ضع true إذا كان المستخدم مسجّل الدخول
+
+  const accountBtn = document.getElementById('accountBtn');
+  accountBtn.addEventListener('click', () => {
+    if(isLoggedIn){
+      window.location.href = 'profile.html';
+    } else {
+      window.location.href = 'register.html';
+    }
+  });
+
+  // الهامبرغر
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const hamburgerMenu = document.getElementById('hamburgerMenu');
 
@@ -113,9 +157,8 @@
     hamburgerMenu.style.display = hamburgerMenu.style.display === 'block' ? 'none' : 'block';
   });
 
-  // إغلاق القائمة عند الضغط خارجها
   window.addEventListener('click', e => {
-    if (!e.target.closest('.hamburger-container')) {
+    if (!e.target.closest('.hamburger-container') && !e.target.closest('.account-container')) {
       hamburgerMenu.style.display = 'none';
     }
   });
@@ -123,6 +166,3 @@
 
 </body>
 </html>
-
-
-
