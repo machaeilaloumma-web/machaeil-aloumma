@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مشاعل الأمة - سفراء القيم</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- الخط -->
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Noto Kufi Arabic', sans-serif;
+      background-color: #000;
+      color: #fff;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    /* 🌙 الشريط الجانبي */
+    .sidebar {
+      height: 100vh;
+      width: 250px;
+      position: fixed;
+      top: 0;
+      right: 0;
+      background-color: rgba(17, 17, 17, 0.95);
+      padding-top: 70px;
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      box-shadow: -2px 0 10px rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(8px);
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ddd;
+      padding: 12px 20px;
+      text-decoration: none;
+      font-size: 15px;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      background-color: #222;
+      color: #fff;
+      transform: translateX(-3px);
+    }
+
+    .sidebar a svg {
+      width: 20px;
+      height: 20px;
+      stroke: #fff;
+    }
+
+    /* 📱 زر فتح القائمة (يظهر فقط في الموبايل) */
+    .openbtn {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      font-size: 26px;
+      background: #111;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: 8px;
+      z-index: 1100;
+      display: none;
+    }
+
+    .openbtn:hover {
+      background-color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(100%);
+      }
+
+      .sidebar.active {
+        transform: translateX(0);
+      }
+
+      .openbtn {
+        display: block;
+      }
+    }
+
+    /* 👤 أيقونة المستخدم */
+    .user-container {
+      position: fixed;
+      top: 15px;
+      left: 20px;
+      z-index: 1100;
+    }
+
+    .user-icon {
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 50%;
+      padding: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .user-icon:hover {
+      background-color: #222;
+      transform: scale(1.05);
+    }
+
+    .user-menu {
+      display: none;
+      position: absolute;
+      left: 0;
+      top: 45px;
+      background-color: rgba(17, 17, 17, 0.95);
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      overflow: hidden;
+      min-width: 180px;
+      backdrop-filter: blur(6px);
+    }
+
+    .user-menu a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #ddd;
+      padding: 10px 15px;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+
+    .user-menu a:hover {
+      background-color: #222;
+      color: #fff;
+    }
+
+    .user-menu a svg {
+      width: 18px;
+      height: 18px;
+      stroke: #fff;
+    }
+
+    .user-menu.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 🏞️ قسم الصورة الرئيسية */
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      width: 100%;
+      overflow: hidden;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .hero-section img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      z-index: 0;
+      filter: brightness(0.8);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #000 30%, transparent);
+      opacity: 0.8;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      color: white;
+      padding: 20px;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .hero-content h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-shadow: 0 3px 8px rgba(0,0,0,0.7);
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      color: #ccc;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 768px) {
+      .hero-content h1 { font-size: 3.5rem; }
+      .hero-content p { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 🔹 زر فتح القائمة (للموبايل فقط) -->
+  <button class="openbtn" onclick="toggleSidebar()">
+    <i data-lucide="menu"></i>
+  </button>
+
+  <!-- 🔸 القائمة الجانبية -->
+  <div id="mySidebar" class="sidebar">
+    <a href="#"><i data-lucide="home"></i> الصفحة الرئيسية</a>
+    <a href="#"><i data-lucide="book-open"></i> الدورات التدريبية</a>
+    <a href="#"><i data-lucide="calendar"></i> الورش والفعاليّات</a>
+    <a href="#"><i data-lucide="library"></i> المكتبة التعليمية</a>
+    <a href="#"><i data-lucide="lightbulb"></i> المشاريع الطلابية</a>
+    <a href="#"><i data-lucide="users"></i> المجتمع والتواصل</a>
+    <a href="#"><i data-lucide="file-text"></i> السجل والنشاط</a>
+  </div>
+
+  <!-- 👤 أيقونة المستخدم -->
+  <div class="user-container">
+    <div class="user-icon" onclick="toggleUserMenu()">
+      <i data-lucide="user"></i>
+    </div>
+    <div id="userMenu" class="user-menu">
+      <a href="profile.html"><i data-lucide="user-circle-2"></i> الملف الشخصي</a>
+      <a href="login.html"><i data-lucide="log-in"></i> تسجيل الدخول</a>
+      <a href="register.html"><i data-lucide="user-plus"></i> إنشاء حساب</a>
+      <a href="#" id="logoutBtn"><i data-lucide="log-out"></i> تسجيل الخروج</a>
+    </div>
+  </div>
+
+  <!-- 🏞️ قسم الصورة والشعار -->
+  <section class="hero-section">
+    <img src="alger.png" alt="الجزائر">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <img src="machaoumma.gif" alt="شعار مشاعل الأمة" class="mx-auto mb-4 w-40 md:w-56 rounded-2xl shadow-lg">
+      <h1>مشاعل الأمة – سفراء القيم</h1>
+      <p>جيل القدوة... جيل ينهض بالأمة 🇩🇿✨</p>
+    </div>
+  </section>
+
+  <script>
+    // تفعيل القائمة الجانبية في الموبايل
+    function toggleSidebar() {
+      document.getElementById("mySidebar").classList.toggle("active");
+    }
+
+    // عرض وإخفاء قائمة المستخدم
+    function toggleUserMenu() {
+      document.getElementById("userMenu").classList.toggle("show");
+    }
+
+    // إغلاق القائمة عند النقر خارجها
+    window.onclick = function(event) {
+      const menu = document.getElementById("userMenu");
+      const icon = document.querySelector(".user-icon");
+      if (!menu.contains(event.target) && !icon.contains(event.target)) {
+        menu.classList.remove("show");
+      }
+    }
+
+    // تفعيل أيقونات Lucide
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>
