@@ -9,7 +9,7 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide/dist/lucide.js"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
 
 <!-- الخط -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
@@ -17,18 +17,20 @@
 <style>
 body { font-family: 'Noto Kufi Arabic', sans-serif; background:#000; color:#fff; margin:0; overflow-x:hidden; }
 
-/* Sidebar */
+/* Sidebar - معدّل لـ RTL */
 .sidebar {
   height: 100%;
   width: 0;
   position: fixed;
   z-index: 40;
   top: 0;
-  left: 0;
+  right: 0; /* ✅ من اليمين */
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
+  direction: rtl;
+  text-align: right;
 }
 .sidebar a {
   padding: 10px 20px;
@@ -39,7 +41,12 @@ body { font-family: 'Noto Kufi Arabic', sans-serif; background:#000; color:#fff;
   transition: 0.3s;
 }
 .sidebar a:hover { color: #00ff80; }
-.sidebar .closebtn { position: absolute; top: 0; right: 20px; font-size: 36px; }
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  left: 20px;
+  font-size: 36px;
+}
 
 /* User bar */
 .user-bar {
@@ -62,7 +69,8 @@ body { font-family: 'Noto Kufi Arabic', sans-serif; background:#000; color:#fff;
 .user-menu {
   position: absolute;
   top: 60px;
-  right: 20px;
+  right: auto;  /* ✅ إلغاء right */
+  left: 20px;   /* ✅ من اليسار */
   width: 200px;
   background: linear-gradient(to bottom, #222, #111);
   border: 1px solid #444;
@@ -85,7 +93,7 @@ body { font-family: 'Noto Kufi Arabic', sans-serif; background:#000; color:#fff;
 .user-menu a.logout:hover { background: #ff6b6b; color: #fff; }
 
 /* Main content */
-#main { transition: margin-left .5s; padding: 16px; margin-top: 60px; }
+#main { transition: margin-right .5s; padding: 16px; margin-top: 60px; }
 
 /* Open sidebar button */
 .openbtn {
@@ -97,8 +105,8 @@ body { font-family: 'Noto Kufi Arabic', sans-serif; background:#000; color:#fff;
   border: none;
   position: fixed;
   top: 12px;
-  left: 12px;
-  z-index: 45;
+  right: 12px; /* ✅ من اليمين */
+  z-index: 55; /* ✅ الآن أعلى من user-bar */
 }
 .openbtn:hover { background-color: #444; }
 
@@ -132,7 +140,6 @@ footer a:hover { color:#00ff80; }
 
 <!-- User bar -->
 <div class="user-bar">
-  <!-- أيقونة المستخدم -->
   <button id="userBtn" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:scale-105 transition-transform duration-200">
     <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-user w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-3-3.87"/>
@@ -141,12 +148,11 @@ footer a:hover { color:#00ff80; }
     </svg>
   </button>
 
-  <!-- قائمة المستخدم المنسدلة -->
   <div id="userMenu" class="user-menu">
-    <a href="profile.html" id="profileLink">الملف الشخصي</a>
+    <a href="profile.html" id="profileLink" style="display: none;">الملف الشخصي</a>
     <a href="login.html" id="loginLink">تسجيل الدخول</a>
     <a href="register.html" id="registerLink">إنشاء حساب</a>
-    <a href="#" id="logoutBtn" class="logout">تسجيل الخروج</a>
+    <a href="#" id="logoutBtn" class="logout" style="display: none;">تسجيل الخروج</a>
   </div>
 </div>
 
@@ -163,7 +169,7 @@ footer a:hover { color:#00ff80; }
   <!-- المراحل -->
   <div class="section-card">
     <h3>المراحل التطويرية</h3>
-    <ol>
+    <ol class="list-decimal list-inside space-y-1">
       <li>مشعل القدوة - برامج تأسيسية للأطفال</li>
       <li>مشعل السفير - تنمية مهارات المسؤولية</li>
       <li>مشعل القائد - برامج قيادية وتطوعية</li>
@@ -200,64 +206,72 @@ footer a:hover { color:#00ff80; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script>
-// Firebase config
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
-};
-firebase.initializeApp(firebaseConfig);
+// تهيئة الحالة الافتراضية
+document.getElementById('profileLink').style.display = 'none';
+document.getElementById('logoutBtn').style.display = 'none';
+document.getElementById('loginLink').style.display = 'block';
+document.getElementById('registerLink').style.display = 'block';
 
 // Sidebar functions
 function openNav(){
-  document.getElementById("mySidebar").style.width="250px";
-  document.getElementById("main").style.marginLeft="250px";
+  document.getElementById("mySidebar").style.width = "250px";
+  document.getElementById("main").style.marginRight = "250px";
 }
 function closeNav(){
-  document.getElementById("mySidebar").style.width="0";
-  document.getElementById("main").style.marginLeft="0";
+  document.getElementById("mySidebar").style.width = "0";
+  document.getElementById("main").style.marginRight = "0";
 }
 
 // User menu toggle
-const userBtn=document.getElementById("userBtn");
-const userMenu=document.getElementById("userMenu");
-userBtn.onclick=()=>userMenu.classList.toggle("show");
-window.onclick=e=>{
-  if(!e.target.closest("#userBtn")&&!e.target.closest("#userMenu"))
+const userBtn = document.getElementById("userBtn");
+const userMenu = document.getElementById("userMenu");
+userBtn.onclick = () => userMenu.classList.toggle("show");
+window.onclick = e => {
+  if (!e.target.closest("#userBtn") && !e.target.closest("#userMenu"))
     userMenu.classList.remove("show");
 };
 
-// Firebase auth
-const logoutBtn=document.getElementById('logoutBtn');
-const loginLink=document.getElementById('loginLink');
-const registerLink=document.getElementById('registerLink');
-const profileLink=document.getElementById('profileLink');
+// Firebase (مع حماية)
+if (typeof firebase !== 'undefined') {
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
 
-firebase.auth().onAuthStateChanged(user=>{
-  if(user){
-    logoutBtn.style.display='block';
-    profileLink.style.display='block';
-    loginLink.style.display='none';
-    registerLink.style.display='none';
-  } else {
-    logoutBtn.style.display='none';
-    profileLink.style.display='none';
-    loginLink.style.display='block';
-    registerLink.style.display='block';
-  }
-});
+  const logoutBtn = document.getElementById('logoutBtn');
+  const loginLink = document.getElementById('loginLink');
+  const registerLink = document.getElementById('registerLink');
+  const profileLink = document.getElementById('profileLink');
 
-// Logout
-logoutBtn.onclick=e=>{
-  e.preventDefault();
-  firebase.auth().signOut().then(()=>{
-    alert('تم تسجيل الخروج بنجاح');
-    window.location.href='login.html';
-  }).catch(err=>{ alert('حدث خطأ: '+err.message); });
-};
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      profileLink.style.display = 'block';
+      logoutBtn.style.display = 'block';
+      loginLink.style.display = 'none';
+      registerLink.style.display = 'none';
+    } else {
+      profileLink.style.display = 'none';
+      logoutBtn.style.display = 'none';
+      loginLink.style.display = 'block';
+      registerLink.style.display = 'block';
+    }
+  });
+
+  logoutBtn.onclick = e => {
+    e.preventDefault();
+    firebase.auth().signOut().then(() => {
+      alert('تم تسجيل الخروج بنجاح');
+      window.location.href = 'login.html';
+    }).catch(err => {
+      alert('حدث خطأ: ' + err.message);
+    });
+  };
+}
 </script>
 </body>
 </html>
