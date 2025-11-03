@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مشاعل الأمة - سفراء القيم</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -11,27 +11,42 @@
   body { background:#000; color:#fff; display:flex; flex-direction:column; align-items:center; min-height:100vh; overflow-x:hidden; position:relative; }
 
   /* زر الهامبرغر وأيقونة الحساب */
-  .hamburger-container, .account-container { position: fixed; top: 16px; z-index: 200; }
-  .hamburger-container { left: 16px; }
-  .account-container { right: 16px; }
+  .hamburger-container, .account-container { position: fixed; top:16px; z-index:200; }
+  .hamburger-container { left:16px; }
+  .account-container { right:16px; }
 
   .hamburger-btn, .account-btn {
-    background: transparent; border: none; color: #fff; padding: 0; font-size: 28px; cursor: pointer; transition: all 0.3s ease;
+    background: transparent; border:none; color:#fff; padding:0; font-size:28px; cursor:pointer; transition: all 0.3s ease;
   }
-  .hamburger-btn:hover, .account-btn:hover { color: #00ff80; transform: scale(1.2); }
+  .hamburger-btn:hover, .account-btn:hover { color:#00ff80; transform:scale(1.2); }
 
   /* قائمة الهامبرغر المنسدلة */
-  .dropdown-content { display: none; position: fixed; top: 60px; left: 16px; background: rgba(37,35,53,0.95); border-radius: 10px; min-width: 200px; z-index: 150; overflow: hidden; box-shadow: 0 8px 24px rgba(0,255,128,0.3); transform: translateY(-20px); opacity: 0; transition: all 0.3s ease; }
-  .dropdown-content.show { display: block; transform: translateY(0); opacity: 1; }
+  .dropdown-content {
+    display:none;
+    position:fixed;
+    top:60px;
+    left:16px;
+    background: rgba(37,35,53,0.95);
+    border-radius:10px;
+    min-width:200px;
+    z-index:150;
+    overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,255,128,0.3);
+    transform:translateY(-20px);
+    opacity:0;
+    transition: all 0.3s ease;
+  }
+  .dropdown-content.show { display:block; transform:translateY(0); opacity:1; }
   .dropdown-content a { display:block; padding:12px; color:#fff; text-decoration:none; font-size:16px; transition: all 0.2s ease; }
-  .dropdown-content a:hover { background: #00ff80; color: #000; }
+  .dropdown-content a:hover { background:#00ff80; color:#000; }
 
   /* محتوى الصفحة */
-  .hero-image { width:100%; max-width:600px; height:auto; display:block; margin:80px auto 16px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.5);}
-  .logo { width:300px; height:300px; margin-bottom:16px;}
-  h1 { color:#fff; margin-bottom:12px; font-size:30px; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.25);}
-  .tagline { color:#ccc; font-size:15px; margin-bottom:24px; text-align:center;}
-  footer { text-align:center; font-size:13px; color:#aaa; width:100%; padding:8px 0; border-top:1px solid #2a2a35; background:transparent; margin-top:auto;}
+  .hero-image { width:100%; max-width:600px; height:auto; display:block; margin:80px auto 16px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.5); }
+  .logo { width:300px; height:300px; margin-bottom:16px; }
+  h1 { color:#fff; margin-bottom:12px; font-size:30px; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.25); }
+  .tagline { color:#ccc; font-size:15px; margin-bottom:24px; text-align:center; }
+
+  footer { text-align:center; font-size:13px; color:#aaa; width:100%; padding:8px 0; border-top:1px solid #2a2a35; background:transparent; margin-top:auto; }
   footer a { color:#00ff80; text-decoration:none; margin:0 8px; transition:opacity 0.3s; }
   footer a:hover { opacity:0.8; text-decoration:underline; }
 </style>
@@ -83,20 +98,6 @@
   };
   firebase.initializeApp(firebaseConfig);
 
-  // أيقونة الحساب
-  const accountBtn = document.getElementById('accountBtn');
-  firebase.auth().onAuthStateChanged(user => {
-    accountBtn.addEventListener('click', () => {
-      if(user){
-        // إذا مسجل الدخول
-        window.location.href = 'profile.html';
-      } else {
-        // إذا لم يسجل الدخول
-        window.location.href = 'login.html';
-      }
-    });
-  });
-
   // الهامبرغر
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const hamburgerMenu = document.getElementById('hamburgerMenu');
@@ -106,6 +107,20 @@
   window.addEventListener('click', e => {
     if (!e.target.closest('.hamburger-container') && !e.target.closest('.account-container')) {
       hamburgerMenu.classList.remove('show');
+    }
+  });
+
+  // أيقونة الحساب مع Firebase Auth
+  const accountBtn = document.getElementById('accountBtn');
+
+  // تحقق مباشر عند تحميل الصفحة
+  firebase.auth().onAuthStateChanged(user => {
+    accountBtn.onclick = () => {
+      if(user){
+        window.location.href = 'profile.html';
+      } else {
+        window.location.href = 'login.html';
+      }
     }
   });
 </script>
