@@ -95,7 +95,51 @@ h1 { text-align:center; font-size:2rem; margin:10px 0; }
         <button class="px-4 py-2 rounded-xl border border-gray-700 hover:bg-gray-900">استكشاف المكتبة</button>
       </div>
     </div>
+
+    <!-- المراحل التطويرية -->
+    <div class="rounded-3xl border border-gray-800 bg-gray-950 p-6 shadow-xl">
+      <h3 class="text-lg font-semibold mb-4 text-white">المراحل التطويرية</h3>
+      <ol class="flex flex-col gap-3">
+        <li class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">1</div>
+          <div><div class="font-medium text-gray-100">مشعل القدوة</div><div class="text-xs text-gray-500">برامج تأسيسية للأطفال</div></div>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">2</div>
+          <div><div class="font-medium text-gray-100">مشعل السفير</div><div class="text-xs text-gray-500">تنمية مهارات المسؤولية</div></div>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">3</div>
+          <div><div class="font-medium text-gray-100">مشعل القائد</div><div class="text-xs text-gray-500">برامج قيادية وتطوعية</div></div>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">4</div>
+          <div><div class="font-medium text-gray-100">مشعل الرائد</div><div class="text-xs text-gray-500">مبادرات مجتمعية ومشروعات</div></div>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">5</div>
+          <div><div class="font-medium text-gray-100">مشعل الحكيم</div><div class="text-xs text-gray-500">برامج تكاملية واستشرافية</div></div>
+        </li>
+      </ol>
+    </div>
   </section>
+
+  <!-- الفعاليات والمجتمع -->
+  <section class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
+      <h4 class="font-semibold mb-2 text-white">الفعاليات القادمة</h4>
+      <p class="text-sm text-gray-400">حفل تكريم المدارس المتميزة — 12 ديسمبر / ورشة بناء القدوات — 20 ديسمبر / مسابقة القصص التربوية — التسجيل مفتوح</p>
+    </div>
+    <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
+      <h4 class="font-semibold mb-2 text-white">الموارد المميزة</h4>
+      <p class="text-sm text-gray-400">قصص تربوية، تقارير، ودورات مختصرة قابلة للتحميل.</p>
+    </div>
+    <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
+      <h4 class="font-semibold mb-2 text-white">المجتمع والتواصل</h4>
+      <p class="text-sm text-gray-400">انضم إلى المنتديات المحلية ومجموعات العمل بين المدارس.</p>
+    </div>
+  </section>
+
 </div>
 
 <footer class="mt-10 text-center text-gray-500 py-6">
@@ -109,7 +153,6 @@ h1 { text-align:center; font-size:2rem; margin:10px 0; }
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script>
-  // ===== Firebase =====
   const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_AUTH_DOMAIN",
@@ -161,24 +204,4 @@ h1 { text-align:center; font-size:2rem; margin:10px 0; }
   const navItems = ["الصفحة الرئيسية","الدورات التدريبية","الورش والفعاليّات","المكتبة التعليمية","المشاريع الطلابية","المجتمع والتواصل","السجل والنشاط"];
   const icons = ["home","book-open","calendar","layers","users","users","clock"];
   const sidebar = document.getElementById("mySidebar");
-  navItems.forEach((item,index)=>{
-    const a = document.createElement("a");
-    a.href="#";
-    a.innerHTML = `<i data-lucide="${icons[index]}" class="w-5 h-5 inline-block mr-2"></i>${item}`;
-    sidebar.appendChild(a);
-  });
-  lucide.replace();
-
-  function openNav() {
-    sidebar.style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
-  }
-
-  function closeNav() {
-    sidebar.style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-  }
-</script>
-
-</body>
-</html>
+  navItems.for
