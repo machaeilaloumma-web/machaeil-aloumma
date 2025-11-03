@@ -13,84 +13,65 @@
     min-height:100vh; overflow-x:hidden; position:relative;
   }
 
-  /* =================== زر الهامبرغر في أعلى يسار =================== */
-  .hamburger-container {
+  /* زر الهامبرغر وأيقونة الحساب */
+  .hamburger-container, .account-container {
     position: fixed;
     top: 16px;
-    left: 16px;
     z-index: 200;
   }
+  .hamburger-container { left: 16px; }
+  .account-container { right: 16px; }
 
-  .hamburger-btn {
-    font-size: 24px;
-    background: #252535;
-    border: 1px solid #2e2e3d;
+  .hamburger-btn, .account-btn {
+    background: transparent; /* شفافة */
+    border: none;
     color: #fff;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 0;
+    font-size: 28px;
     cursor: pointer;
     transition: all 0.3s ease;
   }
-
-  .hamburger-btn:hover {
-    background: #00ff80;
-    color: #000;
-    transform: scale(1.1);
+  .hamburger-btn:hover, .account-btn:hover {
+    color: #00ff80;
+    transform: scale(1.2);
   }
 
+  /* قائمة الهامبرغر المنسدلة متحركة */
   .dropdown-content {
-    display:none;
+    display: none;
     position: fixed;
-    top: 56px; /* أسفل الزر */
+    top: 60px;
     left: 16px;
-    background:#252535;
-    border:1px solid #2e2e3d;
-    border-radius:8px;
-    min-width:200px;
-    z-index:150;
-    box-shadow:0 4px 12px rgba(0,255,128,0.3);
+    background: rgba(37,35,53,0.95);
+    border-radius: 10px;
+    min-width: 200px;
+    z-index: 150;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,255,128,0.3);
+    transform: translateY(-20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+  .dropdown-content.show {
+    display: block;
+    transform: translateY(0);
+    opacity: 1;
   }
 
   .dropdown-content a {
-    display:block;
-    padding:12px;
-    color:#fff;
-    text-decoration:none;
-    font-size:16px;
-    transition:all 0.2s ease;
-  }
-
-  .dropdown-content a:hover {
-    background:#00ff80;
-    color:#000;
-  }
-
-  /* =================== أيقونة الحساب في أعلى يمين =================== */
-  .account-container {
-    position: fixed;
-    top: 16px;
-    right: 16px;
-    z-index: 200;
-  }
-
-  .account-btn {
-    font-size: 24px;
-    background: #252535;
-    border: 1px solid #2e2e3d;
+    display: block;
+    padding: 12px;
     color: #fff;
-    padding: 10px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    text-decoration: none;
+    font-size: 16px;
+    transition: all 0.2s ease;
   }
-
-  .account-btn:hover {
+  .dropdown-content a:hover {
     background: #00ff80;
     color: #000;
-    transform: scale(1.1);
   }
 
-  /* =================== الصفحة الرئيسية =================== */
+  /* محتوى الصفحة */
   .hero-image { width:100%; max-width:600px; height:auto; display:block; margin:80px auto 16px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.5);}
   .logo { width:300px; height:300px; margin-bottom:16px;}
   h1 { color:#fff; margin-bottom:12px; font-size:30px; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.25);}
@@ -111,11 +92,10 @@
   <div class="dropdown-content" id="hamburgerMenu">
     <a href="about.html">من نحن</a>
     <a href="contact.html">اتصل بنا</a>
-    <!-- يمكن إضافة روابط أخرى هنا -->
   </div>
 </div>
 
-<!-- أيقونة الحساب في أعلى يمين -->
+<!-- أيقونة الحساب -->
 <div class="account-container">
   <div class="account-btn" id="accountBtn">
     <i class="fa fa-user"></i>
@@ -128,8 +108,6 @@
 <h1>مشاعل الأمة  مشروع نهضة - سفراء القيم</h1>
 <p class="tagline">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة و التي ستحمش مشعل الامة و تحفظ العهد.</p>
 
-<!-- **تم إزالة كل الأزرار تحت الشعار** -->
-
 <footer>
   © 2025 مشاعل الأمة – جميع الحقوق محفوظة · 
   <a href="about.html">من نحن</a> · 
@@ -137,8 +115,8 @@
 </footer>
 
 <script>
-  // مثال: حالة تسجيل الدخول
-  let isLoggedIn = false; // ضع true إذا كان المستخدم مسجّل الدخول
+  // حالة تسجيل الدخول (مثال)
+  let isLoggedIn = false; // true إذا كان مسجّل الدخول
 
   const accountBtn = document.getElementById('accountBtn');
   accountBtn.addEventListener('click', () => {
@@ -154,12 +132,13 @@
   const hamburgerMenu = document.getElementById('hamburgerMenu');
 
   hamburgerBtn.addEventListener('click', () => {
-    hamburgerMenu.style.display = hamburgerMenu.style.display === 'block' ? 'none' : 'block';
+    hamburgerMenu.classList.toggle('show');
   });
 
+  // إغلاق القائمة عند الضغط خارجها
   window.addEventListener('click', e => {
     if (!e.target.closest('.hamburger-container') && !e.target.closest('.account-container')) {
-      hamburgerMenu.style.display = 'none';
+      hamburgerMenu.classList.remove('show');
     }
   });
 </script>
