@@ -43,44 +43,18 @@
         <div class="input-with-icon">
           <span class="icon">✉️</span>
           <input type="email" id="email" required placeholder=" " />
-  <!-- حقل البريد الإلكتروني -->
-<div class="form-group email-field">
-  <div class="input-with-icon">
-    <span class="icon">📧</span>
-    <input type="email" id="email" class="email-input" required placeholder=" " />
-    <label for="email">البريد الإلكتروني</label>
-  </div>
-</div>
+          <label for="email">البريد الإلكتروني</label>
+        </div>
+      </div>
+      <div class="form-group password-field">
+        <div class="input-with-icon">
+          <span class="icon">🔒</span>
+          <input type="password" id="password" class="password-input" required minlength="6" placeholder=" " />
+          <label for="password">كلمة المرور</label>
+          <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
+        </div>
+      </div>
 
-<!-- حقل كلمة المرور -->
-<div class="form-group password-field">
-  <div class="input-with-icon">
-    <span class="icon">🔒</span>
-    <input type="password" id="password" class="password-input" required minlength="6" placeholder=" " />
-    <label for="password">كلمة المرور</label>
-    <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
-  </div>
-</div>
-<!-- زر الدخول -->
-<div class="form-group">
-  <button type="submit">دخول</button>
-</div>
-
-<!-- JavaScript لتفعيل أيقونة العين -->
-<script>
-function togglePassword(passwordId) {
-  const passwordInput = document.getElementById(passwordId);
-  const toggleIcon = passwordInput.parentElement.querySelector('.toggle-password');
-
-  if (passwordInput.type === 'password') {
-    passwordInput.type = 'text';
-    toggleIcon.textContent = '🙈';
-  } else {
-    passwordInput.type = 'password';
-    toggleIcon.textContent = '👁️';
-  }
-}
-</script>
       <!-- لا تغيير في الكلمة الظاهرة "دخول" -->
       <button type="button" id="loginBtn">دخول</button>
     </form>
@@ -156,5 +130,3 @@ function togglePassword(passwordId) {
   </script>
 </body>
 </html>
-
-
