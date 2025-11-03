@@ -143,4 +143,87 @@ h1 { text-align:center; font-size:2rem; margin:10px 0; }
 
 </div>
 
-<footer class="mt
+<footer class="mt-12 text-center text-gray-400 p-4">
+  © 2025 مشاعل الأمة – جميع الحقوق محفوظة · 
+  <a href="about.html" class="underline">من نحن</a> · 
+  <a href="contact.html" class="underline">اتصل بنا</a>
+</footer>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+firebase.initializeApp(firebaseConfig);
+
+// Sidebar menu items
+const navItems = ["الصفحة الرئيسية","الدورات التدريبية","الورش والفعاليّات","المكتبة التعليمية","المشاريع الطلابية","المجتمع والتواصل","السجل والنشاط"];
+const icons = ["home","book-open","calendar","layers","users","users","clock"];
+const sidebar = document.getElementById("mySidebar");
+navItems.forEach((item,index)=>{
+  const a = document.createElement("a");
+  a.href="#";
+  a.innerHTML = `<i data-lucide="${icons[index]}" class="w-5 h-5 inline-block ml-2"></i>${item}`;
+  sidebar.appendChild(a);
+});
+lucide.replace();
+
+function openNav() {
+  sidebar.style.width = "250px";
+  document.getElementById("main").style.marginLeft = "250px";
+}
+
+function closeNav() {
+  sidebar.style.width = "0";
+  document.getElementById("main").style.marginLeft= "0";
+}
+
+// أيقونة المستخدم المنسدلة
+const userBtn = document.getElementById("userBtn");
+const userMenu = document.getElementById("userMenu");
+const logoutBtn = document.getElementById("logoutBtn");
+const loginLink = document.getElementById("loginLink");
+const registerLink = document.getElementById("registerLink");
+const profileLink = document.getElementById("profileLink");
+
+userBtn.onclick = () => userMenu.classList.toggle("hidden");
+window.onclick = e => {
+  if(!e.target.closest("#userBtn") && !e.target.closest("#userMenu")){
+    userMenu.classList.add("hidden");
+  }
+}
+
+// Firebase Auth state
+firebase.auth().onAuthStateChanged(user => {
+  if(user){
+    logoutBtn.style.display = "block";
+    profileLink.style.display = "block";
+    loginLink.style.display = "none";
+    registerLink.style.display = "none";
+  } else {
+    logoutBtn.style.display = "none";
+    profileLink.style.display = "none";
+    loginLink.style.display = "block";
+    registerLink.style.display = "block";
+  }
+});
+
+logoutBtn.onclick = (e)=>{
+  e.preventDefault();
+  firebase.auth().signOut().then(()=>{
+    alert("تم تسجيل الخروج بنجاح");
+    window.location.href = "login.html";
+  }).catch(err=>{alert("حدث خطأ: "+err.message)});
+}
+</script>
+
+</body>
+</html>
