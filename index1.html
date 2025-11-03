@@ -16,10 +16,6 @@
 
 <style>
 body { font-family: 'Noto Kufi Arabic', sans-serif; background:#000; color:#fff; margin:0; overflow-x:hidden; }
-.hero-image { width:100%; max-height:400px; object-fit:cover; display:block; margin:0 auto; }
-.logo { width:200px; display:block; margin:20px auto; }
-h1 { text-align:center; font-size:2rem; margin:10px 0; }
-.tagline { text-align:center; color:#aaa; margin-bottom:20px; }
 
 /* Sidebar */
 .sidebar {
@@ -108,6 +104,18 @@ h1 { text-align:center; font-size:2rem; margin:10px 0; }
 }
 .openbtn:hover { background-color: #444; }
 
+.hero-image { width:100%; max-height:400px; object-fit:cover; display:block; margin:0 auto; }
+.logo { width:200px; display:block; margin:20px auto; }
+h1 { text-align:center; font-size:2rem; margin:10px 0; }
+.tagline { text-align:center; color:#aaa; margin-bottom:20px; }
+
+.section-card { border:1px solid #444; border-radius:20px; background:#111; padding:20px; margin-bottom:20px; box-shadow:0 4px 10px rgba(0,0,0,0.5); }
+.section-card h2,h3,h4 { color:#fff; }
+.section-card p { color:#aaa; }
+
+footer { text-align:center; color:#888; padding:10px; margin-top:20px; }
+footer a { text-decoration:underline; color:#888; }
+footer a:hover { color:#00ff80; }
 </style>
 </head>
 <body>
@@ -115,6 +123,13 @@ h1 { text-align:center; font-size:2rem; margin:10px 0; }
 <!-- Sidebar -->
 <div id="mySidebar" class="sidebar">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  <a href="#">الصفحة الرئيسية</a>
+  <a href="#">الدورات التدريبية</a>
+  <a href="#">الورش والفعاليّات</a>
+  <a href="#">المكتبة التعليمية</a>
+  <a href="#">المشاريع الطلابية</a>
+  <a href="#">المجتمع والتواصل</a>
+  <a href="#">السجل والنشاط</a>
 </div>
 
 <!-- User bar -->
@@ -146,8 +161,41 @@ h1 { text-align:center; font-size:2rem; margin:10px 0; }
   <img src="http://machaeil-aloumma.web.app/machaoumma.gif" alt="شعار مشاعل الأمة" class="logo" />
   <h1>مشاعل الأمة - مشروع نهضة سفراء القيم</h1>
   <p class="tagline">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة و التي ستحفظ مشعل الأمة و تحفظ العهد.</p>
-  <!-- محتوى إضافي هنا كما في الكود السابق -->
+
+  <!-- مثال للمراحل -->
+  <div class="section-card">
+    <h3>المراحل التطويرية</h3>
+    <ol>
+      <li>مشعل القدوة - برامج تأسيسية للأطفال</li>
+      <li>مشعل السفير - تنمية مهارات المسؤولية</li>
+      <li>مشعل القائد - برامج قيادية وتطوعية</li>
+      <li>مشعل الرائد - مبادرات مجتمعية ومشروعات</li>
+      <li>مشعل الحكيم - برامج تكاملية واستشرافية</li>
+    </ol>
+  </div>
+
+  <!-- مثال للفعاليات والموارد -->
+  <div class="section-card">
+    <h4>الفعاليات القادمة</h4>
+    <p>حفل تكريم المدارس المتميزة — 12 ديسمبر / ورشة بناء القدوات — 20 ديسمبر / مسابقة القصص التربوية — التسجيل مفتوح</p>
+  </div>
+
+  <div class="section-card">
+    <h4>الموارد المميزة</h4>
+    <p>قصص تربوية، تقارير، ودورات مختصرة قابلة للتحميل.</p>
+  </div>
+
+  <div class="section-card">
+    <h4>المجتمع والتواصل</h4>
+    <p>انضم إلى المنتديات المحلية ومجموعات العمل بين المدارس.</p>
+  </div>
 </div>
+
+<footer>
+  © 2025 مشاعل الأمة – جميع الحقوق محفوظة · 
+  <a href="about.html">من نحن</a> · 
+  <a href="contact.html">اتصل بنا</a>
+</footer>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
@@ -165,11 +213,11 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 
-// Sidebar open/close
+// Sidebar
 function openNav() { document.getElementById("mySidebar").style.width="250px"; document.getElementById("main").style.marginLeft="250px"; }
 function closeNav() { document.getElementById("mySidebar").style.width="0"; document.getElementById("main").style.marginLeft="0"; }
 
-// User menu toggle
+// User menu
 const userBtn = document.getElementById("userBtn");
 const userMenu = document.getElementById("userMenu");
 userBtn.onclick = ()=> userMenu.classList.toggle("show");
@@ -200,7 +248,7 @@ logoutBtn.onclick = e => {
   firebase.auth().signOut().then(()=>{
     alert("تم تسجيل الخروج بنجاح");
     window.location.href="login.html";
-  }).catch(err=>{ alert("حدث خطأ: "+err.message) });
+  }).catch(err=>{ alert("حدث خطأ: "+err.message); });
 }
 </script>
 
