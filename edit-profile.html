@@ -30,6 +30,7 @@
       width: 90%;
       max-width: 420px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      position: relative;
     }
 
     h1 {
@@ -142,10 +143,32 @@
       opacity: 0.8;
       text-decoration: underline;
     }
+
+    .notification {
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #00ff80;
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.5s ease;
+    }
+
+    .notification.show {
+      opacity: 1;
+      top: -70px;
+      pointer-events: auto;
+    }
   </style>
 </head>
 <body>
   <div class="edit-container">
+    <div class="notification" id="notify">تم الحفظ بنجاح!</div>
     <h1>تعديل الملف الشخصي</h1>
     <form id="editForm">
       <div class="form-group">
@@ -203,63 +226,83 @@
     <a href="profile.html" class="back-link">← العودة إلى الملف الشخصي</a>
   </div>
 
-  <script>
-    // ✅ تحميل البيانات من localStorage عند فتح الصفحة
-    document.addEventListener('DOMContentLoaded', function () {
-      const user = JSON.parse(localStorage.getItem('user'));
-      if (user) {
-        document.getElementById('fullName').value = user.fullName || '';
-        document.getElementById('email').value = user.email || '';
-        document.getElementById('level').value = user.level || '';
-        document.getElementById('institution').value = user.institution || '';
-        document.getElementById('province').value = user.province || '';
-        document.getElementById('city').value = user.city || '';
-        document.getElementById('gender').value = user.gender || 'ذكر';
-      } else {
-        alert('لم يتم العثور على حساب. يرجى تسجيل الدخول أولًا.');
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged, updateProfile, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+  apiKey: "AIzaSyDiypCTp31wIc5MR3FhClKobeQTeK-vaFs",
+      authDomain: "machaeil-aloumma.firebaseapp.com",
+      projectId: "machaeil-aloumma",
+      storageBucket: "machaeil-aloumma.firebasestorage.app",
+      messagingSenderId: "678363443395",
+      appId: "1:678363443395:web:b604b002d4e8fd430d3276"
+  };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    let currentUser = null;
+
+    const notify = document.getElementById('notify');
+
+    setPersistence(auth, browserLocalPersistence).catch(err => {
+      console.error("خطأ في تحديد Persistence:", err);
+      alert("تعذر الاحتفاظ بجلسة تسجيل الدخول.");
+    });
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        alert("لم يتم التعرف على المستخدم. يرجى تسجيل الدخول مجددًا.");
         window.location.href = 'login.html';
+        return;
+      }
+      currentUser = user;
+
+      try {
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          document.getElementById('fullName').value = data.fullName || '';
+          document.getElementById('email').value = data.email || '';
+          document.getElementById('level').value = data.level || '';
+          document.getElementById('institution').value = data.institution || '';
+          document.getElementById('province').value = data.province || '';
+          document.getElementById('city').value = data.city || '';
+          document.getElementById('gender').value = data.gender || 'ذكر';
+        }
+      } catch (err) {
+        console.error("خطأ في جلب البيانات:", err);
+        alert("تعذر تحميل بيانات المستخدم من Firebase.");
       }
     });
 
-    // ✅ حفظ التعديلات
-    document.getElementById('editForm').addEventListener('submit', function (e) {
+    document.getElementById('editForm').addEventListener('submit', async (e) => {
       e.preventDefault();
+      if (!currentUser) return;
 
-      const fullName = document.getElementById('fullName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const level = document.getElementById('level').value.trim();
-      const institution = document.getElementById('institution').value.trim();
-      const province = document.getElementById('province').value.trim();
-      const city = document.getElementById('city').value.trim();
-      const gender = document.getElementById('gender').value;
-
-      if (!fullName || !email || !level || !institution || !province || !city || !gender) {
-        alert('يرجى ملء جميع الحقول.');
-        return;
-      }
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert('يرجى إدخال بريد إلكتروني صحيح.');
-        return;
-      }
-
-      // ✅ تحديث localStorage (مع الحفاظ على كلمة المرور الأصلية)
-      const existingUser = JSON.parse(localStorage.getItem('user'));
       const updatedUser = {
-        fullName,
-        email,
-        level,
-        institution,
-        province,
-        city,
-        gender,
-        password: existingUser.password // ⚠️ نحتفظ بكلمة المرور الأصلية
+        fullName: document.getElementById('fullName').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        level: document.getElementById('level').value.trim(),
+        institution: document.getElementById('institution').value.trim(),
+        province: document.getElementById('province').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        gender: document.getElementById('gender').value
       };
-      localStorage.setItem('user', JSON.stringify(updatedUser));
 
-      alert('تم حفظ التعديلات بنجاح!');
-      window.location.href = 'profile.html';
+      try {
+        await updateProfile(currentUser, { displayName: updatedUser.fullName });
+        const userRef = doc(db, "users", currentUser.uid);
+        await setDoc(userRef, updatedUser, { merge: true });
+
+        notify.classList.add('show');
+        setTimeout(() => notify.classList.remove('show'), 2500);
+      } catch (err) {
+        console.error("خطأ في الحفظ:", err);
+        alert('حدث خطأ أثناء حفظ التعديلات في Firebase.');
+      }
     });
   </script>
 </body>

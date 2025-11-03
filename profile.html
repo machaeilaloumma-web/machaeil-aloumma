@@ -81,6 +81,15 @@
       box-shadow: 0 0 12px rgba(0,255,128,0.3);
       transform: translateY(-2px);
     }
+    .logout-btn {
+      background: #2a2a35;
+      color: #ff5555;
+      border-color: #ff5555;
+    }
+    .logout-btn:hover {
+      box-shadow: 0 0 12px rgba(255,85,85,0.4);
+      transform: translateY(-2px);
+    }
     .info-item {
       display: flex;
       justify-content: space-between;
@@ -109,7 +118,9 @@
 <body>
   <div class="profile-container">
     <h1>ملفي الشخصي</h1>
-    <div id="noAccountMessage" class="login-link" style="display: block;">
+    <button id="logoutBtn" class="action-btn logout-btn" style="display:none;">🔓 تسجيل الخروج</button>
+
+    <div id="noAccountMessage" class="login-link" style="display:none;">
       لم تُنشئ حسابًا بعد. <a href="register.html">انضم كـ "نجم"</a>
     </div>
 
@@ -117,34 +128,13 @@
       <h3 style="color:#00ff80; margin-bottom:12px; text-align:center;">✅ حسابك جاهز!</h3>
       <p style="color:#ccc; margin-bottom:16px; text-align:center;">شارك هذا الرمز مع أستاذك لتقييمك:</p>
       <img id="qrImage" src="" alt="رمز QR لتقييم الطالب" />
-      <div class="info-item">
-        <span class="info-label">الاسم الكامل:</span>
-        <span class="info-value" id="fullNameDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">البريد الإلكتروني:</span>
-        <span class="info-value" id="emailDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">المستوى الدراسي:</span>
-        <span class="info-value" id="levelDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">اسم المؤسسة:</span>
-        <span class="info-value" id="institutionDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">الولاية:</span>
-        <span class="info-value" id="provinceDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">البلدية:</span>
-        <span class="info-value" id="cityDisplay"></span>
-      </div>
-      <div class="info-item">
-        <span class="info-label">الجنس:</span>
-        <span class="info-value" id="genderDisplay"></span>
-      </div>
+      <div class="info-item"><span class="info-label">الاسم الكامل:</span><span class="info-value" id="fullNameDisplay"></span></div>
+      <div class="info-item"><span class="info-label">البريد الإلكتروني:</span><span class="info-value" id="emailDisplay"></span></div>
+      <div class="info-item"><span class="info-label">المستوى الدراسي:</span><span class="info-value" id="levelDisplay"></span></div>
+      <div class="info-item"><span class="info-label">اسم المؤسسة:</span><span class="info-value" id="institutionDisplay"></span></div>
+      <div class="info-item"><span class="info-label">الولاية:</span><span class="info-value" id="provinceDisplay"></span></div>
+      <div class="info-item"><span class="info-label">البلدية:</span><span class="info-value" id="cityDisplay"></span></div>
+      <div class="info-item"><span class="info-label">الجنس:</span><span class="info-value" id="genderDisplay"></span></div>
       <div class="button-group">
         <button id="copyBtn" class="action-btn" onclick="copyQRLink()">نسخ الرابط</button>
         <button id="printBtn" class="action-btn" onclick="printQRCard()">طباعة بطاقة النجم</button>
@@ -155,92 +145,118 @@
     </div>
   </div>
 
-  <script>
-    function loadProfile() {
-      const userData = JSON.parse(localStorage.getItem('user'));
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiypCTp31wIc5MR3FhClKobeQTeK-vaFs",
+      authDomain: "machaeil-aloumma.firebaseapp.com",
+      projectId: "machaeil-aloumma",
+      storageBucket: "machaeil-aloumma.firebasestorage.app",
+      messagingSenderId: "678363443395",
+      appId: "1:678363443395:web:b604b002d4e8fd430d3276"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    onAuthStateChanged(auth, async (user) => {
+      const logoutBtn = document.getElementById('logoutBtn');
       const noAccountMessage = document.getElementById('noAccountMessage');
       const qrResult = document.getElementById('qrResult');
 
-      if (!userData || !userData.formUrl) {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      logoutBtn.style.display = 'block';
+      logoutBtn.onclick = async () => {
+        await signOut(auth);
+        window.location.href = "login.html";
+      };
+
+      try {
+        let userSnap = await getDoc(doc(db, "users", user.uid));
+        if (!userSnap.exists()) {
+          userSnap = await getDoc(doc(db, "users", user.email));
+        }
+
+        if (userSnap.exists()) {
+          const data = userSnap.data();
+          noAccountMessage.style.display = 'none';
+          qrResult.style.display = 'block';
+
+          document.getElementById('fullNameDisplay').textContent = data.fullName || 'غير متوفر';
+          document.getElementById('emailDisplay').textContent = data.email || user.email;
+          document.getElementById('levelDisplay').textContent = data.level || 'غير متوفر';
+          document.getElementById('institutionDisplay').textContent = data.institution || 'غير متوفر';
+          document.getElementById('provinceDisplay').textContent = data.province || 'غير متوفر';
+          document.getElementById('cityDisplay').textContent = data.city || 'غير متوفر';
+          document.getElementById('genderDisplay').textContent = data.gender || 'غير متوفر';
+
+          const baseUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdfBDs6Ta8vt3AAM7aKGCaUymXWRNhW-9GFTmbhjnBTuuLvCg/viewform";
+          const params = new URLSearchParams({
+            'entry.500102530': data.fullName || '',
+            'entry.1295909734': '',
+            'entry.1782792963': data.level || '',
+            'entry.7598977': data.institution || '',
+            'entry.1504285967': data.city || '',
+            'entry.141302358': data.province?.split('-')[1]?.trim() || data.province || '',
+            'entry.1987444241': data.gender || ''
+          });
+          const fullUrl = `${baseUrl}?${params.toString()}`;
+          const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(fullUrl)}&qzone=1&margin=0`;
+
+          document.getElementById('qrImage').src = qrUrl;
+          document.getElementById('copyBtn').setAttribute('data-url', fullUrl);
+          if (!navigator.share) document.getElementById('shareBtn').style.display = 'none';
+        } else {
+          noAccountMessage.style.display = 'block';
+          qrResult.style.display = 'none';
+        }
+      } catch (err) {
+        console.error("Firestore error:", err);
         noAccountMessage.style.display = 'block';
         qrResult.style.display = 'none';
-        return;
       }
+    });
 
-      noAccountMessage.style.display = 'none';
-      qrResult.style.display = 'block';
-
-      document.getElementById('fullNameDisplay').textContent = userData.fullName || 'غير متوفر';
-      document.getElementById('emailDisplay').textContent = userData.email || 'غير متوفر';
-      document.getElementById('levelDisplay').textContent = userData.level || 'غير متوفر';
-      document.getElementById('institutionDisplay').textContent = userData.institution || 'غير متوفر';
-      document.getElementById('provinceDisplay').textContent = userData.province || 'غير متوفر';
-      document.getElementById('cityDisplay').textContent = userData.city || 'غير متوفر';
-      document.getElementById('genderDisplay').textContent = userData.gender || 'غير متوفر';
-
-      // توليد QR
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(userData.formUrl)}&qzone=1&margin=0`;
-      document.getElementById('qrImage').src = qrUrl;
-
-      document.getElementById('copyBtn').setAttribute('data-url', userData.formUrl);
-
-      if (!navigator.share) document.getElementById('shareBtn').style.display = 'none';
-    }
-
-    function copyQRLink() {
+    window.copyQRLink = function () {
       const url = document.getElementById('copyBtn').getAttribute('data-url');
-      if (url) {
-        navigator.clipboard.writeText(url).then(() => {
-          alert('تم نسخ رابط التقييم! أرسله لأستاذك.');
-        }).catch(err => {
-          console.error('فشل في النسخ: ', err);
-          alert('فشل في نسخ الرابط. جرب يدويًا.');
-        });
-      } else {
-        alert('لا يوجد رابط للنسخ.');
-      }
+      if (url) navigator.clipboard.writeText(url).then(() => alert('تم نسخ رابط التقييم!'));
     }
 
-    function printQRCard() {
+    window.printQRCard = function () {
       const fullName = document.getElementById('fullNameDisplay').textContent || 'طالب';
-      const qrImageSrc = document.getElementById('qrImage').src;
-      if (!qrImageSrc) {
-        alert('لا يوجد رمز QR للطباعة.');
-        return;
-      }
-      const printWindow = window.open('', '_blank');
-      printWindow.document.write(`
-        <html>
-        <head><title>بطاقة نجم - مشاعل الأمة</title></head>
-        <body style="font-family:'Noto Kufi Arabic',sans-serif;text-align:center;padding:20px;background:#000;color:#fff;">
+      const qrSrc = document.getElementById('qrImage').src;
+      if (!qrSrc) return;
+      const w = window.open('', '_blank');
+      w.document.write(`
+        <html><head><title>بطاقة نجم - مشاعل الأمة</title></head>
+        <body style="font-family:'Noto Kufi Arabic',sans-serif;text-align:center;background:#000;color:#fff;padding:20px;">
           <h2 style="color:#ffcc00;">🌟 مشاعل الأمة – سفراء القيم</h2>
-          <h3 style="color:#fff;margin:20px 0;">الطالب: ${fullName}</h3>
-          <img src="${qrImageSrc}" style="width:240px;height:240px;margin:20px 0;" />
-          <p style="color:#aaa;font-size:14px;">امسح الرمز لتقييم الطالب</p>
-       </body>
-      </html>
-    `);
-    printWindow.document.close();
-    printWindow.print();
-  }
-
-  function shareQR() {
-    const url = document.getElementById('copyBtn').getAttribute('data-url');
-    if (navigator.share && url) {
-      navigator.share({
-        title: 'تقييم نجم - مشاعل الأمة',
-        text: 'من فضلك قيّم الطالب في مشروع "مشاعل الأمة"',
-        url: url
-      }).catch(err => {
-        console.error('فشل في المشاركة: ', err);
-      });
-    } else {
-      alert('المشاركة غير مدعومة في متصفحك أو لا يوجد رابط.');
+          <h3>الطالب: ${fullName}</h3>
+          <img src="${qrSrc}" style="width:240px;height:240px;margin:20px 0;" />
+          <p style="color:#aaa;">امسح الرمز لتقييم الطالب</p>
+        </body></html>`);
+      w.document.close();
+      w.print();
     }
-  }
 
-  window.addEventListener('load', loadProfile);
+    window.shareQR = function () {
+      const url = document.getElementById('copyBtn').getAttribute('data-url');
+      if (navigator.share && url) {
+        navigator.share({
+          title: 'تقييم نجم - مشاعل الأمة',
+          text: 'من فضلك قيّم الطالب في مشروع "مشاعل الأمة"',
+          url
+        });
+      }
+    }
   </script>
 </body>
 </html>
-

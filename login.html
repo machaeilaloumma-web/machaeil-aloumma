@@ -3,10 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <!-- ✅ هذا السطر فقط تمت إضافته لعلاج خطأ unsafe-eval نهائيًا -->
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.gstatic.com https://www.googleapis.com https://www.google.com https://apis.google.com https://www.gstatic.com/firebasejs/; connect-src 'self' https://firestore.googleapis.com https://www.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://www.gstatic.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none';">
+
   <title>تسجيل الدخول - مشاعل الأمة</title>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
-    /* لا تغيير في CSS، كما هو من النسخة السابقة */
+    /* لا تغيير في CSS */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Noto Kufi Arabic', sans-serif; }
     body { background: #000; color: #fff; display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow-x: hidden; }
     .logo { width: 250px; height: 250px; margin-bottom: 16px; }
@@ -50,8 +54,11 @@
           <span class="toggle-password" onclick="togglePassword('password')">👁️</span>
         </div>
       </div>
-      <button type="submit" id="loginBtn">دخول</button>
+
+      <!-- لا تغيير في الكلمة الظاهرة "دخول" -->
+      <button type="button" id="loginBtn">دخول</button>
     </form>
+
     <div class="register-link">
       لا تملك حساب؟ <a href="register.html">أنشئ واحدًا الآن</a>
     </div>
@@ -80,54 +87,44 @@
       field.type = field.type === "password" ? "text" : "password";
     }
 
-    document.getElementById('loginForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
+    document.getElementById('loginForm').addEventListener('submit', (ev) => ev.preventDefault());
 
+    document.getElementById('loginBtn').addEventListener('click', async () => {
       const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
 
       if (!email || !password) {
-        alert('يرجى ملء جميع الحقول.');
-        return;
-      }
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert('البريد الإلكتروني غير صالح.');
-        return;
-      }
-
-      if (password.length < 6) {
-        alert('كلمة المرور قصيرة جداً. يجب أن تحتوي على 6 أحرف على الأقل.');
+        alert('يرجى إدخال البريد الإلكتروني وكلمة المرور.');
         return;
       }
 
       try {
-        // ✅ تحقق أولًا من وجود المستخدم في Firestore
-        const userDocRef = doc(db, "users", email);
-        const userDocSnap = await getDoc(userDocRef);
-
-        if (!userDocSnap.exists()) {
-          alert("❌ المستخدم غير مسجل. يرجى إنشاء حساب أولاً.");
-          return;
-        }
-
-        // تسجيل الدخول باستخدام Firebase Auth
+        // ✅ تسجيل الدخول
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
+        console.log("✅ تسجيل دخول ناجح:", user.uid);
 
-        const userData = {
-          fullName: user.displayName || userDocSnap.data().fullName || "",
-          email: user.email,
-          uid: user.uid
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
+        // ✅ جلب بيانات المستخدم من Firestore مباشرة عبر UID
+        const userDocRef = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userDocRef);
 
-        alert('تم تسجيل الدخول بنجاح!');
-        window.location.href = 'profile.html';
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          localStorage.setItem("user", JSON.stringify(userData));
+          window.location.href = "profile.html"; // انتقال مباشر بدون رسائل
+        } else {
+          console.warn("⚠️ لم يتم العثور على بيانات المستخدم في Firestore.");
+          localStorage.setItem("user", JSON.stringify({ email: user.email }));
+          window.location.href = "profile.html";
+        }
+
       } catch (error) {
-        console.error("حدث خطأ أثناء تسجيل الدخول:", error);
-        alert("❌ البريد الإلكتروني أو كلمة المرور غير صحيحة.");
+        console.error("❌ خطأ أثناء تسجيل الدخول:", error.code, error.message);
+        if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+          alert("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
+        } else {
+          alert("حدث خطأ غير متوقع. حاول مرة أخرى.");
+        }
       }
     });
   </script>

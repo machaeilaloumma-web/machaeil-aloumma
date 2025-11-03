@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>مشاعل الأمة - سفراء القيم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Noto Kufi Arabic', sans-serif; }
+    body {
+      background: #000;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      padding-bottom: 60px;
+    }
+    h1 { font-size: 2.5em; margin:20px 0 10px; color:#fff; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.25);}
+    .stars-container {
+      background:#1a1a25;
+      padding:24px;
+      border-radius:16px;
+      width:90%;
+      max-width:420px;
+      box-shadow:0 8px 24px rgba(0,0,0,0.5);
+      text-align:center;
+      margin:20px auto;
+      position: relative;
+    }
+    .star-count { font-size:3em; font-weight:bold; color:#FFD700; margin:15px 0; }
+    #level-badge {
+      display:inline-block;
+      padding:8px 20px;
+      background: rgba(255,255,255,0.1);
+      border-radius:30px;
+      font-size:1.2em;
+      font-weight:bold;
+      margin:15px 0;
+      border:2px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(5px);
+      box-shadow:0 0 15px rgba(255,255,255,0.3);
+    }
+    #reasons-list {
+      text-align:right;
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      border-radius:15px;
+      margin: 15px auto;
+      max-height:250px;
+      overflow-y:auto;
+      border-right:4px solid #FFD700;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+    }
+    .btn {
+      display:block;
+      width:100%;
+      padding:12px;
+      background:#252535;
+      color:#fff;
+      font-weight:500;
+      border:1px solid #2e2e3d;
+      border-radius:8px;
+      cursor:pointer;
+      margin:12px 0;
+      font-size:16px;
+      text-decoration:none;
+      text-align:center;
+      transition: all 0.3s ease;
+    }
+    .btn:hover { border-color:#00ff80; box-shadow:0 0 12px rgba(0,255,128,0.3); transform:translateY(-2px);}
+    footer {
+      position: absolute;
+      bottom: 0;
+      text-align:center;
+      font-size:13px;
+      color:#aaa;
+      width:100%;
+      padding:10px 0;
+      border-top:1px solid #2a2a35;
+      background:transparent;
+    }
+    footer a { color:#00ff80; text-decoration:none; margin:0 8px; transition:opacity 0.3s; }
+    footer a:hover { opacity:0.8; text-decoration:underline; }
+  </style>
+</head>
+<body>
+  <h1 id="student-name">جارٍ التحميل...</h1>
+  <div class="stars-container">
+    <div class="star-count">
+      <span id="total-stars">0</span> ⭐
+    </div>
+    <div id="level-badge">
+      <span id="current-level">المشعل القدوة 🌟</span>
+      <span id="target-level" style="color:#FFD700; font-size:0.9em; margin-right:5px;">(الهدف: المشعل السفير)</span>
+    </div>
+    <h3 style="color:#FFD700; margin:25px 0 10px 0; font-size:1.3em;">الأسباب التي حصلت بها على النجوم:</h3>
+    <div id="reasons-list">
+      <p style="color:#ccc; font-style: italic; text-align:center;">لم يُسجَّل أي نجم بعد.</p>
+    </div>
+    <a href="index.html" class="btn">🏠 العودة للصفحة الرئيسية</a>
+    <button onclick="shareAchievement()" class="btn">📲 شارك إنجازك مع عائلتك</button>
+  </div>
+  <footer>
+    © 2025 مشاعل الأمة – جميع الحقوق محفوظة ·
+    <a href="about.html">من نحن</a> ·
+    <a href="contact.html">اتصل بنا</a>
+  </footer>
+  <script type="module">
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyDiypCTp31wIc5MR3FhClKobeQTeK-vaFs",
+      authDomain: "machaeil-aloumma.firebaseapp.com",
+      projectId: "machaeil-aloumma",
+      storageBucket: "machaeil-aloumma.firebasestorage.app",
+      messagingSenderId: "678363443395",
+      appId: "1:678363443395:web:b604b002d4e8fd430d3276"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQPoVbqnu-Dg4Aa-GeOPnVwmGH8kLOo-SU0JtzhdoxKuGKphZeZ05QQo0YBHjff0HAsSppJpGYqGOMj/pub?gid=376531307&single=true&output=csv";
+    onAuthStateChanged(auth, (user) => {
+      if (!user) { window.location.href="login.html"; return; }
+      const studentName = user.displayName || user.email;
+      document.getElementById('student-name').textContent = studentName;
+      loadStars(studentName);
+    });
+    async function loadStars(studentName) {
+      try {
+        const res = await fetch(SHEET_URL);
+        if(!res.ok) throw new Error('فشل تحميل البيانات');
+        const data = await res.text();
+        const lines = data.split('\n').filter(line => line.trim() !== '');
+        if (lines.length === 0) {
+          document.getElementById('reasons-list').innerHTML = '<p style="color: #ff6b6b; text-align: center;">❌ لا توجد بيانات.</p>';
+          return;
+        }
+        let total = 0;
+        const reasons = [];
+        for (let i = 1; i < lines.length; i++) {
+          const row = lines[i].split(',').map(cell => cell.replace(/"/g, '').trim());
+          if (row.length < 5 || !row[1] || row[1].trim() === '') continue;
+          if (row[1].trim() === studentName) {
+            total += parseInt(row[4]) || 1;
+            reasons.push({
+              teacher: row[2] || 'مجهول',
+              reason: row[3] || 'سبب غير محدد'
+            });
+          }
+        }
+        document.getElementById('total-stars').textContent = total;
+        let currentLevel = "المشعل القدوة 🌟";
+        let targetLevel = "(الهدف: المشعل السفير)";
+        if (total >= 20) {
+          currentLevel = "المشعل الحكيم 🧙‍♂️";
+          targetLevel = ""; 
+        } else if (total >= 15) {
+          currentLevel = "المشعل الرائد 🦁";
+          targetLevel = "(الهدف: المشعل الحكيم)";
+        } else if (total >= 10) {
+          currentLevel = "المشعل القائد 👑";
+          targetLevel = "(الهدف: المشعل الرائد)";
+        } else if (total >= 5) {
+          currentLevel = "المشعل السفير 🚀";
+          targetLevel = "(الهدف: المشعل القائد)";
+        } else {
+          currentLevel = "المشعل القدوة 🌟";
+          targetLevel = "(الهدف: المشعل السفير)";
+        }
+        document.getElementById('current-level').textContent = currentLevel;
+        document.getElementById('target-level').textContent = targetLevel;
+        const list = document.getElementById('reasons-list');
+        if (reasons.length === 0) {
+          list.innerHTML = '<p style="color: #ccc; font-style: italic; text-align: center;">لم يُسجَّل أي نجم بعد.</p>';
+        } else {
+          list.innerHTML = reasons.map(r =>
+            `<div style="padding: 12px; margin: 8px 0; background: rgba(255,255,255,0.05); border-radius: 10px; border-right: 4px solid #FFD700; font-size: 0.95em; line-height: 1.5; direction: rtl; text-align: right; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+              <strong>📌 ${r.reason}</strong><br>
+              <small>— من: <span style="color: #FFD700;">${r.teacher}</span></small>
+            </div>`
+          ).join('');
+        }
+        // تأثير لمعان النجوم
+        document.getElementById('total-stars').style.animation = 'pulse 1.5s infinite';
+        document.head.insertAdjacentHTML('beforeend', `
+          <style>
+            @keyframes pulse {
+              0% { transform: scale(1); }
+              50% { transform: scale(1.1); color: #FFD700; }
+              100% { transform: scale(1); }
+            }
+          </style>
+        `);
+      } catch (err) {
+        console.error("خطأ:", err);
+        document.getElementById('reasons-list').innerHTML = '<p style="color: #ff6b6b; text-align: center;">❌ فشل تحميل البيانات.</p>';
+      }
+    }
+    function shareAchievement() {
+      const total = document.getElementById('total-stars').textContent;
+      const level = document.getElementById('current-level').textContent;
+      const message = `🌟 إنجازي في "مشاعل الأمة":\n${total} نجوم — ${level}\n#مشاعل_الأمة #إنجاز`;
+     
+      if (navigator.share) {
+        navigator.share({ title: 'إنجازي', text: message });
+      } else {
+        navigator.clipboard.writeText(message).then(() => {
+          alert("✅ تم نسخ الرسالة! يمكنك مشاركتها مع عائلتك الآن.");
+        }).catch(() => {
+          prompt("انسخ هذه الرسالة:", message);
+        });
+      }
+    }
+  </script>
+</body>
+</html>
