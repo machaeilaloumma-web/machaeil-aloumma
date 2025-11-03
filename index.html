@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>مشاعل الأمة - سفراء القيم</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family: 'Noto Kufi Arabic', sans-serif; }
   body {
@@ -12,33 +13,42 @@
     min-height:100vh; overflow-x:hidden; position:relative;
   }
 
-  .hero-image { width:100%; max-width:600px; height:auto; display:block; margin:0 auto 16px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.5);}
-  .logo { width:300px; height:300px; margin-bottom:16px;}
-  h1 { color:#fff; margin-bottom:12px; font-size:30px; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.25);}
-  .tagline { color:#ccc; font-size:15px; margin-bottom:24px; text-align:center;}
-
-  .index-container { background:#1a1a25; padding:24px; border-radius:16px; width:90%; max-width:420px; box-shadow:0 8px 24px rgba(0,0,0,0.5); text-align:center; margin-bottom:40px; position:relative;}
-
-  .btn {
-    display:block; width:100%; padding:12px; background:#252535; color:#fff; font-weight:500; border:1px solid #2e2e3d;
-    border-radius:8px; cursor:pointer; margin-bottom:12px; font-size:16px; text-decoration:none; text-align:center; transition:all 0.3s ease;
-    position:relative;
+  /* =================== زر الهامبرغر في أعلى يسار =================== */
+  .hamburger-container {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 200;
   }
-  .btn:hover { border-color:#00ff80; box-shadow:0 0 12px rgba(0,255,128,0.3); transform:translateY(-2px); }
 
-  /* =================== قائمة منسدلة للزر =================== */
+  .hamburger-btn {
+    font-size: 24px;
+    background: #252535;
+    border: 1px solid #2e2e3d;
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .hamburger-btn:hover {
+    background: #00ff80;
+    color: #000;
+    transform: scale(1.1);
+  }
+
   .dropdown-content {
     display:none;
-    position:absolute;
+    position: fixed;
+    top: 56px; /* أسفل الزر */
+    left: 16px;
     background:#252535;
-    min-width:100%;
     border:1px solid #2e2e3d;
     border-radius:8px;
-    z-index:100;
-    top:100%;
-    left:0;
-    text-align:right;
-    box-shadow:0 4px 12px rgba(0,255,128,0.2);
+    min-width:200px;
+    z-index:150;
+    box-shadow:0 4px 12px rgba(0,255,128,0.3);
   }
 
   .dropdown-content a {
@@ -55,6 +65,15 @@
     color:#000;
   }
 
+  /* =================== الصفحة الرئيسية =================== */
+  .hero-image { width:100%; max-width:600px; height:auto; display:block; margin:80px auto 16px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.5);}
+  .logo { width:300px; height:300px; margin-bottom:16px;}
+  h1 { color:#fff; margin-bottom:12px; font-size:30px; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.25);}
+  .tagline { color:#ccc; font-size:15px; margin-bottom:24px; text-align:center;}
+  .index-container { background:#1a1a25; padding:24px; border-radius:16px; width:90%; max-width:420px; box-shadow:0 8px 24px rgba(0,0,0,0.5); text-align:center; margin-bottom:40px;}
+  .btn { display:block; width:100%; padding:12px; background:#252535; color:#fff; font-weight:500; border:1px solid #2e2e3d; border-radius:8px; cursor:pointer; margin-bottom:12px; font-size:16px; text-decoration:none; text-align:center; transition:all 0.3s ease; }
+  .btn:hover { border-color:#00ff80; box-shadow:0 0 12px rgba(0,255,128,0.3); transform:translateY(-2px); }
+
   footer { text-align:center; font-size:13px; color:#aaa; width:100%; padding:8px 0; border-top:1px solid #2a2a35; background:transparent; margin-top:auto;}
   footer a { color:#00ff80; text-decoration:none; margin:0 8px; transition:opacity 0.3s; }
   footer a:hover { opacity:0.8; text-decoration:underline; }
@@ -62,21 +81,29 @@
 </head>
 <body>
 
+<!-- زر الهامبرغر -->
+<div class="hamburger-container">
+  <div class="hamburger-btn" id="hamburgerBtn">
+    <i class="fa fa-bars"></i>
+  </div>
+  <div class="dropdown-content" id="hamburgerMenu">
+    <a href="register.html">إنشاء حساب جديد</a>
+    <a href="login.html">تسجيل الدخول</a>
+    <a href="about.html">من نحن</a>
+    <a href="contact.html">اتصل بنا</a>
+  </div>
+</div>
+
+<!-- محتوى الصفحة -->
 <img src="http://machaeil-aloumma.web.app/alger.jpg" alt="الجزائر" class="hero-image" />
 <img src="http://machaeil-aloumma.web.app/machaoumma.gif" alt="شعار مشاعل الأمة" class="logo" />
 <h1>مشاعل الأمة  مشروع نهضة - سفراء القيم</h1>
 <p class="tagline">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة و التي ستحمش مشعل الامة و تحفظ العهد.</p>
 
 <div class="index-container">
-  <!-- زر رئيسي -->
-  <div class="btn dropdown-btn">القائمة الرئيسية
-    <div class="dropdown-content">
-      <a href="register.html">إنشاء حساب جديد</a>
-      <a href="login.html">تسجيل الدخول</a>
-      <a href="about.html">من نحن</a>
-      <a href="contact.html">اتصل بنا</a>
-    </div>
-  </div>
+  <a href="register.html" class="btn">إنشاء حساب جديد</a>
+  <a href="login.html" class="btn">تسجيل الدخول</a>
+  <a href="about.html" class="btn">من نحن</a>
 </div>
 
 <footer>
@@ -86,28 +113,23 @@
 </footer>
 
 <script>
-  // تفعيل القائمة المنسدلة
-  const dropdowns = document.querySelectorAll('.dropdown-btn');
-  dropdowns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const content = btn.querySelector('.dropdown-content');
-      const isVisible = content.style.display === 'block';
-      // إغلاق جميع القوائم الأخرى
-      document.querySelectorAll('.dropdown-content').forEach(d => d.style.display = 'none');
-      // فتح القائمة الحالية
-      content.style.display = isVisible ? 'none' : 'block';
-    });
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const hamburgerMenu = document.getElementById('hamburgerMenu');
+
+  hamburgerBtn.addEventListener('click', () => {
+    hamburgerMenu.style.display = hamburgerMenu.style.display === 'block' ? 'none' : 'block';
   });
 
-  // إغلاق القوائم عند الضغط خارجها
+  // إغلاق القائمة عند الضغط خارجها
   window.addEventListener('click', e => {
-    if (!e.target.closest('.dropdown-btn')) {
-      document.querySelectorAll('.dropdown-content').forEach(d => d.style.display = 'none');
+    if (!e.target.closest('.hamburger-container')) {
+      hamburgerMenu.style.display = 'none';
     }
   });
 </script>
 
 </body>
 </html>
+
 
 
