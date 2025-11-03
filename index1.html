@@ -1,77 +1,192 @@
-import React, { useState } from 'react';
-import { Home, BookOpen, Calendar, Layers, Users, Clock, Share2, LogIn, UserPlus } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>منصة مشاعل الأمة</title>
 
-// واجهة مشاعل الأمة - تصميم عصري مع تقسيم المهام والحواف المستديرة
-export default function MashaelPlatform() {
-  const [active, setActive] = useState('الصفحة الرئيسية');
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  const navItems = [
-    { name: 'الصفحة الرئيسية', icon: Home },
-    { name: 'الدورات التدريبية', icon: BookOpen },
-    { name: 'الورش والفعاليات', icon: Calendar },
-    { name: 'المكتبة التعليمية', icon: Layers },
-    { name: 'المشاريع الطلابية', icon: Users },
-    { name: 'المجتمع والتواصل', icon: Share2 },
-    { name: 'السجل والنشاط', icon: Clock },
-  ];
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide/dist/lucide.js"></script>
+</head>
+<body class="bg-black text-gray-100 font-sans min-h-screen">
 
-  return (
-    <div dir="rtl" className="flex flex-col min-h-screen bg-[#0a0a0a] text-gray-200 font-['Noto_Kufi_Arabic']">
-      {/* الشريط العلوي */}
-      <header className="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-[#0a0a0a]/80 backdrop-blur-md shadow-md sticky top-0 z-50">
-        <div className="text-xl font-bold">منصة مشاعل الأمة</div>
-        <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-900 border border-gray-700 rounded-2xl hover:bg-gray-800 transition" onClick={() => alert('تسجيل دخول - هذه ديمو')}>
-            <LogIn size={18} /> <span>تسجيل دخول</span>
-          </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-900 border border-gray-700 rounded-2xl hover:bg-gray-800 transition" onClick={() => alert('إنشاء حساب - هذه ديمو')}>
-            <UserPlus size={18} /> <span>إنشاء حساب</span>
-          </button>
+  <!-- ======= الشريط العلوي ======= -->
+  <header class="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-black/80 backdrop-blur-md shadow-md">
+    <div class="flex items-center gap-3">
+      <button aria-label="مشاركة" class="flex items-center gap-2 hover:bg-gray-800/60 transition px-3 py-2 rounded-xl border border-gray-800">
+        <i data-lucide="share-2" class="w-4 h-4"></i>
+        <span class="text-sm">مشاركة</span>
+      </button>
+    </div>
+
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl flex items-center justify-center border border-gray-700 bg-gradient-to-br from-gray-900 to-black">
+          <span class="text-xs font-bold text-gray-300">شعار</span>
         </div>
-      </header>
+        <div class="hidden md:block text-right">
+          <div class="text-sm font-semibold">منصة مشاعل الأمة</div>
+          <div class="text-xs text-gray-400">سفراء القيم — المنصة الوطنية التربوية</div>
+        </div>
+      </div>
 
-      <div className="flex flex-1">
-        {/* القائمة الجانبية */}
-        <aside className="w-64 border-l border-gray-800 bg-[#101010]/80 backdrop-blur-lg p-4 flex flex-col gap-2 sticky top-[72px] h-[calc(100vh-72px)]">
-          {navItems.map((item) => (
-            <button
-              key={item.name}
-              onClick={() => setActive(item.name)}
-              className={`flex items-center justify-start gap-3 px-4 py-2 rounded-2xl transition-all duration-200 border ${
-                active === item.name
-                  ? 'bg-gray-900 border-gray-700 text-white'
-                  : 'border-transparent hover:bg-gray-900/60 hover:border-gray-700 text-gray-400 hover:text-white'
-              }`}
-            >
-              {React.createElement(item.icon, { size: 18 })}
-              <span>{item.name}</span>
-            </button>
-          ))}
-        </aside>
-
-        {/* المحتوى الرئيسي */}
-        <main className="flex-1 p-8 overflow-y-auto">
-          <section className="bg-gray-900/40 border border-gray-800 rounded-2xl shadow-lg p-6 mb-8">
-            <h1 className="text-2xl font-semibold mb-2 text-white">مرحبًا بك في منصة مشاعل الأمة</h1>
-            <p className="text-gray-400">فضاء وطني تربوي شامل لغرس القيم وتعزيز الوعي الوطني والاجتماعي.</p>
-          </section>
-
-          <section className="bg-gray-900/40 border border-gray-800 rounded-2xl shadow-lg p-6">
-            <h2 className="text-xl font-semibold mb-4 text-white">المراحل التطويرية</h2>
-            <ul className="list-decimal pr-6 space-y-2 text-gray-300">
-              <li>مشعل القدوة — برامج تأسيسية للأطفال</li>
-              <li>مشعل السفير — تنمية مهارات المسؤولية</li>
-              <li>مشعل القائد — برامج قيادية وتطوعية</li>
-              <li>مشعل الرائد — مبادرات مجتمعية</li>
-              <li>مشعل الحكيم — برامج تكاملية واستشرافية</li>
-            </ul>
-          </section>
-
-          <footer className="text-center text-gray-500 text-sm border-t border-gray-800 pt-4 mt-8">
-            القسم النشط حاليًا: {active}
-          </footer>
-        </main>
+      <div class="flex items-center gap-2">
+        <button class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 border border-gray-700 rounded-xl text-sm hover:bg-gray-900">
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>تسجيل دخول</span>
+        </button>
+        <button class="inline-flex items-center gap-2 px-3 py-1.5 bg-white text-black hover:bg-gray-200 rounded-xl text-sm font-medium">
+          <i data-lucide="user-plus" class="w-4 h-4"></i>
+          <span>إنشاء حساب</span>
+        </button>
+        <button class="w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center" aria-label="القائمة الشخصية">
+          <i data-lucide="user" class="w-4 h-4"></i>
+        </button>
       </div>
     </div>
-  );
-}
+  </header>
+
+  <!-- ======= الهيكل الرئيسي ======= -->
+  <div class="flex">
+
+    <!-- ======= القائمة الجانبية ======= -->
+    <nav class="w-72 border-l border-gray-800 h-[calc(100vh-64px)] px-4 py-6 sticky top-0 bg-black/70 backdrop-blur-md">
+      <ul class="flex flex-col gap-2" id="navList">
+        <!-- سيتم ملئها بواسطة JS -->
+      </ul>
+
+      <div class="mt-6 px-3">
+        <div class="flex items-center gap-2 bg-gray-900 px-3 py-2 rounded-xl border border-gray-800">
+          <i data-lucide="search" class="w-4 h-4"></i>
+          <input placeholder="ابحث في المحتوى، الدورات، الموارد..." class="bg-transparent outline-none text-sm w-full">
+        </div>
+      </div>
+    </nav>
+
+    <!-- ======= المحتوى الرئيسي ======= -->
+    <main class="flex-1 p-8">
+      
+      <!-- القسم الترحيبي -->
+      <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="rounded-3xl border border-gray-800 bg-gradient-to-br from-black via-gray-950 to-gray-900 p-6 shadow-xl">
+          <h1 class="text-2xl font-bold mb-2 text-white">مرحبًا بك في منصة مشاعل الأمة</h1>
+          <p class="text-sm text-gray-400 leading-relaxed">
+            فضاء تربوي ووطني يهدف لغرس القيم، إعداد القادة الصغار، ودعم المدارس والمجتمعات المحلية عبر برامج تعليمية وتدريبية متدرجة ومتكاملة.
+          </p>
+          <div class="mt-6 flex gap-3">
+            <button class="px-4 py-2 rounded-xl bg-white text-black hover:bg-gray-200">البدء بالدورة</button>
+            <button class="px-4 py-2 rounded-xl border border-gray-700 hover:bg-gray-900">استكشاف المكتبة</button>
+          </div>
+        </div>
+
+        <!-- المراحل التطويرية -->
+        <div class="rounded-3xl border border-gray-800 bg-gray-950 p-6 shadow-xl">
+          <h3 class="text-lg font-semibold mb-4 text-white">المراحل التطويرية</h3>
+          <ol class="flex flex-col gap-3">
+            <li class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">1</div>
+              <div>
+                <div class="font-medium text-gray-100">مشعل القدوة</div>
+                <div class="text-xs text-gray-500">برامج تأسيسية للأطفال</div>
+              </div>
+            </li>
+            <li class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">2</div>
+              <div>
+                <div class="font-medium text-gray-100">مشعل السفير</div>
+                <div class="text-xs text-gray-500">تنمية مهارات المسؤولية</div>
+              </div>
+            </li>
+            <li class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">3</div>
+              <div>
+                <div class="font-medium text-gray-100">مشعل القائد</div>
+                <div class="text-xs text-gray-500">برامج قيادية وتطوعية</div>
+              </div>
+            </li>
+            <li class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">4</div>
+              <div>
+                <div class="font-medium text-gray-100">مشعل الرائد</div>
+                <div class="text-xs text-gray-500">مبادرات مجتمعية ومشروعات</div>
+              </div>
+            </li>
+            <li class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">5</div>
+              <div>
+                <div class="font-medium text-gray-100">مشعل الحكيم</div>
+                <div class="text-xs text-gray-500">برامج تكاملية واستشرافية</div>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- أقسام إضافية -->
+      <section class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
+          <h4 class="font-semibold mb-2 text-white">الفعاليات القادمة</h4>
+          <p class="text-sm text-gray-400">حفل تكريم المدارس المتميزة — 12 ديسمبر / ورشة بناء القدوات — 20 ديسمبر / مسابقة القصص التربوية — التسجيل مفتوح</p>
+        </div>
+        <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
+          <h4 class="font-semibold mb-2 text-white">الموارد المميزة</h4>
+          <p class="text-sm text-gray-400">قصص تربوية، تقارير، ودورات مختصرة قابلة للتحميل.</p>
+        </div>
+        <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
+          <h4 class="font-semibold mb-2 text-white">المجتمع والتواصل</h4>
+          <p class="text-sm text-gray-400">انضم إلى المنتديات المحلية ومجموعات العمل بين المدارس.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ======= JavaScript ======= -->
+  <script>
+    // تفعيل أيقونات Lucide
+    lucide.replace();
+
+    // عناصر القائمة الجانبية
+    const navItems = [
+      "الصفحة الرئيسية",
+      "الدورات التدريبية",
+      "الورش والفعاليّات",
+      "المكتبة التعليمية",
+      "المشاريع الطلابية",
+      "المجتمع والتواصل",
+      "السجل والنشاط",
+    ];
+
+    const icons = ["home", "book-open", "calendar", "layers", "users", "users", "clock"];
+
+    const navList = document.getElementById("navList");
+
+    navItems.forEach((item, index) => {
+      const li = document.createElement("li");
+
+      const a = document.createElement("a");
+      a.className = `flex items-center gap-3 px-3 py-2 rounded-2xl transition ${item === "السجل والنشاط" ? "bg-gray-900 text-white border border-gray-800 shadow-inner" : "hover:bg-gray-900/60"}`;
+      a.href = "#";
+
+      const icon = document.createElement("i");
+      icon.setAttribute("data-lucide", icons[index]);
+      icon.className = "w-4 h-4 text-gray-300";
+
+      const span = document.createElement("span");
+      span.className = "text-sm";
+      span.textContent = item;
+
+      a.appendChild(icon);
+      a.appendChild(span);
+      li.appendChild(a);
+      navList.appendChild(li);
+    });
+
+    lucide.replace(); // إعادة تفعيل الأيقونات بعد إضافتها
+  </script>
+
+</body>
+</html>
