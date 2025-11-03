@@ -1,192 +1,214 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>منصة مشاعل الأمة</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مشاعل الأمة - سفراء القيم</title>
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+<!-- الخط -->
+<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide/dist/lucide.js"></script>
+<!-- Font Awesome للرموز القديمة -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Lucide Icons CDN -->
+<script src="https://unpkg.com/lucide/dist/lucide.js"></script>
+
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Noto Kufi Arabic', sans-serif; }
+  body { background:#000; color:#fff; display:flex; flex-direction:column; min-height:100vh; overflow-x:hidden; }
+
+  /* القوائم المنسدلة والهامبرغر */
+  .hamburger-container, .account-container { position: fixed; top:16px; z-index:200; }
+  .hamburger-container { left:16px; }
+  .account-container { right:16px; }
+  .hamburger-btn, .account-btn { background: transparent; border:none; color:#fff; padding:0; font-size:28px; cursor:pointer; transition: all 0.3s ease; }
+  .hamburger-btn:hover, .account-btn:hover { color:#00ff80; transform:scale(1.2); }
+  .dropdown-content {
+    display:none; position:fixed; top:60px; left:16px;
+    background: rgba(37,35,53,0.95); border-radius:10px; min-width:200px; z-index:150;
+    overflow:hidden; box-shadow:none; transform:translateY(-10px); opacity:0;
+    transition: all 0.3s ease;
+  }
+  .dropdown-content.show { display:block; transform:translateY(0); opacity:1; }
+  .dropdown-content a { display:block; padding:12px; color:#fff; text-decoration:none; font-size:16px; transition: all 0.2s ease; }
+  .dropdown-content a:hover { background:#00ff80; color:#000; }
+  .dropdown-content a.logout { color:#ff6b6b; }
+  .dropdown-content a.logout:hover { background:#ff6b6b; color:#fff; }
+
+  /* الصور الرئيسية */
+  .hero-image { width:100%; max-height:400px; object-fit:cover; margin-top:64px; }
+  .logo { width:200px; display:block; margin:20px auto; }
+
+  h1 { text-align:center; margin:10px 0; font-size:2rem; }
+  .tagline { text-align:center; color:#aaa; margin-bottom:20px; }
+
+  footer { text-align:center; margin:20px 0; font-size:14px; color:#777; }
+  footer a { color:#00ff80; text-decoration:none; margin:0 5px; }
+  footer a:hover { text-decoration:underline; }
+</style>
 </head>
-<body class="bg-black text-gray-100 font-sans min-h-screen">
+<body>
 
-  <!-- ======= الشريط العلوي ======= -->
-  <header class="flex items-center justify-between px-6 py-4 border-b border-gray-800 bg-black/80 backdrop-blur-md shadow-md">
-    <div class="flex items-center gap-3">
-      <button aria-label="مشاركة" class="flex items-center gap-2 hover:bg-gray-800/60 transition px-3 py-2 rounded-xl border border-gray-800">
-        <i data-lucide="share-2" class="w-4 h-4"></i>
-        <span class="text-sm">مشاركة</span>
-      </button>
-    </div>
-
-    <div class="flex items-center gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-2xl flex items-center justify-center border border-gray-700 bg-gradient-to-br from-gray-900 to-black">
-          <span class="text-xs font-bold text-gray-300">شعار</span>
-        </div>
-        <div class="hidden md:block text-right">
-          <div class="text-sm font-semibold">منصة مشاعل الأمة</div>
-          <div class="text-xs text-gray-400">سفراء القيم — المنصة الوطنية التربوية</div>
-        </div>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <button class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 border border-gray-700 rounded-xl text-sm hover:bg-gray-900">
-          <i data-lucide="log-in" class="w-4 h-4"></i>
-          <span>تسجيل دخول</span>
-        </button>
-        <button class="inline-flex items-center gap-2 px-3 py-1.5 bg-white text-black hover:bg-gray-200 rounded-xl text-sm font-medium">
-          <i data-lucide="user-plus" class="w-4 h-4"></i>
-          <span>إنشاء حساب</span>
-        </button>
-        <button class="w-10 h-10 rounded-full bg-gray-900 border border-gray-800 flex items-center justify-center" aria-label="القائمة الشخصية">
-          <i data-lucide="user" class="w-4 h-4"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <!-- ======= الهيكل الرئيسي ======= -->
-  <div class="flex">
-
-    <!-- ======= القائمة الجانبية ======= -->
-    <nav class="w-72 border-l border-gray-800 h-[calc(100vh-64px)] px-4 py-6 sticky top-0 bg-black/70 backdrop-blur-md">
-      <ul class="flex flex-col gap-2" id="navList">
-        <!-- سيتم ملئها بواسطة JS -->
-      </ul>
-
-      <div class="mt-6 px-3">
-        <div class="flex items-center gap-2 bg-gray-900 px-3 py-2 rounded-xl border border-gray-800">
-          <i data-lucide="search" class="w-4 h-4"></i>
-          <input placeholder="ابحث في المحتوى، الدورات، الموارد..." class="bg-transparent outline-none text-sm w-full">
-        </div>
-      </div>
-    </nav>
-
-    <!-- ======= المحتوى الرئيسي ======= -->
-    <main class="flex-1 p-8">
-      
-      <!-- القسم الترحيبي -->
-      <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="rounded-3xl border border-gray-800 bg-gradient-to-br from-black via-gray-950 to-gray-900 p-6 shadow-xl">
-          <h1 class="text-2xl font-bold mb-2 text-white">مرحبًا بك في منصة مشاعل الأمة</h1>
-          <p class="text-sm text-gray-400 leading-relaxed">
-            فضاء تربوي ووطني يهدف لغرس القيم، إعداد القادة الصغار، ودعم المدارس والمجتمعات المحلية عبر برامج تعليمية وتدريبية متدرجة ومتكاملة.
-          </p>
-          <div class="mt-6 flex gap-3">
-            <button class="px-4 py-2 rounded-xl bg-white text-black hover:bg-gray-200">البدء بالدورة</button>
-            <button class="px-4 py-2 rounded-xl border border-gray-700 hover:bg-gray-900">استكشاف المكتبة</button>
-          </div>
-        </div>
-
-        <!-- المراحل التطويرية -->
-        <div class="rounded-3xl border border-gray-800 bg-gray-950 p-6 shadow-xl">
-          <h3 class="text-lg font-semibold mb-4 text-white">المراحل التطويرية</h3>
-          <ol class="flex flex-col gap-3">
-            <li class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">1</div>
-              <div>
-                <div class="font-medium text-gray-100">مشعل القدوة</div>
-                <div class="text-xs text-gray-500">برامج تأسيسية للأطفال</div>
-              </div>
-            </li>
-            <li class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">2</div>
-              <div>
-                <div class="font-medium text-gray-100">مشعل السفير</div>
-                <div class="text-xs text-gray-500">تنمية مهارات المسؤولية</div>
-              </div>
-            </li>
-            <li class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">3</div>
-              <div>
-                <div class="font-medium text-gray-100">مشعل القائد</div>
-                <div class="text-xs text-gray-500">برامج قيادية وتطوعية</div>
-              </div>
-            </li>
-            <li class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">4</div>
-              <div>
-                <div class="font-medium text-gray-100">مشعل الرائد</div>
-                <div class="text-xs text-gray-500">مبادرات مجتمعية ومشروعات</div>
-              </div>
-            </li>
-            <li class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">5</div>
-              <div>
-                <div class="font-medium text-gray-100">مشعل الحكيم</div>
-                <div class="text-xs text-gray-500">برامج تكاملية واستشرافية</div>
-              </div>
-            </li>
-          </ol>
-        </div>
-      </section>
-
-      <!-- أقسام إضافية -->
-      <section class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
-          <h4 class="font-semibold mb-2 text-white">الفعاليات القادمة</h4>
-          <p class="text-sm text-gray-400">حفل تكريم المدارس المتميزة — 12 ديسمبر / ورشة بناء القدوات — 20 ديسمبر / مسابقة القصص التربوية — التسجيل مفتوح</p>
-        </div>
-        <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
-          <h4 class="font-semibold mb-2 text-white">الموارد المميزة</h4>
-          <p class="text-sm text-gray-400">قصص تربوية، تقارير، ودورات مختصرة قابلة للتحميل.</p>
-        </div>
-        <div class="rounded-3xl border border-gray-800 bg-gray-950 p-5 shadow-xl">
-          <h4 class="font-semibold mb-2 text-white">المجتمع والتواصل</h4>
-          <p class="text-sm text-gray-400">انضم إلى المنتديات المحلية ومجموعات العمل بين المدارس.</p>
-        </div>
-      </section>
-
-    </main>
+<!-- ======= الهامبرغر والقائمة المنسدلة ======= -->
+<div class="hamburger-container">
+  <div class="hamburger-btn" id="hamburgerBtn">
+    <i class="fa fa-bars"></i>
   </div>
+  <div class="dropdown-content" id="hamburgerMenu">
+    <a href="about.html">من نحن</a>
+    <a href="contact.html">اتصل بنا</a>
+    <a href="profile.html">الملف الشخصي</a>
+    <a href="#" id="logoutBtn" class="logout" style="display:none;">
+      <i class="fa fa-sign-out"></i> تسجيل الخروج
+    </a>
+  </div>
+</div>
 
-  <!-- ======= JavaScript ======= -->
-  <script>
-    // تفعيل أيقونات Lucide
-    lucide.replace();
+<!-- أيقونة المستخدم -->
+<div class="account-container">
+  <a href="profile.html" id="accountLink" class="account-btn">
+    <i class="fa fa-user"></i>
+  </a>
+</div>
 
-    // عناصر القائمة الجانبية
-    const navItems = [
-      "الصفحة الرئيسية",
-      "الدورات التدريبية",
-      "الورش والفعاليّات",
-      "المكتبة التعليمية",
-      "المشاريع الطلابية",
-      "المجتمع والتواصل",
-      "السجل والنشاط",
-    ];
+<!-- الصور الرئيسية -->
+<img src="http://machaeil-aloumma.web.app/alger.jpg" alt="الجزائر" class="hero-image" />
+<img src="http://machaeil-aloumma.web.app/machaoumma.gif" alt="شعار مشاعل الأمة" class="logo" />
+<h1>مشاعل الأمة - مشروع نهضة سفراء القيم</h1>
+<p class="tagline">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة و التي ستحفظ مشعل الأمة و تحفظ العهد.</p>
 
-    const icons = ["home", "book-open", "calendar", "layers", "users", "users", "clock"];
+<!-- ======= الشريط العلوي الحديث + قائمة جانبية ======= -->
+<div class="flex w-full">
 
-    const navList = document.getElementById("navList");
+  <!-- القائمة الجانبية -->
+  <nav class="w-72 border-l border-gray-800 h-[calc(100vh-64px)] px-4 py-6 sticky top-0 bg-black/70 backdrop-blur-md hidden md:block">
+    <ul class="flex flex-col gap-2" id="navList"></ul>
 
-    navItems.forEach((item, index) => {
-      const li = document.createElement("li");
+    <div class="mt-6 px-3">
+      <div class="flex items-center gap-2 bg-gray-900 px-3 py-2 rounded-xl border border-gray-800">
+        <i data-lucide="search" class="w-4 h-4"></i>
+        <input placeholder="ابحث في المحتوى، الدورات، الموارد..." class="bg-transparent outline-none text-sm w-full">
+      </div>
+    </div>
+  </nav>
 
-      const a = document.createElement("a");
-      a.className = `flex items-center gap-3 px-3 py-2 rounded-2xl transition ${item === "السجل والنشاط" ? "bg-gray-900 text-white border border-gray-800 shadow-inner" : "hover:bg-gray-900/60"}`;
-      a.href = "#";
+  <!-- المحتوى الرئيسي -->
+  <main class="flex-1 p-8">
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="rounded-3xl border border-gray-800 bg-gradient-to-br from-black via-gray-950 to-gray-900 p-6 shadow-xl">
+        <h2 class="text-2xl font-bold mb-2 text-white">مرحبًا بك في منصة مشاعل الأمة</h2>
+        <p class="text-sm text-gray-400 leading-relaxed">
+          فضاء تربوي ووطني يهدف لغرس القيم، إعداد القادة الصغار، ودعم المدارس والمجتمعات المحلية عبر برامج تعليمية وتدريبية متدرجة ومتكاملة.
+        </p>
+        <div class="mt-6 flex gap-3">
+          <button class="px-4 py-2 rounded-xl bg-white text-black hover:bg-gray-200">البدء بالدورة</button>
+          <button class="px-4 py-2 rounded-xl border border-gray-700 hover:bg-gray-900">استكشاف المكتبة</button>
+        </div>
+      </div>
 
-      const icon = document.createElement("i");
-      icon.setAttribute("data-lucide", icons[index]);
-      icon.className = "w-4 h-4 text-gray-300";
+      <div class="rounded-3xl border border-gray-800 bg-gray-950 p-6 shadow-xl">
+        <h3 class="text-lg font-semibold mb-4 text-white">المراحل التطويرية</h3>
+        <ol class="flex flex-col gap-3">
+          <li class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">1</div>
+            <div><div class="font-medium text-gray-100">مشعل القدوة</div><div class="text-xs text-gray-500">برامج تأسيسية للأطفال</div></div>
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">2</div>
+            <div><div class="font-medium text-gray-100">مشعل السفير</div><div class="text-xs text-gray-500">تنمية مهارات المسؤولية</div></div>
+          </li>
+          <li class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl border border-gray-700 flex items-center justify-center font-semibold text-gray-300">3</div>
+            <div><div class="font-medium text-gray-100">مشعل القائد</div><div class="text-xs text-gray-500">برامج قيادية وتطوعية</div></div>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
 
-      const span = document.createElement("span");
-      span.className = "text-sm";
-      span.textContent = item;
+</div>
 
-      a.appendChild(icon);
-      a.appendChild(span);
-      li.appendChild(a);
-      navList.appendChild(li);
-    });
+<footer>
+  © 2025 مشاعل الأمة – جميع الحقوق محفوظة · 
+  <a href="about.html">من نحن</a> · 
+  <a href="contact.html">اتصل بنا</a>
+</footer>
 
-    lucide.replace(); // إعادة تفعيل الأيقونات بعد إضافتها
-  </script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+  firebase.initializeApp(firebaseConfig);
+
+  const logoutBtn = document.getElementById('logoutBtn');
+  const accountLink = document.getElementById('accountLink');
+
+  document.getElementById('hamburgerBtn').onclick = () => {
+    document.getElementById('hamburgerMenu').classList.toggle('show');
+  };
+  window.onclick = e => {
+    if (!e.target.closest('.hamburger-container') && !e.target.closest('.account-container')) {
+      document.getElementById('hamburgerMenu').classList.remove('show');
+    }
+  };
+
+  firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      logoutBtn.style.display = 'block';
+      accountLink.href = 'profile.html';
+    } else {
+      logoutBtn.style.display = 'none';
+      accountLink.href = 'login.html';
+    }
+  });
+
+  logoutBtn.onclick = (e) => {
+    e.preventDefault();
+    firebase.auth().signOut().then(() => {
+      alert('تم تسجيل الخروج بنجاح');
+      window.location.href = 'login.html';
+    }).catch(err => { alert('حدث خطأ: ' + err.message); });
+  };
+
+  // ===== قائمة جانبية ديناميكية بالـ Lucide =====
+  const navItems = [
+    "الصفحة الرئيسية",
+    "الدورات التدريبية",
+    "الورش والفعاليّات",
+    "المكتبة التعليمية",
+    "المشاريع الطلابية",
+    "المجتمع والتواصل",
+    "السجل والنشاط"
+  ];
+  const icons = ["home","book-open","calendar","layers","users","users","clock"];
+  const navList = document.getElementById("navList");
+  navItems.forEach((item,index)=>{
+    const li = document.createElement("li");
+    const a = document.createElement("a");
+    a.className = `flex items-center gap-3 px-3 py-2 rounded-2xl transition ${item==="السجل والنشاط"?"bg-gray-900 text-white border border-gray-800 shadow-inner":"hover:bg-gray-900/60"}`;
+    a.href="#";
+    const icon = document.createElement("i");
+    icon.setAttribute("data-lucide",icons[index]);
+    icon.className="w-4 h-4 text-gray-300";
+    const span = document.createElement("span");
+    span.className="text-sm"; span.textContent=item;
+    a.appendChild(icon); a.appendChild(span); li.appendChild(a); navList.appendChild(li);
+  });
+  lucide.replace();
+</script>
 
 </body>
 </html>
