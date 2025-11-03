@@ -34,7 +34,7 @@ h1 {
 .input-group input,
 .input-group select {
   width: 100%;
-  padding: 14px 12px 14px 48px;
+  padding: 14px 20px 14px 48px;
   border-radius: 12px;
   border: 1px solid #333;
   background: #111;
@@ -94,4 +94,5 @@ button {
   color: #FFD700;
   text-decoration: none;
 }
+
 
