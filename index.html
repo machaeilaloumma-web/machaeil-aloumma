@@ -5,91 +5,74 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مشاعل الأمة - سفراء القيم</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
   * { margin:0; padding:0; box-sizing:border-box; font-family: 'Noto Kufi Arabic', sans-serif; }
   body { background:#000; color:#fff; display:flex; flex-direction:column; align-items:center; min-height:100vh; overflow-x:hidden; position:relative; }
 
-  /* أيقونات ثابتة */
-  .hamburger-container, .account-container { 
-    position: fixed; top:16px; z-index:200; 
-  }
+  .hamburger-container, .account-container { position: fixed; top:16px; z-index:200; }
   .hamburger-container { left:16px; }
   .account-container { right:16px; }
 
   .hamburger-btn, .account-btn {
-    background: transparent; border:none; color:#fff; 
-    padding:8px; font-size:28px; cursor:pointer; 
-    transition: all 0.3s ease; border-radius:50%;
+    background: transparent; border:none; color:#fff; padding:0; font-size:28px; cursor:pointer; transition: all 0.3s ease;
   }
-  .hamburger-btn:hover, .account-btn:hover { 
-    color:#00ff80; transform:scale(1.2); background:rgba(0,255,128,0.15);
-  }
+  .hamburger-btn:hover, .account-btn:hover { color:#00ff80; transform:scale(1.2); }
 
-  /* قائمة الهامبرغر */
+  /* القائمة المنسدلة: بدون توهج، بدون ضبابية */
   .dropdown-content {
-    display:none; position:fixed; top:60px; left:16px;
-    background: rgba(37,35,53,0.98); border-radius:12px;
-    min-width:200px; z-index:150; overflow:hidden;
-    box-shadow:0 8px 32px rgba(0,255,128,0.25);
-    backdrop-filter: blur(10px);
-    transform:translateY(-10px); opacity:0;
+    display:none;
+    position:fixed;
+    top:60px;
+    left:16px;
+    background: rgba(37,35,53,0.95);
+    border-radius:10px;
+    min-width:200px;
+    z-index:150;
+    overflow:hidden;
+    box-shadow: none;           /* تم حذف التوهج */
+    backdrop-filter: none;      /* تم حذف الضبابية */
+    transform:translateY(-10px);
+    opacity:0;
     transition: all 0.3s ease;
   }
   .dropdown-content.show { display:block; transform:translateY(0); opacity:1; }
-  .dropdown-content a { 
-    display:block; padding:14px 16px; color:#fff; 
-    text-decoration:none; font-size:16px; 
-    transition: all 0.2s ease; border-bottom:1px solid rgba(255,255,255,0.05);
+  .dropdown-content a {
+    display:block; padding:12px; color:#fff; text-decoration:none; font-size:16px;
+    transition: all 0.2s ease;
   }
   .dropdown-content a:hover { background:#00ff80; color:#000; }
 
-  /* المحتوى */
   .hero-image { width:100%; max-width:600px; height:auto; display:block; margin:80px auto 16px; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.5); }
-  .logo { width:300px; height:300px; margin-bottom:16px; border-radius:50%; object-fit:cover; }
-  h1 { color:#fff; margin-bottom:12px; font-size:30px; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.3); }
-  .tagline { color:#ccc; font-size:15px; margin-bottom:24px; text-align:center; line-height:1.6; }
+  .logo { width:300px; height:300px; margin-bottom:16px; }
+  h1 { color:#fff; margin-bottom:12px; font-size:30px; text-align:center; text-shadow:0 0 10px rgba(0,255,128,0.25); }
+  .tagline { color:#ccc; font-size:15px; margin-bottom:24px; text-align:center; }
 
-  footer { text-align:center; font-size:13px; color:#aaa; width:100%; padding:12px 0; border-top:1px solid #2a2a35; background:rgba(0,0,0,0.5); margin-top:auto; }
-  footer a { color:#00ff80; text-decoration:none; margin:0 10px; transition:opacity 0.3s; }
+  footer { text-align:center; font-size:13px; color:#aaa; width:100%; padding:8px 0; border-top:1px solid #2a2a35; margin-top:auto; }
+  footer a { color:#00ff80; text-decoration:none; margin:0 8px; }
   footer a:hover { opacity:0.8; text-decoration:underline; }
-
-  /* مؤشر تحميل بسيط */
-  .account-btn.loading::after {
-    content:""; display:inline-block; width:10px; height:10px;
-    border:2px solid #00ff80; border-radius:50%; border-top-color:transparent;
-    animation: spin 0.8s linear infinite; margin-right:8px;
-  }
-  @keyframes spin { to { transform:rotate(360deg); } }
 </style>
 </head>
 <body>
 
-<!-- زر الهامبرغر -->
 <div class="hamburger-container">
-  <button class="hamburger-btn" id="hamburgerBtn" aria-label="القائمة">
-    <i class="fa fa-bars"></i>
-  </button>
+  <div class="hamburger-btn" id="hamburgerBtn"><i class="fa fa-bars"></i></div>
   <div class="dropdown-content" id="hamburgerMenu">
     <a href="about.html">من نحن</a>
     <a href="contact.html">اتصل بنا</a>
-    <a href="profile.html" id="profileLink">الملف الشخصي</a>
-    <a href="#" id="logoutLink" style="display:none; color:#ff6b6b;">تسجيل الخروج</a>
   </div>
 </div>
 
-<!-- أيقونة الحساب -->
 <div class="account-container">
-  <button class="account-btn" id="accountBtn" aria-label="حساب المستخدم">
+  <a href="login.html" id="accountLink" class="account-btn">
     <i class="fa fa-user"></i>
-  </button>
+  </a>
 </div>
 
-<!-- المحتوى -->
 <img src="http://machaeil-aloumma.web.app/alger.jpg" alt="الجزائر" class="hero-image" />
 <img src="http://machaeil-aloumma.web.app/machaoumma.gif" alt="شعار مشاعل الأمة" class="logo" />
-<h1>مشاعل الأمة - مشروع نهضة</h1>
-<p class="tagline">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة، لتحمل مشعل الأمة وتحفظ العهد.</p>
+<h1>مشاعل الأمة  مشروع نهضة - سفراء القيم</h1>
+<p class="tagline">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة و التي ستحمش مشعل الامة و تحفظ العهد.</p>
 
 <footer>
   © 2025 مشاعل الأمة – جميع الحقوق محفوظة · 
@@ -97,12 +80,9 @@
   <a href="contact.html">اتصل بنا</a>
 </footer>
 
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
 <script>
-  // === إعداد Firebase (استبدل بالقيم الحقيقية) ===
   const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_AUTH_DOMAIN",
@@ -112,60 +92,21 @@
     appId: "YOUR_APP_ID"
   };
   firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
 
-  // === العناصر ===
-  const accountBtn = document.getElementById('accountBtn');
-  const profileLink = document.getElementById('profileLink');
-  const logoutLink = document.getElementById('logoutLink');
-  const hamburgerMenu = document.getElementById('hamburgerMenu');
+  // الهامبرغر
+  document.getElementById('hamburgerBtn').onclick = () => {
+    document.getElementById('hamburgerMenu').classList.toggle('show');
+  };
+  window.onclick = e => {
+    if (!e.target.closest('.hamburger-container') && !e.target.closest('.account-container')) {
+      document.getElementById('hamburgerMenu').classList.remove('show');
+    }
+  };
 
-  // === دالة التوجيه الذكية ===
-  function navigateBasedOnAuth() {
-    accountBtn.classList.add('loading'); // مؤشر تحميل
-
-    auth.onAuthStateChanged(user => {
-      accountBtn.classList.remove('loading');
-
-      if (user) {
-        // مسجل الدخول → profile.html
-        accountBtn.onclick = () => window.location.href = 'profile.html';
-        profileLink.style.display = 'block';
-        logoutLink.style.display = 'block';
-        logoutLink.onclick = (e) => {
-          e.preventDefault();
-          auth.signOut().then(() => {
-            alert('تم تسجيل الخروج بنجاح');
-            window.location.href = 'login.html';
-          });
-        };
-      } else {
-        // غير مسجل → login.html
-        accountBtn.onclick = () => window.location.href = 'login.html';
-        profileLink.style.display = 'none';
-        logoutLink.style.display = 'none';
-      }
-    });
-  }
-
-  // === تشغيل التحقق عند التحميل ===
-  document.addEventListener('DOMContentLoaded', () => {
-    navigateBasedOnAuth();
-
-    // الهامبرغر
-    document.getElementById('hamburgerBtn').addEventListener('click', (e) => {
-      e.stopPropagation();
-      hamburgerMenu.classList.toggle('show');
-    });
-
-    // إغلاق القوائم عند النقر خارجها
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.hamburger-container') && !e.target.closest('.account-container')) {
-        hamburgerMenu.classList.remove('show');
-      }
-    });
+  // أيقونة الحساب: ذكية وفورية
+  firebase.auth().onAuthStateChanged(user => {
+    document.getElementById('accountLink').href = user ? 'profile.html' : 'login.html';
   });
 </script>
-
 </body>
 </html>
