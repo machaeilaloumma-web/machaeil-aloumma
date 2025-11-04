@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>مشاعل الأمة – سفراء القيم</title>
 
-  <!-- خط عربي -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
-  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
@@ -17,7 +15,6 @@
       --text:#fff;
       --glass:rgba(255,255,255,0.05);
       --overlay:rgba(0,0,0,0.6);
-      --sidebar-w:250px;
       transition:all .3s ease;
     }
     [data-theme="light"]{
@@ -28,8 +25,7 @@
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
-    html,body{
-      height:100%;
+    body{
       font-family:'Noto Kufi Arabic',sans-serif;
       background:var(--bg);
       color:var(--text);
@@ -42,44 +38,46 @@
       filter:brightness(0.6);
     }
 
-    a{color:inherit;text-decoration:none}
-    button{cursor:pointer;background:none;border:none;color:inherit}
-
-    /* ===== الشريط العلوي ===== */
     header{
-      position:fixed;top:0;right:0;left:0;height:64px;display:flex;
-      align-items:center;justify-content:space-between;
-      padding:0 18px;background:var(--overlay);backdrop-filter:blur(6px);
-      z-index:150;box-shadow:0 2px 12px rgba(0,0,0,0.3);
+      position:fixed;top:0;right:0;left:0;height:64px;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:0 14px;background:var(--overlay);backdrop-filter:blur(6px);
+      z-index:150;
+      box-shadow:0 2px 12px rgba(0,0,0,0.3);
     }
+
+    /* شعار داخل الشريط العلوي */
+    .header-logo{
+      display:flex;align-items:center;gap:8px;
+    }
+    .header-logo img{
+      width:42px;height:42px;border-radius:8px;object-fit:cover;
+    }
+    .header-logo span{
+      font-weight:700;font-size:0.9rem;
+      display:none; /* يظهر فقط في الشاشات المتوسطة فما فوق */
+    }
+
     .menu-btn,.theme-btn,.user-btn{
       width:40px;height:40px;display:flex;align-items:center;justify-content:center;
-      border-radius:8px;background:var(--glass)
+      border-radius:8px;background:var(--glass);
     }
     .menu-btn:hover,.theme-btn:hover,.user-btn:hover{background:rgba(255,255,255,0.1)}
-    .search-bar{flex:1;margin:0 14px;position:relative}
+    .search-bar{flex:1;margin:0 12px;position:relative}
     .search-bar input{
-      width:100%;padding:10px 40px 10px 12px;border-radius:8px;border:none;
+      width:100%;padding:9px 40px 9px 12px;border-radius:8px;border:none;
       outline:none;background:var(--glass);color:var(--text);
     }
     .search-bar svg{position:absolute;top:50%;left:12px;transform:translateY(-50%)}
 
-    /* ===== الحاوية العامة ===== */
     .layout{
-      display:flex;
-      flex-direction:row;
-      margin-top:64px; /* أسفل الشريط العلوي */
-      min-height:100vh;
+      display:flex;flex-direction:row;margin-top:64px;min-height:100vh;
     }
 
-    /* ===== الشريط الجانبي ===== */
     .sidebar{
-      width:var(--sidebar-w);
-      background:linear-gradient(180deg,rgba(17,17,17,0.95),rgba(9,9,9,0.95));
-      backdrop-filter:blur(8px);
-      padding:22px 14px;
-      display:flex;flex-direction:column;align-items:center;
-      gap:12px;
+      width:250px;background:rgba(17,17,17,0.95);
+      backdrop-filter:blur(8px);padding:20px 14px;
+      display:flex;flex-direction:column;align-items:center;gap:12px;
       transition:transform .3s ease;
     }
     .sidebar.hide{display:none}
@@ -91,35 +89,23 @@
     .nav a:hover{background:var(--glass);color:var(--accent);transform:translateX(-4px)}
     .nav a:hover svg{stroke:var(--accent)}
 
-    /* ===== المحتوى ===== */
-    main{
-      flex:1;
-      padding:28px;
-      overflow:auto;
-    }
+    main{flex:1;padding:28px;overflow:auto}
 
-    .hero{position:relative;height:80vh;border-radius:18px;overflow:hidden}
-    .hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8)}
+    .hero{
+      position:relative;width:100%;height:60vh;max-height:600px;border-radius:18px;overflow:hidden;
+      display:flex;align-items:center;justify-content:center;
+    }
+    .hero img{
+      width:100%;height:100%;object-fit:cover;
+    }
     .hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
-    .hero .content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-    .hero h1{font-size:2rem;font-weight:700;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,0.7)}
-    .hero p{color:#eee;font-size:1.1rem;margin-top:8px}
-
-    /* ===== قائمة المستخدم ===== */
-    .user-menu{
-      position:absolute;top:64px;left:10px;min-width:180px;
-      background:linear-gradient(180deg,rgba(17,17,17,0.97),rgba(9,9,9,0.97));
-      border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.6);
-      overflow:hidden;opacity:0;transform:translateY(-10px);
-      pointer-events:none;transition:.25s;
+    .hero .content{
+      position:absolute;z-index:2;text-align:center;color:#fff;
+      padding:0 10px;
     }
-    .user-menu.show{opacity:1;transform:translateY(0);pointer-events:auto}
-    .user-menu a{display:flex;align-items:center;gap:8px;padding:10px 12px;font-size:0.95rem;transition:.2s}
-    .user-menu a svg{width:16px;height:16px}
-    .user-menu a:hover{background:rgba(255,255,255,0.05);color:var(--accent)}
-    .user-menu a:hover svg{stroke:var(--accent)}
+    .hero h1{font-size:2rem;font-weight:700}
+    .hero p{font-size:1.1rem;margin-top:8px;color:#eee}
 
-    /* ===== تذييل ===== */
     footer{
       background:rgba(17,17,17,0.9);padding:20px;text-align:center;margin-top:50px;
       border-top:1px solid rgba(255,255,255,0.05);backdrop-filter:blur(8px)
@@ -129,40 +115,34 @@
     footer .social a{margin:0 6px;opacity:0.8}
     footer .social a:hover{opacity:1;color:var(--accent)}
 
-    /* ===== استجابة ===== */
+    /* استجابة */
     @media(max-width:900px){
-      .sidebar{display:none;position:fixed;top:64px;right:0;width:80%;max-width:320px;height:calc(100vh - 64px);z-index:300}
+      .sidebar{display:none;position:fixed;top:64px;right:0;width:80%;max-width:320px;height:calc(100vh - 64px);z-index:300;background:rgba(20,20,20,0.96);}
       .sidebar.show{display:flex}
+      .header-logo span{display:none}
       main{padding:18px}
+    }
+    @media(min-width:600px){
+      .header-logo span{display:inline}
     }
   </style>
 </head>
 <body>
-  <!-- الشريط العلوي -->
   <header>
+    <div class="header-logo">
+      <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار">
+      <span>مشاعل الأمة</span>
+    </div>
     <button id="menuBtn" class="menu-btn" title="القائمة"><i data-lucide="menu"></i></button>
     <div class="search-bar">
       <input type="text" placeholder="ابحث في المنصة..." aria-label="بحث">
       <i data-lucide="search"></i>
     </div>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <button id="themeBtn" class="theme-btn" title="تبديل النمط"><i data-lucide="moon"></i></button>
-      <div style="position:relative;">
-        <button id="userBtn" class="user-btn" title="حسابي"><i data-lucide="user"></i></button>
-        <div id="userMenu" class="user-menu">
-          <a href="#"><i data-lucide="user-circle-2"></i>الملف الشخصي</a>
-          <a href="#"><i data-lucide="settings"></i>الإعدادات</a>
-          <a href="#"><i data-lucide="log-in"></i>تسجيل الدخول</a>
-          <a href="#"><i data-lucide="user-plus"></i>إنشاء حساب</a>
-          <a href="#"><i data-lucide="log-out"></i>تسجيل الخروج</a>
-        </div>
-      </div>
-    </div>
+    <button id="themeBtn" class="theme-btn" title="تبديل النمط"><i data-lucide="moon"></i></button>
+    <button id="userBtn" class="user-btn" title="حسابي"><i data-lucide="user"></i></button>
   </header>
 
-  <!-- الحاوية الرئيسية -->
   <div class="layout">
-    <!-- الشريط الجانبي -->
     <aside id="sidebar" class="sidebar">
       <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo">
       <div class="title">مشاعل الأمة<br><small style="opacity:0.9;font-weight:600">سفراء القيم</small></div>
@@ -177,7 +157,6 @@
       </nav>
     </aside>
 
-    <!-- المحتوى -->
     <main>
       <section class="hero">
         <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
@@ -211,34 +190,18 @@
 
     const sidebar=document.getElementById('sidebar');
     const menuBtn=document.getElementById('menuBtn');
-    const userBtn=document.getElementById('userBtn');
-    const userMenu=document.getElementById('userMenu');
     const themeBtn=document.getElementById('themeBtn');
 
-    // تبديل عرض القائمة الجانبية على الموبايل
     menuBtn.addEventListener('click',()=>{
       sidebar.classList.toggle('show');
     });
 
-    // إخفاء القائمة عند النقر خارجها على الموبايل
     window.addEventListener('click',(e)=>{
       if(window.innerWidth<=900 && sidebar.classList.contains('show') && !sidebar.contains(e.target) && !menuBtn.contains(e.target)){
         sidebar.classList.remove('show');
       }
     });
 
-    // قائمة المستخدم
-    userBtn.addEventListener('click',e=>{
-      e.stopPropagation();
-      userMenu.classList.toggle('show');
-    });
-    window.addEventListener('click',e=>{
-      if(!userMenu.contains(e.target) && !userBtn.contains(e.target)){
-        userMenu.classList.remove('show');
-      }
-    });
-
-    // تبديل الوضع الليلي/النهاري
     themeBtn.addEventListener('click',()=>{
       if(document.documentElement.getAttribute('data-theme')==='light'){
         document.documentElement.removeAttribute('data-theme');
