@@ -181,14 +181,44 @@
     .nav a:hover svg{stroke:var(--accent)}
 
     /* ===== الشريط العلوي ===== */
-    header{
-      position:fixed;top:0;right:0;left:0;height:64px;display:flex;
-      align-items:center;justify-content:space-between;
-      padding:0 18px;background:var(--overlay);backdrop-filter:blur(6px);
-      z-index:150;box-shadow:0 2px 12px rgba(0,0,0,0.3);
-    }
-    .menu-btn,.theme-btn,.user-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--glass)}
-    .menu-btn:hover,.theme-btn:hover,.user-btn:hover{background:rgba(255,255,255,0.1)}
+/* الهيدر داكن بالكامل */
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  background: #111; /* داكن صلب */
+  z-index: 150;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  backdrop-filter: none; /* إزالة أي تأثير شفافية */
+}
+
+/* الأزرار داخل الهيدر */
+.menu-btn,
+.theme-btn,
+.user-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #222; /* داكن صلب */
+  color: var(--text);
+}
+
+/* تأثير عند المرور بالفأرة */
+.menu-btn:hover,
+.theme-btn:hover,
+.user-btn:hover {
+  background: #333; /* أغمق عند المرور */
+}
+
     .search-bar{flex:1;margin:0 14px;position:relative}
     .search-bar input{
       width:100%;padding:10px 40px 10px 12px;border-radius:8px;border:none;
