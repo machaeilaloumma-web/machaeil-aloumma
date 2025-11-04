@@ -386,14 +386,17 @@ header {
   </footer>
 
   <script>
-    lucide.createIcons();
-    // بعد إنشاء أيقونات Lucide
 lucide.createIcons();
 
 // اجعل أيقونات الهيدر داكنة اللون دائمًا
-document.querySelectorAll('header i[data-lucide]').forEach(icon => {
-  icon.setAttribute('stroke', '#fff'); // اللون الأبيض يجبر أيقونات Lucide على البقاء واضحة
-});
+function fixHeaderIcons() {
+  document.querySelectorAll('header i[data-lucide]').forEach(icon => {
+    icon.setAttribute('stroke', '#fff'); // اللون الأبيض يجبر أيقونات Lucide على البقاء واضحة
+  });
+}
+
+// تطبيق فوراً
+fixHeaderIcons();
 
 // أيضا عند تمرير الماوس على الأزرار
 document.querySelectorAll('header .menu-btn, header .theme-btn, header .user-btn').forEach(btn => {
@@ -403,21 +406,23 @@ document.querySelectorAll('header .menu-btn, header .theme-btn, header .user-btn
   });
 });
 
-    const sidebar = document.getElementById('sidebar');
-    const menuBtn = document.getElementById('menuBtn');
-    const userBtn = document.getElementById('userBtn');
-    const userMenu = document.getElementById('userMenu');
-    const themeBtn = document.getElementById('themeBtn');
-    const overlay = document.getElementById('overlay');
+// الشريط الجانبي وأزرار التحكم
+const sidebar = document.getElementById('sidebar');
+const menuBtn = document.getElementById('menuBtn');
+const userBtn = document.getElementById('userBtn');
+const userMenu = document.getElementById('userMenu');
+const themeBtn = document.getElementById('themeBtn');
+const overlay = document.getElementById('overlay');
 
-    function updateMenuIcon() {
-      if (sidebar.classList.contains('hide')) {
-        menuBtn.innerHTML = '<i data-lucide="menu"></i>';
-      } else {
-        menuBtn.innerHTML = '<i data-lucide="x"></i>';
-      }
-      lucide.createIcons();
-    }
+function updateMenuIcon() {
+  if (sidebar.classList.contains('hide')) {
+    menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+  } else {
+    menuBtn.innerHTML = '<i data-lucide="x"></i>';
+  }
+  lucide.createIcons();
+  fixHeaderIcons(); // إعادة فرض اللون الأبيض بعد تحديث الأيقونات
+}
 
     menuBtn.addEventListener('click', () => {
       sidebar.classList.toggle('hide');
