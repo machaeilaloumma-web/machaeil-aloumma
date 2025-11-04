@@ -29,8 +29,11 @@
 
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{
-      height:100%;font-family:'Noto Kufi Arabic',sans-serif;
-      background:var(--bg);color:var(--text);overflow-x:hidden;
+      height:100%;
+      font-family:'Noto Kufi Arabic',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
     }
 
     body::before{
@@ -42,25 +45,6 @@
     a{color:inherit;text-decoration:none}
     button{cursor:pointer;background:none;border:none;color:inherit}
 
-    /* ===== الشريط الجانبي ===== */
-    .sidebar{
-      position:fixed;top:0;right:0;width:var(--sidebar-w);height:100vh;
-      background:linear-gradient(180deg,rgba(17,17,17,0.96),rgba(9,9,9,0.96));
-      backdrop-filter:blur(8px);
-      box-shadow:-2px 0 20px rgba(0,0,0,0.6);
-      display:flex;flex-direction:column;align-items:center;
-      padding:22px 14px;z-index:200;transition:transform .3s ease;
-    }
-    .sidebar.hide{transform:translateX(100%)}
-
-    .logo{width:120px;border-radius:10px;margin-bottom:8px}
-    .title{text-align:center;font-weight:700;margin-bottom:14px}
-    .nav{width:100%;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
-    .nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;transition:.2s}
-    .nav a svg{width:20px;height:20px;stroke:#fff;flex-shrink:0}
-    .nav a:hover{background:var(--glass);color:var(--accent);transform:translateX(-4px)}
-    .nav a:hover svg{stroke:var(--accent)}
-
     /* ===== الشريط العلوي ===== */
     header{
       position:fixed;top:0;right:0;left:0;height:64px;display:flex;
@@ -68,7 +52,10 @@
       padding:0 18px;background:var(--overlay);backdrop-filter:blur(6px);
       z-index:150;box-shadow:0 2px 12px rgba(0,0,0,0.3);
     }
-    .menu-btn,.theme-btn,.user-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--glass)}
+    .menu-btn,.theme-btn,.user-btn{
+      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      border-radius:8px;background:var(--glass)
+    }
     .menu-btn:hover,.theme-btn:hover,.user-btn:hover{background:rgba(255,255,255,0.1)}
     .search-bar{flex:1;margin:0 14px;position:relative}
     .search-bar input{
@@ -76,6 +63,47 @@
       outline:none;background:var(--glass);color:var(--text);
     }
     .search-bar svg{position:absolute;top:50%;left:12px;transform:translateY(-50%)}
+
+    /* ===== الحاوية العامة ===== */
+    .layout{
+      display:flex;
+      flex-direction:row;
+      margin-top:64px; /* أسفل الشريط العلوي */
+      min-height:100vh;
+    }
+
+    /* ===== الشريط الجانبي ===== */
+    .sidebar{
+      width:var(--sidebar-w);
+      background:linear-gradient(180deg,rgba(17,17,17,0.95),rgba(9,9,9,0.95));
+      backdrop-filter:blur(8px);
+      padding:22px 14px;
+      display:flex;flex-direction:column;align-items:center;
+      gap:12px;
+      transition:transform .3s ease;
+    }
+    .sidebar.hide{display:none}
+    .logo{width:120px;border-radius:10px;margin-bottom:8px}
+    .title{text-align:center;font-weight:700;margin-bottom:10px}
+    .nav{width:100%;display:flex;flex-direction:column;gap:8px}
+    .nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;transition:.2s}
+    .nav a svg{width:20px;height:20px;stroke:#fff;flex-shrink:0}
+    .nav a:hover{background:var(--glass);color:var(--accent);transform:translateX(-4px)}
+    .nav a:hover svg{stroke:var(--accent)}
+
+    /* ===== المحتوى ===== */
+    main{
+      flex:1;
+      padding:28px;
+      overflow:auto;
+    }
+
+    .hero{position:relative;height:80vh;border-radius:18px;overflow:hidden}
+    .hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8)}
+    .hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
+    .hero .content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+    .hero h1{font-size:2rem;font-weight:700;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,0.7)}
+    .hero p{color:#eee;font-size:1.1rem;margin-top:8px}
 
     /* ===== قائمة المستخدم ===== */
     .user-menu{
@@ -91,16 +119,6 @@
     .user-menu a:hover{background:rgba(255,255,255,0.05);color:var(--accent)}
     .user-menu a:hover svg{stroke:var(--accent)}
 
-    /* ===== المحتوى ===== */
-    main{margin-top:64px;margin-right:var(--sidebar-w);padding:28px;min-height:100vh;transition:.3s}
-    @media(max-width:900px){main{margin-right:0}}
-    .hero{position:relative;height:90vh;border-radius:18px;overflow:hidden}
-    .hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8)}
-    .hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
-    .hero .content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-    .hero h1{font-size:2rem;font-weight:700;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,0.7)}
-    .hero p{color:#eee;font-size:1.1rem;margin-top:8px}
-
     /* ===== تذييل ===== */
     footer{
       background:rgba(17,17,17,0.9);padding:20px;text-align:center;margin-top:50px;
@@ -113,9 +131,9 @@
 
     /* ===== استجابة ===== */
     @media(max-width:900px){
-      .sidebar{position:fixed;z-index:300}
-      .menu-btn{display:flex}
-      .sidebar.hide{transform:translateX(100%)}
+      .sidebar{display:none;position:fixed;top:64px;right:0;width:80%;max-width:320px;height:calc(100vh - 64px);z-index:300}
+      .sidebar.show{display:flex}
+      main{padding:18px}
     }
   </style>
 </head>
@@ -142,49 +160,51 @@
     </div>
   </header>
 
-  <!-- الشريط الجانبي -->
-  <aside id="sidebar" class="sidebar">
-    <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo">
-    <div class="title">مشاعل الأمة<br><small style="opacity:0.9;font-weight:600">سفراء القيم</small></div>
-    <nav class="nav">
-      <a href="#"><i data-lucide="home"></i>الصفحة الرئيسية</a>
-      <a href="#"><i data-lucide="book-open"></i>الدورات التدريبية</a>
-      <a href="#"><i data-lucide="calendar"></i>الورش والفعاليات</a>
-      <a href="#"><i data-lucide="library"></i>المكتبة التعليمية</a>
-      <a href="#"><i data-lucide="lightbulb"></i>المشاريع الطلابية</a>
-      <a href="#"><i data-lucide="users"></i>المجتمع والتواصل</a>
-      <a href="#"><i data-lucide="file-text"></i>السجل والنشاط</a>
-    </nav>
-  </aside>
+  <!-- الحاوية الرئيسية -->
+  <div class="layout">
+    <!-- الشريط الجانبي -->
+    <aside id="sidebar" class="sidebar">
+      <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo">
+      <div class="title">مشاعل الأمة<br><small style="opacity:0.9;font-weight:600">سفراء القيم</small></div>
+      <nav class="nav">
+        <a href="#"><i data-lucide="home"></i>الصفحة الرئيسية</a>
+        <a href="#"><i data-lucide="book-open"></i>الدورات التدريبية</a>
+        <a href="#"><i data-lucide="calendar"></i>الورش والفعاليات</a>
+        <a href="#"><i data-lucide="library"></i>المكتبة التعليمية</a>
+        <a href="#"><i data-lucide="lightbulb"></i>المشاريع الطلابية</a>
+        <a href="#"><i data-lucide="users"></i>المجتمع والتواصل</a>
+        <a href="#"><i data-lucide="file-text"></i>السجل والنشاط</a>
+      </nav>
+    </aside>
 
-  <!-- المحتوى -->
-  <main>
-    <section class="hero">
-      <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
-      <div class="overlay"></div>
-      <div class="content">
-        <h1>مرحبًا بك في منصة مشاعل الأمة</h1>
-        <p>معًا لبناء جيل القدوة وصناعة النهضة 🇩🇿</p>
-      </div>
-    </section>
+    <!-- المحتوى -->
+    <main>
+      <section class="hero">
+        <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
+        <div class="overlay"></div>
+        <div class="content">
+          <h1>مرحبًا بك في منصة مشاعل الأمة</h1>
+          <p>معًا لبناء جيل القدوة وصناعة النهضة 🇩🇿</p>
+        </div>
+      </section>
 
-    <section style="margin-top:40px;">
-      <h2>محتوى تجريبي</h2>
-      <p style="margin-top:8px;color:#ccc">هذه المساحة مخصصة لإضافة الأقسام القادمة أو النصوص والمواد التعليمية.</p>
-      <div style="height:800px"></div>
-    </section>
-  </main>
+      <section style="margin-top:40px;">
+        <h2>محتوى تجريبي</h2>
+        <p style="margin-top:8px;color:#ccc">هذه المساحة مخصصة لإضافة الأقسام القادمة أو النصوص والمواد التعليمية.</p>
+        <div style="height:800px"></div>
+      </section>
 
-  <!-- التذييل -->
-  <footer>
-    <div>© 2025 مشاعل الأمة – جميع الحقوق محفوظة</div>
-    <div class="social">
-      <a href="#"><i data-lucide="facebook"></i></a>
-      <a href="#"><i data-lucide="twitter"></i></a>
-      <a href="#"><i data-lucide="instagram"></i></a>
-      <a href="#"><i data-lucide="youtube"></i></a>
-    </div>
-  </footer>
+      <footer>
+        <div>© 2025 مشاعل الأمة – جميع الحقوق محفوظة</div>
+        <div class="social">
+          <a href="#"><i data-lucide="facebook"></i></a>
+          <a href="#"><i data-lucide="twitter"></i></a>
+          <a href="#"><i data-lucide="instagram"></i></a>
+          <a href="#"><i data-lucide="youtube"></i></a>
+        </div>
+      </footer>
+    </main>
+  </div>
 
   <script>
     lucide.createIcons();
@@ -195,8 +215,17 @@
     const userMenu=document.getElementById('userMenu');
     const themeBtn=document.getElementById('themeBtn');
 
-    // تبديل الشريط الجانبي
-    menuBtn.addEventListener('click',()=>{sidebar.classList.toggle('hide')});
+    // تبديل عرض القائمة الجانبية على الموبايل
+    menuBtn.addEventListener('click',()=>{
+      sidebar.classList.toggle('show');
+    });
+
+    // إخفاء القائمة عند النقر خارجها على الموبايل
+    window.addEventListener('click',(e)=>{
+      if(window.innerWidth<=900 && sidebar.classList.contains('show') && !sidebar.contains(e.target) && !menuBtn.contains(e.target)){
+        sidebar.classList.remove('show');
+      }
+    });
 
     // قائمة المستخدم
     userBtn.addEventListener('click',e=>{
@@ -209,7 +238,7 @@
       }
     });
 
-    // تبديل النمط الليلي/النهاري
+    // تبديل الوضع الليلي/النهاري
     themeBtn.addEventListener('click',()=>{
       if(document.documentElement.getAttribute('data-theme')==='light'){
         document.documentElement.removeAttribute('data-theme');
@@ -223,4 +252,3 @@
   </script>
 </body>
 </html>
-
