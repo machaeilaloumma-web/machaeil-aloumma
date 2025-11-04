@@ -63,6 +63,17 @@
     display: block;
     object-fit: cover;
   }
+    /* === إصلاح تموضع الصورة بالنسبة للشريط الجانبي في الحاسوب === */
+.hero {
+  margin-top: -64px; /* يجعل الصورة تصعد لتبدأ من نفس مستوى الهيدر */
+}
+
+@media (max-width: 900px) {
+  .hero {
+    margin-top: 0; /* في الموبايل تبقى عادية */
+  }
+}
+
 
     .close-btn {
   position: absolute;
