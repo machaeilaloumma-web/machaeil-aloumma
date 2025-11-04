@@ -13,8 +13,10 @@
   <style>
     /* أيقونات الهيدر داكنة اللون دائمًا */
 /* أيقونات الهيدر داكنة دائمًا */
+/* أيقونات الهيدر داكنة دائمًا */
 header svg {
   stroke: #fff !important;  /* اللون الأبيض يجبر أيقونات Lucide على البقاء واضحة */
+  fill: none !important;    /* تأكد أن أي تعبئة داخل الأيقونة لا تتأثر */
 }
 
 /* الأزرار عند المرور تبقى الأيقونات واضحة */
@@ -23,6 +25,7 @@ header .theme-btn:hover svg,
 header .user-btn:hover svg {
   stroke: #fff !important;
 }
+
 
 
     :root{
