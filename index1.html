@@ -49,11 +49,13 @@
       backdrop-filter:blur(8px);
       box-shadow:-2px 0 20px rgba(0,0,0,0.6);
       display:flex;flex-direction:column;align-items:center;
-      padding:22px 14px;z-index:200;transition:transform .3s ease;
+      padding:22px 14px;z-index:300;transition:transform .35s ease;
     }
     .sidebar.hide{transform:translateX(100%)}
 
-    .logo{width:120px;border-radius:10px;margin-bottom:8px}
+    .logo{width:120px;border-radius:10px;margin-bottom:8px;transition:all .3s ease;}
+    @media(max-width:900px){.logo{width:90px}}
+
     .title{text-align:center;font-weight:700;margin-bottom:14px}
     .nav{width:100%;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
     .nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;transition:.2s}
@@ -66,10 +68,14 @@
       position:fixed;top:0;right:0;left:0;height:64px;display:flex;
       align-items:center;justify-content:space-between;
       padding:0 18px;background:var(--overlay);backdrop-filter:blur(6px);
-      z-index:150;box-shadow:0 2px 12px rgba(0,0,0,0.3);
+      z-index:250;box-shadow:0 2px 12px rgba(0,0,0,0.3);
     }
-    .menu-btn,.theme-btn,.user-btn{width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:var(--glass)}
+    .menu-btn,.theme-btn,.user-btn{
+      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
+      border-radius:8px;background:var(--glass);transition:transform .3s ease;
+    }
     .menu-btn:hover,.theme-btn:hover,.user-btn:hover{background:rgba(255,255,255,0.1)}
+    .menu-btn.active i{transform:rotate(90deg)}
     .search-bar{flex:1;margin:0 14px;position:relative}
     .search-bar input{
       width:100%;padding:10px 40px 10px 12px;border-radius:8px;border:none;
@@ -95,11 +101,25 @@
     main{margin-top:64px;margin-right:var(--sidebar-w);padding:28px;min-height:100vh;transition:.3s}
     @media(max-width:900px){main{margin-right:0}}
     .hero{position:relative;height:90vh;border-radius:18px;overflow:hidden}
-    .hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8)}
+    .hero img{
+      width:100%;height:100%;object-fit:cover;filter:brightness(0.8);
+      transition:height .3s ease;
+    }
+    @media(max-width:700px){
+      .hero{height:60vh}
+      .hero img{object-fit:cover;height:60vh;width:100%}
+    }
     .hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
     .hero .content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
     .hero h1{font-size:2rem;font-weight:700;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,0.7)}
     .hero p{color:#eee;font-size:1.1rem;margin-top:8px}
+
+    /* ===== التراكب عند فتح القائمة ===== */
+    .overlay-bg{
+      position:fixed;inset:0;background:rgba(0,0,0,0.6);
+      z-index:200;opacity:0;pointer-events:none;transition:.3s ease;
+    }
+    .overlay-bg.show{opacity:1;pointer-events:auto}
 
     /* ===== تذييل ===== */
     footer{
@@ -113,93 +133,14 @@
 
     /* ===== استجابة ===== */
     @media(max-width:900px){
-      .sidebar{position:fixed;z-index:300}
       .menu-btn{display:flex}
       .sidebar.hide{transform:translateX(100%)}
     }
-
-    /* ===================== إضافات مُحافِظة على الأصل (تحسينات) ===================== */
-    /* لم يُحذف أي شيء من الأسطر السابقة — هذه الإضافات فقط لتحسين السلوك في الموبايل */
-    /* تأكد: أضفنا فقط تعاريف جديدة أدناه بدون حذف شيء أصلي */
-
-    /* شعار صغير يظهر دائمًا في زاوية الموبايل حتى لو اختفت الشريط الجانبي */
-    .mobile-logo {
-      display:none;
-      position:fixed;
-      top:12px;
-      left:12px;
-      z-index:260;
-      background:rgba(0,0,0,0.45);
-      padding:6px 8px;
-      border-radius:8px;
-      align-items:center;
-      gap:8px;
-    }
-    .mobile-logo img{width:36px;height:36px;border-radius:6px;object-fit:cover;}
-    .mobile-logo span{font-weight:600;color:#fff;font-size:0.95rem;display:inline-block;margin-right:6px;}
-
-    /* تحسين تصغير الصورة على الموبايل */
-    @media (max-width:600px) {
-      .hero { height: auto; }
-      .hero img {
-        width:100%;
-        height:auto;
-        max-height:60vh; /* لا تتجاوز 60% من ارتفاع الشاشة */
-        object-fit:contain; /* إظهار الصورة كاملة دون قص */
-        transition: all 0.45s ease-in-out;
-      }
-      /* اجعل الشعار الصغير ظاهرًا على الموبايل */
-      .mobile-logo { display:flex; }
-      /* قلص شعار الشريط الجانبي قليلًا حتى لا يكون ضخمًا في القوائم */
-      .logo{ width:90px; }
-      .title{ font-size:0.95rem; }
-    }
-
-    /* انزلاق ناعم للشريط الجانبي عبر إضافة حالة active (لن يؤثر على سلوكه على الحاسوب) */
-    .sidebar {
-      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
-      opacity:1;
-    }
-    .sidebar.hidden {
-      transform: translateX(100%);
-      opacity:0;
-    }
-    @media (max-width:900px) {
-      .sidebar { transform: translateX(100%); opacity:0; }
-      .sidebar.active { transform: translateX(0); opacity:1; }
-    }
-
-    /* تأثير زر القائمة (يتحول إلى ✕ عند الفتح) */
-    .menu-btn i {
-      transition: transform 0.35s ease, opacity 0.25s ease;
-    }
-    .menu-btn.active i { transform: rotate(90deg); opacity:0; }
-    .menu-btn.active::after {
-      content: "✕";
-      position: absolute;
-      font-size: 22px;
-      color: var(--accent);
-      font-weight: 700;
-      transition: opacity 0.3s ease;
-    }
-
-    /* overlay عند فتح القائمة في الموبايل */
-    .mobile-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(2px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.35s ease;
-      z-index:140;
-    }
-    .mobile-overlay.show { opacity:1; pointer-events:auto; }
-
-    /* انتهاء الإضافات */
   </style>
 </head>
 <body>
+  <div id="overlay" class="overlay-bg"></div>
+
   <!-- الشريط العلوي -->
   <header>
     <button id="menuBtn" class="menu-btn" title="القائمة"><i data-lucide="menu"></i></button>
@@ -222,18 +163,7 @@
     </div>
   </header>
 
-  <!-- حفظنا الشيفرة الأصلية بالكامل أعلاه كما كانت -->
-
-  <!-- شعار صغير للموبايل (إضافة تحسينية، لم نغيّر الشعار الأصلي داخل الشريط الجانبي) -->
-  <div class="mobile-logo" aria-hidden="true">
-    <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار">
-    <span>مشاعل الأمة</span>
-  </div>
-
-  <!-- overlay الخاص بالموبايل (إضافة تحسينية) -->
-  <div id="mobileOverlay" class="mobile-overlay" aria-hidden="true"></div>
-
-  <!-- الشريط الجانبي (نفسه كما في الأصل) -->
+  <!-- الشريط الجانبي -->
   <aside id="sidebar" class="sidebar">
     <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo">
     <div class="title">مشاعل الأمة<br><small style="opacity:0.9;font-weight:600">سفراء القيم</small></div>
@@ -248,10 +178,9 @@
     </nav>
   </aside>
 
-  <!-- المحتوى (كما في الأصل) -->
+  <!-- المحتوى -->
   <main>
     <section class="hero">
-      <!-- ملاحظة: نفس مصدر الصورة كما في الأصل -->
       <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
       <div class="overlay"></div>
       <div class="content">
@@ -267,7 +196,7 @@
     </section>
   </main>
 
-  <!-- التذييل (كما في الأصل) -->
+  <!-- التذييل -->
   <footer>
     <div>© 2025 مشاعل الأمة – جميع الحقوق محفوظة</div>
     <div class="social">
@@ -286,31 +215,23 @@
     const userBtn = document.getElementById('userBtn');
     const userMenu = document.getElementById('userMenu');
     const themeBtn = document.getElementById('themeBtn');
-    const mobileOverlay = document.getElementById('mobileOverlay');
+    const overlay = document.getElementById('overlay');
 
-    // تبديل الشريط الجانبي (حافظنا على السلوك الأصلي + أضفنا الانزلاق والـ overlay والايقونة المتحولة)
+    // تبديل الشريط الجانبي
     menuBtn.addEventListener('click', () => {
-      // السلوك الأصلي: toggle hide
       sidebar.classList.toggle('hide');
-
-      // تحسين: نستخدم حالات active/hidden لانتقالات سلسة وoverlay
-      sidebar.classList.toggle('active');
-      sidebar.classList.toggle('hidden');
       menuBtn.classList.toggle('active');
-      mobileOverlay.classList.toggle('show');
+      overlay.classList.toggle('show');
+      lucide.createIcons();
     });
 
-    // إغلاق overlay والقائمة عند النقر على الـ overlay
-    mobileOverlay.addEventListener('click', () => {
-      sidebar.classList.add('hidden');
-      sidebar.classList.remove('active');
-      menuBtn.classList.remove('active');
-      mobileOverlay.classList.remove('show');
-      // نعيد أيضاً الحالة الأصلية (إذا كانت مستخدمة)
+    overlay.addEventListener('click', () => {
       sidebar.classList.add('hide');
+      overlay.classList.remove('show');
+      menuBtn.classList.remove('active');
     });
 
-    // قائمة المستخدم (نفسها كما في الأصل)
+    // قائمة المستخدم
     userBtn.addEventListener('click', e => {
       e.stopPropagation();
       userMenu.classList.toggle('show');
@@ -319,17 +240,9 @@
       if (!userMenu.contains(e.target) && !userBtn.contains(e.target)) {
         userMenu.classList.remove('show');
       }
-      // عند النقر خارج: إغلاق القائمة الجانبية والـ overlay على الموبايل (تحسين وظيفي محافظ)
-      if(window.innerWidth <= 900 && (sidebar.classList.contains('active') || !sidebar.classList.contains('hide')) && !sidebar.contains(e.target) && !menuBtn.contains(e.target)){
-        sidebar.classList.remove('active');
-        sidebar.classList.add('hidden');
-        sidebar.classList.add('hide');
-        menuBtn.classList.remove('active');
-        mobileOverlay.classList.remove('show');
-      }
     });
 
-    // تبديل النمط الليلي/النهاري (حفظنا سلوكك الأصلي تمامًا)
+    // تبديل النمط الليلي/النهاري
     themeBtn.addEventListener('click', () => {
       if (document.documentElement.getAttribute('data-theme') === 'light') {
         document.documentElement.removeAttribute('data-theme');
@@ -341,24 +254,18 @@
       lucide.createIcons();
     });
 
-    // دالة لإخفاء أو إظهار الشريط الجانبي حسب عرض الشاشة (حافظنا على المنطق الأصلي)
+    // التحقق من عرض الشاشة
     function checkWidth() {
       if (window.innerWidth <= 900) {
         sidebar.classList.add('hide');
-        // تأكد من أن overlay مغلق
-        mobileOverlay.classList.remove('show');
-        menuBtn.classList.remove('active');
       } else {
         sidebar.classList.remove('hide');
-        sidebar.classList.remove('hidden');
-        sidebar.classList.remove('active');
-        mobileOverlay.classList.remove('show');
-        menuBtn.classList.remove('active');
+        overlay.classList.remove('show');
       }
     }
 
-    checkWidth(); // تحقق عند تحميل الصفحة
-    window.addEventListener('resize', checkWidth); // تحقق عند تغيير حجم النافذة
+    checkWidth();
+    window.addEventListener('resize', checkWidth);
   </script>
 </body>
 </html>
