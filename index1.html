@@ -11,99 +11,27 @@
       --sidebar-w:250px;
       --accent: #facc15;
       --glass: rgba(255,255,255,0.04);
-      --overlay: rgba(0,0,0,0.65);
-      --header-h:58px;
+      --overlay: rgba(0,0,0,0.55);
     }
-    *{box-sizing:border-box;}
-    html,body{height:100%;margin:0;font-family:'Noto Kufi Arabic', system-ui, sans-serif;background:#000;color:#fff;direction:rtl;}
-    a{color:inherit;}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Noto Kufi Arabic', system-ui, sans-serif;background:#000;color:#fff;direction:rtl}
+    a{color:inherit}
 
+    body::before{
+      content:"";
+      position:fixed; inset:0; z-index:0;
+      background-image: url('https://machaeil-aloumma.vercel.app/alger.jpg');
+      background-size: cover;
+      background-position:center;
+      filter: brightness(0.75);
+    }
     .page-overlay{ position:fixed; inset:0; background:var(--overlay); z-index:1; }
 
-    /* الشريط العلوي */
-    .app-bar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      left: 0;
-      height: var(--header-h);
-      background: linear-gradient(90deg, #151515 90%, #222 100%);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
-      z-index: 300;
-      display: flex;
-      align-items: center;
-      padding: 0;
-    }
-    .app-bar-content {
-      display: flex;
-      align-items: center;
-      height: 100%;
-      width: 100%;
-      padding: 0 22px;
-      gap: 14px;
-      justify-content: flex-start;
-      direction: rtl;
-    }
-    .header-logo {
-      width: 42px;
-      border-radius: 9px;
-      border: 1px solid rgba(255,255,255,0.08);
-      margin-left: 7px;
-    }
-    .header-title {
-      font-size: 1.06rem;
-      font-weight: 600;
-      color: #fae07c;
-      letter-spacing: 0.5px;
-      margin-left: 26px;
-    }
-    .user-icon-bar {
-      width: 40px;
-      height: 40px;
-      background: var(--glass);
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.07);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      margin-right: auto;
-      box-shadow: 0 1px 6px rgba(0,0,0,0.10);
-      transition: transform .18s;
-      position: relative;
-    }
-    .user-icon-bar:hover {
-      transform: scale(1.08);
-    }
-    /* قائمة المستخدم المنسدلة */
-    .user-menu-bar{
-      position: absolute;
-      top: 48px;
-      left: 0;
-      min-width:180px;
-      background: linear-gradient(180deg, rgba(17,17,17,0.98), rgba(9,9,9,0.98));
-      border-radius:10px;
-      overflow:hidden;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-      transform: translateY(-8px);
-      opacity:0;
-      pointer-events:none;
-      transition: transform .22s ease, opacity .22s ease;
-      z-index:350;
-    }
-    .user-menu-bar.show{ transform: translateY(0); opacity:1; pointer-events:auto;}
-    .user-menu-bar a{ display:flex; align-items:center; gap:8px; padding:9px 12px; color:#eee; text-decoration:none; font-size:0.95rem; }
-    .user-menu-bar a svg{ width:16px; height:16px; stroke:#fff }
-    .user-menu-bar a:hover{ background: rgba(255,255,255,0.03); color: var(--accent) }
-    .user-menu-bar a:hover svg{ stroke: var(--accent) }
-
-    /* الشريط الجانبي */
     .sidebar{
       position:fixed;
-      top:var(--header-h);
-      right:0;
+      top:0; right:0;
       width:var(--sidebar-w);
-      height:calc(100vh - var(--header-h));
+      height:100vh;
       background: linear-gradient(180deg, rgba(17,17,17,0.96), rgba(9,9,9,0.96));
       padding:20px 14px;
       box-shadow: -2px 0 18px rgba(0,0,0,0.6);
@@ -116,6 +44,7 @@
       overflow:hidden;
       transition: transform .28s ease;
     }
+
     .sidebar .logo{
       width:120px; height:auto; border-radius:12px; display:block;
       border:1px solid rgba(255,255,255,0.06);
@@ -135,10 +64,29 @@
     .nav a:hover svg{ stroke: var(--accent) }
 
     .menu-btn{
-      position:fixed; top:calc(14px + var(--header-h)); right:14px; z-index:250;
+      position:fixed; top:14px; right:14px; z-index:250;
       width:44px; height:44px; display:none; align-items:center; justify-content:center;
       background:var(--glass); border-radius:8px; border:1px solid rgba(255,255,255,0.06); cursor:pointer;
     }
+
+    .user-container{ position:fixed; top:14px; left:14px; z-index:250; display:flex; align-items:flex-start }
+    .user-icon{
+      width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+      background:var(--glass); border-radius:50%; border:1px solid rgba(255,255,255,0.06);
+      cursor:pointer; transition: transform .25s ease, box-shadow .2s;
+    }
+    .user-icon:hover{ transform: scale(1.03) }
+    .user-icon.active{ transform: rotate(45deg) scale(1.05) }
+    .user-menu{
+      position:absolute; left:0; top:54px; min-width:180px; background: linear-gradient(180deg, rgba(17,17,17,0.98), rgba(9,9,9,0.98));
+      border-radius:10px; overflow:hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      transform: translateY(-8px); opacity:0; pointer-events:none; transition: transform .22s ease, opacity .22s ease;
+    }
+    .user-menu.show{ transform: translateY(0); opacity:1; pointer-events:auto; transition: transform .22s ease, opacity .22s ease .12s; }
+    .user-menu a{ display:flex; align-items:center; gap:8px; padding:9px 12px; color:#eee; text-decoration:none; font-size:0.95rem }
+    .user-menu a svg{ width:16px; height:16px; stroke:#fff }
+    .user-menu a:hover{ background: rgba(255,255,255,0.03); color: var(--accent) }
+    .user-menu a:hover svg{ stroke: var(--accent) }
 
     .content{
       margin-right: calc(var(--sidebar-w));
@@ -148,7 +96,6 @@
       z-index:100;
       min-width:0;
       transition: margin-right .22s;
-      margin-top:var(--header-h);
     }
 
     .hero-section{ position:relative; width:100%; height:100vh; overflow:hidden; display:block; }
@@ -168,8 +115,6 @@
       .hero-content h1{ font-size:1.25rem; }
       .hero-content p{ font-size:0.89rem; }
       .sidebar .logo{ width:70px; }
-      .header-logo{width:30px;}
-      .header-title{font-size:0.9rem; margin-left:10px;}
     }
     .nav::-webkit-scrollbar{ width:7px }
     .nav::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.06); border-radius:6px }
@@ -177,23 +122,17 @@
 </head>
 <body>
   <div class="page-overlay" aria-hidden="true"></div>
-  <!-- الشريط العلوي -->
-  <header class="app-bar">
-    <div class="app-bar-content">
-      <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="header-logo" draggable="false" oncontextmenu="return false;">
-      <span class="header-title">مشاعل الأمة – سفراء القيم</span>
-      <div id="fixedUserIcon" class="user-icon-bar" title="حسابي">
-        <i data-lucide="user" style="width:20px;height:20px;stroke:#fff"></i>
-        <!-- قائمة المستخدم المنسدلة للشريط العلوي -->
-        <div id="userMenuBar" class="user-menu-bar" role="menu" aria-hidden="true">
-          <a href="profile.html"><i data-lucide="user-circle-2"></i><span>الملف الشخصي</span></a>
-          <a href="login.html"><i data-lucide="log-in"></i><span>تسجيل الدخول</span></a>
-          <a href="register.html"><i data-lucide="user-plus"></i><span>إنشاء حساب</span></a>
-          <a href="#"><i data-lucide="log-out"></i><span>تسجيل الخروج</span></a>
-        </div>
-      </div>
+  <div class="user-container">
+    <div id="userIcon" class="user-icon" aria-expanded="false" title="حسابي">
+      <i data-lucide="user" style="width:18px;height:18px;stroke:#fff"></i>
     </div>
-  </header>
+    <div id="userMenu" class="user-menu" role="menu" aria-hidden="true">
+      <a href="profile.html"><i data-lucide="user-circle-2"></i><span>الملف الشخصي</span></a>
+      <a href="login.html"><i data-lucide="log-in"></i><span>تسجيل الدخول</span></a>
+      <a href="register.html"><i data-lucide="user-plus"></i><span>إنشاء حساب</span></a>
+      <a href="#" id="logoutBtn"><i data-lucide="log-out"></i><span>تسجيل الخروج</span></a>
+    </div>
+  </div>
   <button id="menuBtn" class="menu-btn" aria-label="قائمة">
     <i data-lucide="menu" style="width:18px;height:18px;stroke:#fff"></i>
   </button>
@@ -228,26 +167,16 @@
 <script>
   lucide.createIcons();
 
-  // القائمة المنسدلة لأيقونة المستخدم في الشريط العلوي
-  const fixedUserIcon = document.getElementById('fixedUserIcon');
-  const userMenuBar = document.getElementById('userMenuBar');
-  fixedUserIcon.addEventListener('click', (e)=>{
-    e.stopPropagation();
-    userMenuBar.classList.toggle('show');
-  });
-  window.addEventListener('click', (e)=>{
-    if(!userMenuBar.contains(e.target) && !fixedUserIcon.contains(e.target)){
-      userMenuBar.classList.remove('show');
-    }
-  });
-
-  // الشريط الجانبي للهامبرغر والموبايل
   const menuBtn = document.getElementById('menuBtn');
   const sidebar = document.getElementById('sidebar');
+  const userIcon = document.getElementById('userIcon');
+  const userMenu = document.getElementById('userMenu');
+  // زر الهامبرغر: يفتح الشريط في الموبايل ويوقف التمرير
   if(menuBtn){
     menuBtn.addEventListener('click', (e)=>{
       e.stopPropagation();
       sidebar.classList.toggle('active');
+      // يمنع التمرير عند فتح الشريط في الموبايل
       if (sidebar.classList.contains('active') && window.innerWidth <= 900) {
         document.body.style.overflow = 'hidden';
       } else {
@@ -255,12 +184,25 @@
       }
     });
   }
+  // أيقونة المستخدم: تفتح القائمة وتدوّر الأيقونة
+  userIcon.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    userMenu.classList.toggle('show');
+    userIcon.classList.toggle('active');
+  });
+  // إغلاق عند النقر خارج العناصر
   window.addEventListener('click', (e)=>{
+    if(!userMenu.contains(e.target) && !userIcon.contains(e.target)){
+      userMenu.classList.remove('show');
+      userIcon.classList.remove('active');
+    }
+    // إذا الشريط مفتوح على الموبايل وانقرت خارج الشريط والزر، أغلقه وأعد التمرير
     if(window.innerWidth <= 900 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !menuBtn.contains(e.target)){
       sidebar.classList.remove('active');
       document.body.style.overflow = '';
     }
   });
+  // عند تغيير حجم النافذة تأكد من إعادة الحالة الملائمة
   window.addEventListener('resize', ()=>{
     if(window.innerWidth > 900){
       sidebar.classList.remove('active');
