@@ -391,19 +391,44 @@ header {
   </footer>
 
   <script>
+// أنشئ الأيقونات
 lucide.createIcons();
 
-// اجعل أيقونات الهيدر داكنة اللون دائمًا
-// دالة لإجبار أيقونات الهيدر على البقاء باللون الأبيض
-function fixHeaderIcons() {
-  document.querySelectorAll('header i[data-lucide]').forEach(icon => {
-    icon.setAttribute('stroke', '#fff');
+// اجعل كل أيقونات الهيدر والـ footer باللون الأبيض دائمًا
+function forceWhiteIcons() {
+  document.querySelectorAll('header i[data-lucide], header svg, footer i[data-lucide], footer svg').forEach(icon => {
+    icon.setAttribute('stroke', '#fff'); // اللون الأبيض
+    icon.setAttribute('fill', 'none');   // إزالة أي تعبئة قد تظهر
   });
 }
 
-// إنشاء أيقونات Lucide أول مرة
-lucide.createIcons();
-fixHeaderIcons();
+// نفّذ فورًا
+forceWhiteIcons();
+
+// كل مرة تنشئ فيها أيقونات جديدة (مثل تغيير زر القائمة)
+function updateMenuIcon() {
+  if (sidebar.classList.contains('hide')) {
+    menuBtn.innerHTML = '<i data-lucide="menu"></i>';
+  } else {
+    menuBtn.innerHTML = '<i data-lucide="x"></i>';
+  }
+  lucide.createIcons();
+  forceWhiteIcons(); // أعد تلوين الأيقونات بعد الإنشاء
+}
+
+// تطبيق نفس الشيء عند تبديل الوضع الليلي/النهاري أو أي تغيير ديناميكي
+themeBtn.addEventListener('click', () => {
+  if (document.documentElement.getAttribute('data-theme') === 'light') {
+    document.documentElement.removeAttribute('data-theme');
+    themeBtn.innerHTML = '<i data-lucide="moon"></i>';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeBtn.innerHTML = '<i data-lucide="sun"></i>';
+  }
+  lucide.createIcons();
+  forceWhiteIcons();
+});
+
 
 // الشريط الجانبي وأزرار التحكم
 const sidebar = document.getElementById('sidebar');
