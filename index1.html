@@ -4,25 +4,21 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>مشاعل الأمة – سفراء القيم</title>
-
   <!-- خط عربي -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
-
   <style>
 /* أيقونات الهيدر داكنة اللون دائمًا */
 header i[data-lucide] {
   stroke: #fff !important; /* يجبر اللون على الأبيض */
 }
-
 /* الأزرار عند المرور تبقى الأيقونات واضحة */
 header .menu-btn:hover i,
 header .theme-btn:hover i,
 header .user-btn:hover i {
   stroke: #fff !important;
 }
-
     :root{
       --accent:#facc15;
       --bg:#000;
@@ -38,16 +34,13 @@ header .user-btn:hover i {
       --glass:rgba(0,0,0,0.05);
       --overlay:rgba(255,255,255,0.6);
     }
-
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{
       height:100%;font-family:'Noto Kufi Arabic',sans-serif;
       background:var(--bg);color:var(--text);overflow-x:hidden;
     }
-
     a{color:inherit;text-decoration:none}
     button{cursor:pointer;background:none;border:none;color:inherit}
-
     /* ===== الشريط الجانبي ===== */
     .sidebar{
   position: relative; /* ← كان fixed */
@@ -68,7 +61,6 @@ header .user-btn:hover i {
   align-items: flex-start; /* يضمن أن يبدأ الشريط والمحتوى من نفس المستوى */
   gap: 24px; /* مسافة اختيارية بين الشريط والمحتوى */
 }
-
 /* الشريط الجانبي */
 .sidebar {
   flex-shrink: 0; /* لا يتقلص */
@@ -76,7 +68,6 @@ header .user-btn:hover i {
   position: relative; /* كما ضبطته */
   top: 0;
 }
-
 /* المحتوى يأخذ المساحة المتبقية */
 .layout > main {
   flex: 1;
@@ -84,7 +75,6 @@ header .user-btn:hover i {
   margin-top: 64px; /* المسافة أسفل الهيدر الثابت */
   padding: 28px;
 }
-
 /* تصحيح عرض الصورة */
 .hero {
   margin-top: 0; /* لا داعي لسحب الصورة لأعلى */
@@ -95,7 +85,6 @@ header .user-btn:hover i {
   display: block;
   object-fit: cover;
 }
-
 /* زر الإغلاق داخل الشريط الجانبي */
 .close-btn {
   position: absolute;
@@ -122,19 +111,17 @@ header .user-btn:hover i {
 @media (min-width: 901px){
   .close-btn { display: none; } /* يخفي الزر على الحواسيب */
 }
-
 /* استجابة الأجهزة الصغيرة */
 @media (max-width: 900px) {
   .layout { flex-direction: column; } /* في الموبايل يصبح عموديًا */
-  .layout > main { margin-top: 0; }   /* لا هامش علوي زائد في الموبايل */
+  .layout > main { margin-top: 0; } /* لا هامش علوي زائد في الموبايل */
 }
-    
+   
      /* تصحيح محاذاة الصورة والمحتوى الرئيسي */
   main {
     margin-top: 0;
     margin-right: 0; /* إزالة الفراغ الذي كان مخصصاً للشريط الجانبي الثابت */
   }
-
   /* تنسيق خاص للصورة لتتناسب مع مختلف الشاشات */
   .hero img {
     width: 100%;
@@ -146,16 +133,13 @@ header .user-btn:hover i {
 .hero {
   margin-top: -64px; /* يجعل الصورة تصعد لتبدأ من نفس مستوى الهيدر */
 }
-
 @media (max-width: 900px) {
   .hero {
     margin-top: 0; /* في الموبايل تبقى عادية */
   }
 } /* ← هذا القوس كان مفقودًا */
-
 .close-btn {
   position: absolute;
-
   top: 12px;
   left: 12px;
   z-index: 9999;
@@ -172,18 +156,14 @@ header .user-btn:hover i {
   cursor: pointer;
   transition: background .18s, transform .12s;
 }
-
 .close-btn:hover {
   background: rgba(255,255,255,0.08);
   transform: scale(1.05);
 }
-
 @media (min-width: 901px){
   .close-btn { display: none; } /* يخفي الزر على الحواسيب */
 }
-
     .sidebar.hide{transform:translateX(100%)}
-
     .logo{width:120px;border-radius:10px;margin-bottom:8px}
     .title{text-align:center;font-weight:700;margin-bottom:14px}
     .nav{width:100%;display:flex;flex-direction:column;gap:8px;overflow-y:auto}
@@ -191,7 +171,6 @@ header .user-btn:hover i {
     .nav a svg{width:20px;height:20px;stroke:#fff;flex-shrink:0}
     .nav a:hover{background:var(--glass);color:var(--accent);transform:translateX(-4px)}
     .nav a:hover svg{stroke:var(--accent)}
-
     /* ===== الشريط العلوي ===== */
 /* الهيدر داكن بالكامل */
 header {
@@ -209,7 +188,6 @@ header {
   box-shadow: 0 2px 12px rgba(0,0,0,0.3);
   backdrop-filter: none; /* إزالة أي تأثير شفافية */
 }
-
 /* الأزرار داخل الهيدر */
 .menu-btn,
 .theme-btn,
@@ -224,7 +202,6 @@ header {
   color: var(--text);
 }
 /* ==== إصلاح النصوص والأيقونات لتكون واضحة على الخلفية الداكنة ==== */
-
 /* نصوص داخل الهيدر وأزرار التحكم تبقى بيضاء دائمًا */
 header,
 .menu-btn,
@@ -233,39 +210,33 @@ header,
 .search-bar input {
   color: #fff !important;
 }
-
 /* أيقونات Lucide داخل الهيدر تبقى بيضاء دائمًا */
 header i[data-lucide],
 header svg {
   stroke: #fff !important;
   fill: none !important; /* إزالة أي تعبئة قد تظهر */
 }
-
 /* نصوص البحث داخل الهيدر */
 .search-bar input {
   background: rgba(0,0,0,0.15) !important; /* خلفية داكنة لطيفة */
   color: #fff !important; /* النص يبقى أبيض */
 }
-
 /* نصوص المستخدم والقائمة تبقى واضحة على الخلفية الداكنة */
 .user-menu a {
   color: #fff !important;
 }
-
 /* تأثير عند المرور بالفأرة */
 .menu-btn:hover,
 .theme-btn:hover,
 .user-btn:hover {
   background: #333; /* أغمق عند المرور */
 }
-
     .search-bar{flex:1;margin:0 14px;position:relative}
     .search-bar input{
       width:100%;padding:10px 40px 10px 12px;border-radius:8px;border:none;
       outline:none;background:var(--glass);color:var(--text);
     }
     .search-bar svg{position:absolute;top:50%;left:12px;transform:translateY(-50%)}
-
     /* ===== قائمة المستخدم ===== */
     .user-menu{
       position:absolute;top:64px;left:10px;min-width:180px;
@@ -279,11 +250,9 @@ header svg {
     .user-menu a svg{width:16px;height:16px}
     .user-menu a:hover{background:rgba(255,255,255,0.05);color:var(--accent)}
     .user-menu a:hover svg{stroke:var(--accent)}
-
     /* ===== المحتوى ===== */
     main{margin-top:64px;margin-right:var(--sidebar-w);padding:28px;min-height:100vh;transition:.3s}
     @media(max-width:900px){main{margin-right:0}}
-
     /* ===== الصورة والعنوان ===== */
     .hero {
       position: relative;
@@ -304,7 +273,6 @@ header svg {
       font-weight: 700;
       color: var(--text);
     }
-
     /* ===== تذييل ===== */
     footer{
       background:rgba(17,17,17,0.9);padding:20px;text-align:center;margin-top:50px;
@@ -314,7 +282,6 @@ header svg {
     footer .social{margin-top:10px}
     footer .social a{margin:0 6px;opacity:0.8}
     footer .social a:hover{opacity:1;color:var(--accent)}
-
     /* ===== استجابة ===== */
     @media(max-width:900px){
       .sidebar{position:fixed;z-index:300}
@@ -322,7 +289,6 @@ header svg {
       .sidebar.hide{transform:translateX(100%)}
       .hero img {object-fit: contain;height: auto;min-height: 100%;}
     }
-
     /* ===== Overlay القائمة في الموبايل ===== */
     #overlay {
       position: fixed;
@@ -333,16 +299,53 @@ header svg {
       visibility: hidden;
       transition: opacity 0.3s ease, visibility 0.3s ease;
     }
-
     #overlay.active {
       opacity: 1;
       visibility: visible;
     }
+
+    /* جعل النصوص في الأجزاء الداكنة بيضاء دائمًا، حتى في الوضع النهاري */
+.sidebar,
+.sidebar .title,
+.sidebar .nav a,
+header,
+header .search-bar input::placeholder, /* لون النص الافتراضي في حقل البحث */
+.user-menu,
+.user-menu a,
+footer,
+footer a {
+  color: #fff !important; /* يتجاوز --text في الثيم النهاري */
+}
+
+/* تأكيد لون الأيقونات داخل هذه الأجزاء (موسع على ما هو موجود) */
+.sidebar svg,
+.sidebar i[data-lucide],
+.user-menu svg,
+.user-menu i[data-lucide],
+footer svg,
+footer i[data-lucide] {
+  stroke: #fff !important;
+}
+
+/* تأثيرات عند المرور (hover) لتبقى متسقة */
+.sidebar .nav a:hover,
+.user-menu a:hover,
+footer a:hover {
+  color: var(--accent) !important; /* يحافظ على اللون الأصفر عند المرور */
+}
+.sidebar .nav a:hover svg,
+.user-menu a:hover svg {
+  stroke: var(--accent) !important;
+}
+
+/* إصلاح لون placeholder في حقل البحث (يبقى رمادي فاتح للوضوح) */
+.search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
   </style>
 </head>
 <body>
   <div id="overlay"></div>
-
   <!-- الشريط العلوي -->
   <header>
     <button id="menuBtn" class="menu-btn" title="القائمة"><i data-lucide="menu"></i></button>
@@ -364,9 +367,7 @@ header svg {
       </div>
     </div>
   </header>
-
   <div class="layout">
-
   <!-- الشريط الجانبي -->
   <aside id="sidebar" class="sidebar">
     <button class="close-btn" id="closeSidebarBtn">✖</button>
@@ -382,26 +383,21 @@ header svg {
       <a href="#"><i data-lucide="file-text"></i>السجل والنشاط</a>
     </nav>
   </aside>
-
   <!-- المحتوى -->
   <main>
     <section class="hero">
       <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
     </section>
-
     <div class="hero-title">
       <!-- يمكنك كتابة العنوان الرئيسي هنا -->
     </div>
-
     <section style="margin-top:40px;">
       <h1>مشاعل الأمة - سفراء القيم</h1>
       <p style="margin-top:8px;color:#ccc">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة و التي ستحمش مشعل الامة و تحفظ العهد.</p>
       <div style="height:800px"></div>
     </section>
   </main>
-
 </div> <!-- نهاية .layout -->
-
   <!-- التذييل -->
   <footer>
     <div>© 2025 مشاعل الأمة – جميع الحقوق محفوظة</div>
@@ -412,33 +408,27 @@ header svg {
       <a href="#"><i data-lucide="youtube"></i></a>
     </div>
   </footer>
-
   <script>
 // أنشئ الأيقونات
 lucide.createIcons();
-
 // اجعل كل أيقونات الهيدر والـ footer باللون الأبيض دائمًا
 function forceWhiteIcons() {
   document.querySelectorAll('header i[data-lucide], header svg, footer i[data-lucide], footer svg').forEach(icon => {
     icon.setAttribute('stroke', '#fff'); // اللون الأبيض
-    icon.setAttribute('fill', 'none');   // إزالة أي تعبئة قد تظهر
+    icon.setAttribute('fill', 'none'); // إزالة أي تعبئة قد تظهر
   });
 }
-
 // نفّذ فورًا
 forceWhiteIcons();
-
 // دالة لإجبار أيقونات الهيدر على البقاء باللون الأبيض
 function fixHeaderIcons() {
   document.querySelectorAll('header i[data-lucide]').forEach(icon => {
     icon.setAttribute('stroke', '#fff');
   });
 }
-
 // إنشاء أيقونات Lucide أول مرة
 lucide.createIcons();
 fixHeaderIcons();
-
 // الشريط الجانبي وأزرار التحكم
 const sidebar = document.getElementById('sidebar');
 const menuBtn = document.getElementById('menuBtn');
@@ -446,7 +436,6 @@ const userBtn = document.getElementById('userBtn');
 const userMenu = document.getElementById('userMenu');
 const themeBtn = document.getElementById('themeBtn');
 const overlay = document.getElementById('overlay');
-
 // تحديث أيقونة زر القائمة مع إصلاح اللون مباشرة
 function updateMenuIcon() {
   if (sidebar.classList.contains('hide')) {
@@ -457,21 +446,18 @@ function updateMenuIcon() {
   lucide.createIcons();
   fixHeaderIcons(); // ← هنا نعيد فرض اللون الأبيض
 }
-
 // فتح/إغلاق الشريط الجانبي
 menuBtn.addEventListener('click', () => {
   sidebar.classList.toggle('hide');
   updateMenuIcon();
   overlay.classList.toggle('active');
 });
-
 // إغلاق القائمة عند النقر على الـ overlay
 overlay.addEventListener('click', () => {
   sidebar.classList.add('hide');
   updateMenuIcon();
   overlay.classList.remove('active');
 });
-
 // قائمة المستخدم
 userBtn.addEventListener('click', e => {
   e.stopPropagation();
@@ -482,7 +468,6 @@ window.addEventListener('click', e => {
     userMenu.classList.remove('show');
   }
 });
-
 // تبديل النمط الليلي/النهاري
 themeBtn.addEventListener('click', () => {
   if (document.documentElement.getAttribute('data-theme') === 'light') {
@@ -495,7 +480,6 @@ themeBtn.addEventListener('click', () => {
   lucide.createIcons();
   fixHeaderIcons(); // ← إعادة فرض اللون الأبيض بعد تغيير أيقونة الوضع
 });
-
 // التحكم في الشريط الجانبي حسب عرض الشاشة
 function checkWidth() {
   if (window.innerWidth <= 900) {
@@ -506,11 +490,9 @@ function checkWidth() {
   }
   updateMenuIcon();
 }
-
 checkWidth();
 window.addEventListener('resize', checkWidth);
     const closeSidebarBtn = document.getElementById('closeSidebarBtn');
-
 if (closeSidebarBtn) {
   closeSidebarBtn.addEventListener('click', () => {
     sidebar.classList.add('hide');
@@ -518,7 +500,6 @@ if (closeSidebarBtn) {
     updateMenuIcon();
   });
 }
-
   </script>
 </body>
 </html>
