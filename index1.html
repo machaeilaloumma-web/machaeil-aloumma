@@ -33,12 +33,6 @@
       background:var(--bg);color:var(--text);overflow-x:hidden;
     }
 
-    body::before{
-      content:"";position:fixed;inset:0;z-index:-1;
-      background:url('https://machaeil-aloumma.vercel.app/alger.jpg') center/cover no-repeat;
-      filter:brightness(0.6);
-    }
-
     a{color:inherit;text-decoration:none}
     button{cursor:pointer;background:none;border:none;color:inherit}
 
@@ -94,12 +88,27 @@
     /* ===== المحتوى ===== */
     main{margin-top:64px;margin-right:var(--sidebar-w);padding:28px;min-height:100vh;transition:.3s}
     @media(max-width:900px){main{margin-right:0}}
-    .hero{position:relative;height:90vh;border-radius:18px;overflow:hidden}
-    .hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.8)}
-    .hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
-    .hero .content{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
-    .hero h1{font-size:2rem;font-weight:700;color:#fff;text-shadow:0 4px 18px rgba(0,0,0,0.7)}
-    .hero p{color:#eee;font-size:1.1rem;margin-top:8px}
+
+    /* ===== الصورة والعنوان ===== */
+    .hero {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
+    .hero img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    .hero-title {
+      text-align: center;
+      padding: 20px 0;
+      background: transparent;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+    }
 
     /* ===== تذييل ===== */
     footer{
@@ -116,13 +125,7 @@
       .sidebar{position:fixed;z-index:300}
       .menu-btn{display:flex}
       .sidebar.hide{transform:translateX(100%)}
-
-      /* ضمان ظهور الصورة بالكامل على الموبايل */
-      .hero img {
-        object-fit: contain;
-        height: auto;
-        min-height: 100%;
-      }
+      .hero img {object-fit: contain;height: auto;min-height: 100%;}
     }
 
     /* ===== Overlay القائمة في الموبايل ===== */
@@ -186,12 +189,11 @@
   <main>
     <section class="hero">
       <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
-      <div class="overlay"></div>
-      <div class="content">
-        <h1>مرحبًا بك في منصة مشاعل الأمة</h1>
-        <p>معًا لبناء جيل القدوة وصناعة النهضة 🇩🇿</p>
-      </div>
     </section>
+
+    <div class="hero-title">
+      <!-- يمكنك كتابة العنوان الرئيسي هنا -->
+    </div>
 
     <section style="margin-top:40px;">
       <h2>محتوى تجريبي</h2>
@@ -221,7 +223,6 @@
     const themeBtn = document.getElementById('themeBtn');
     const overlay = document.getElementById('overlay');
 
-    // تحديث أيقونة زر القائمة
     function updateMenuIcon() {
       if (sidebar.classList.contains('hide')) {
         menuBtn.innerHTML = '<i data-lucide="menu"></i>';
@@ -231,21 +232,18 @@
       lucide.createIcons();
     }
 
-    // فتح/إغلاق الشريط الجانبي مع التحكم في overlay والأيقونة
     menuBtn.addEventListener('click', () => {
       sidebar.classList.toggle('hide');
       updateMenuIcon();
       overlay.classList.toggle('active');
     });
 
-    // إغلاق القائمة عند النقر على الـ overlay
     overlay.addEventListener('click', () => {
       sidebar.classList.add('hide');
       updateMenuIcon();
       overlay.classList.remove('active');
     });
 
-    // قائمة المستخدم
     userBtn.addEventListener('click', e => {
       e.stopPropagation();
       userMenu.classList.toggle('show');
@@ -256,7 +254,6 @@
       }
     });
 
-    // تبديل النمط الليلي/النهاري
     themeBtn.addEventListener('click', () => {
       if (document.documentElement.getAttribute('data-theme') === 'light') {
         document.documentElement.removeAttribute('data-theme');
@@ -268,7 +265,6 @@
       lucide.createIcons();
     });
 
-    // التحكم في الشريط الجانبي حسب عرض الشاشة
     function checkWidth() {
       if (window.innerWidth <= 900) {
         sidebar.classList.add('hide');
