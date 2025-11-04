@@ -1,277 +1,272 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>مشاعل الأمة - سفراء القيم</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>مشاعل الأمة – سفراء القيم</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root{
+      --sidebar-w:250px;
+      --accent: #facc15;
+      --glass: rgba(255,255,255,0.04);
+      --overlay: rgba(0,0,0,0.65);
+      --header-h:58px;
+    }
+    *{box-sizing:border-box;}
+    html,body{height:100%;margin:0;font-family:'Noto Kufi Arabic', system-ui, sans-serif;background:#000;color:#fff;direction:rtl;}
+    a{color:inherit;}
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
+    .page-overlay{ position:fixed; inset:0; background:var(--overlay); z-index:1; }
 
-<!-- Lucide Icons -->
-<script src="https://unpkg.com/lucide@latest"></script>
+    /* الشريط العلوي */
+    .app-bar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: var(--header-h);
+      background: linear-gradient(90deg, #151515 90%, #222 100%);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.16);
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      padding: 0;
+    }
+    .app-bar-content {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding: 0 22px;
+      gap: 14px;
+      justify-content: flex-start;
+      direction: rtl;
+    }
+    .header-logo {
+      width: 42px;
+      border-radius: 9px;
+      border: 1px solid rgba(255,255,255,0.08);
+      margin-left: 7px;
+    }
+    .header-title {
+      font-size: 1.06rem;
+      font-weight: 600;
+      color: #fae07c;
+      letter-spacing: 0.5px;
+      margin-left: 26px;
+    }
+    .user-icon-bar {
+      width: 40px;
+      height: 40px;
+      background: var(--glass);
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-right: auto;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.10);
+      transition: transform .18s;
+      position: relative;
+    }
+    .user-icon-bar:hover {
+      transform: scale(1.08);
+    }
+    /* قائمة المستخدم المنسدلة */
+    .user-menu-bar{
+      position: absolute;
+      top: 48px;
+      left: 0;
+      min-width:180px;
+      background: linear-gradient(180deg, rgba(17,17,17,0.98), rgba(9,9,9,0.98));
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      transform: translateY(-8px);
+      opacity:0;
+      pointer-events:none;
+      transition: transform .22s ease, opacity .22s ease;
+      z-index:350;
+    }
+    .user-menu-bar.show{ transform: translateY(0); opacity:1; pointer-events:auto;}
+    .user-menu-bar a{ display:flex; align-items:center; gap:8px; padding:9px 12px; color:#eee; text-decoration:none; font-size:0.95rem; }
+    .user-menu-bar a svg{ width:16px; height:16px; stroke:#fff }
+    .user-menu-bar a:hover{ background: rgba(255,255,255,0.03); color: var(--accent) }
+    .user-menu-bar a:hover svg{ stroke: var(--accent) }
 
-<!-- الخط -->
-<link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+    /* الشريط الجانبي */
+    .sidebar{
+      position:fixed;
+      top:var(--header-h);
+      right:0;
+      width:var(--sidebar-w);
+      height:calc(100vh - var(--header-h));
+      background: linear-gradient(180deg, rgba(17,17,17,0.96), rgba(9,9,9,0.96));
+      padding:20px 14px;
+      box-shadow: -2px 0 18px rgba(0,0,0,0.6);
+      backdrop-filter: blur(6px);
+      z-index:200;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+      overflow:hidden;
+      transition: transform .28s ease;
+    }
+    .sidebar .logo{
+      width:120px; height:auto; border-radius:12px; display:block;
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .sidebar .title{
+      text-align:center; font-size:1rem; font-weight:600; color:#fff; line-height:1.2;
+      margin-top:6px; margin-bottom:6px;
+    }
+    .nav{ width:100%; margin-top:6px; display:flex; flex-direction:column; gap:6px; overflow:auto; padding-bottom:14px }
+    .nav a{
+      display:flex; align-items:center; gap:10px; padding:10px 12px; color:#e6e6e6;
+      text-decoration:none; border-radius:10px; transition: background .18s, transform .12s;
+      font-size:0.96rem;
+    }
+    .nav a svg{ width:20px; height:20px; stroke:#fff; flex-shrink:0 }
+    .nav a:hover{ background: rgba(255,255,255,0.04); transform: translateX(-4px); color: var(--accent) }
+    .nav a:hover svg{ stroke: var(--accent) }
 
-<style>
-body { font-family: 'Noto Kufi Arabic', sans-serif; background:#000; color:#fff; margin:0; overflow-x:hidden; }
+    .menu-btn{
+      position:fixed; top:calc(14px + var(--header-h)); right:14px; z-index:250;
+      width:44px; height:44px; display:none; align-items:center; justify-content:center;
+      background:var(--glass); border-radius:8px; border:1px solid rgba(255,255,255,0.06); cursor:pointer;
+    }
 
-/* Sidebar - معدّل لـ RTL */
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 40;
-  top: 0;
-  right: 0; /* ✅ من اليمين */
-  background-color: #111;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-  direction: rtl;
-  text-align: right;
-}
-.sidebar a {
-  padding: 10px 20px;
-  text-decoration: none;
-  font-size: 18px;
-  color: #ccc;
-  display: block;
-  transition: 0.3s;
-}
-.sidebar a:hover { color: #00ff80; }
-.sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  left: 20px;
-  font-size: 36px;
-}
+    .content{
+      margin-right: calc(var(--sidebar-w));
+      padding:28px;
+      min-height:100vh;
+      position:relative;
+      z-index:100;
+      min-width:0;
+      transition: margin-right .22s;
+      margin-top:var(--header-h);
+    }
 
-/* User bar */
-.user-bar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: 60px;
-  background: linear-gradient(to right, #1f1f1f, #111);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 0 20px;
-  z-index: 50;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
+    .hero-section{ position:relative; width:100%; height:100vh; overflow:hidden; display:block; }
+    .hero-section img{ width:100%; height:100%; object-fit:cover; filter: brightness(0.85); display:block }
+    .hero-overlay{ position:absolute; inset:0; background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.25)); z-index:2 }
+    .hero-content{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3; text-align:center; padding:10px }
+    .hero-content h1{ font-size:2rem; margin:6px 0; font-weight:700; color:#fff; text-shadow:0 6px 22px rgba(0,0,0,0.6) }
+    .hero-content p{ color:#ddd; font-size:1.05rem; margin-top:8px }
 
-.user-bar button { cursor: pointer; }
-
-.user-menu {
-  position: absolute;
-  top: 60px;
-  right: auto;  /* ✅ إلغاء right */
-  left: 20px;   /* ✅ من اليسار */
-  width: 200px;
-  background: linear-gradient(to bottom, #222, #111);
-  border: 1px solid #444;
-  border-radius: 12px;
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  transition: all 0.3s ease;
-  z-index: 55;
-}
-.user-menu.show { display: flex; }
-.user-menu a {
-  padding: 12px 15px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 14px;
-}
-.user-menu a:hover { background: #333; }
-.user-menu a.logout { color: #ff6b6b; }
-.user-menu a.logout:hover { background: #ff6b6b; color: #fff; }
-
-/* Main content */
-#main { transition: margin-right .5s; padding: 16px; margin-top: 60px; }
-
-/* Open sidebar button */
-.openbtn {
-  font-size: 20px;
-  cursor: pointer;
-  background-color: #111;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  position: fixed;
-  top: 12px;
-  right: 12px; /* ✅ من اليمين */
-  z-index: 55; /* ✅ الآن أعلى من user-bar */
-}
-.openbtn:hover { background-color: #444; }
-
-.hero-image { width:100%; max-height:400px; object-fit:cover; display:block; margin:0 auto; }
-.logo { width:200px; display:block; margin:20px auto; }
-h1 { text-align:center; font-size:2rem; margin:10px 0; }
-.tagline { text-align:center; color:#aaa; margin-bottom:20px; }
-
-.section-card { border:1px solid #444; border-radius:20px; background:#111; padding:20px; margin-bottom:20px; box-shadow:0 4px 10px rgba(0,0,0,0.5); }
-.section-card h2,h3,h4 { color:#fff; }
-.section-card p, .section-card li { color:#aaa; }
-
-footer { text-align:center; color:#888; padding:10px; margin-top:20px; }
-footer a { text-decoration:underline; color:#888; }
-footer a:hover { color:#00ff80; }
-</style>
+    @media (max-width:900px){
+      .sidebar{ transform: translateX(100%); width:84%; max-width:320px; }
+      .sidebar.active{ transform: translateX(0) }
+      .content{ margin-right:0; padding:14px; min-width:0; }
+      .menu-btn{ display:flex }
+    }
+    @media (max-width:550px){
+      .hero-content h1{ font-size:1.25rem; }
+      .hero-content p{ font-size:0.89rem; }
+      .sidebar .logo{ width:70px; }
+      .header-logo{width:30px;}
+      .header-title{font-size:0.9rem; margin-left:10px;}
+    }
+    .nav::-webkit-scrollbar{ width:7px }
+    .nav::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.06); border-radius:6px }
+  </style>
 </head>
 <body>
-
-<!-- Sidebar -->
-<div id="mySidebar" class="sidebar">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-  <a href="#">الصفحة الرئيسية</a>
-  <a href="#">الدورات التدريبية</a>
-  <a href="#">الورش والفعاليّات</a>
-  <a href="#">المكتبة التعليمية</a>
-  <a href="#">المشاريع الطلابية</a>
-  <a href="#">المجتمع والتواصل</a>
-  <a href="#">السجل والنشاط</a>
-</div>
-
-<!-- User bar -->
-<div class="user-bar">
-  <button id="userBtn" class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center hover:scale-105 transition-transform duration-200">
-    <svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-user w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 0 0-3-3.87"/>
-      <path stroke-linecap="round" stroke-linejoin="round" d="M4 21v-2a4 4 0 0 1 3-3.87"/>
-      <circle cx="12" cy="7" r="4"/>
-    </svg>
+  <div class="page-overlay" aria-hidden="true"></div>
+  <!-- الشريط العلوي -->
+  <header class="app-bar">
+    <div class="app-bar-content">
+      <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="header-logo" draggable="false" oncontextmenu="return false;">
+      <span class="header-title">مشاعل الأمة – سفراء القيم</span>
+      <div id="fixedUserIcon" class="user-icon-bar" title="حسابي">
+        <i data-lucide="user" style="width:20px;height:20px;stroke:#fff"></i>
+        <!-- قائمة المستخدم المنسدلة للشريط العلوي -->
+        <div id="userMenuBar" class="user-menu-bar" role="menu" aria-hidden="true">
+          <a href="profile.html"><i data-lucide="user-circle-2"></i><span>الملف الشخصي</span></a>
+          <a href="login.html"><i data-lucide="log-in"></i><span>تسجيل الدخول</span></a>
+          <a href="register.html"><i data-lucide="user-plus"></i><span>إنشاء حساب</span></a>
+          <a href="#"><i data-lucide="log-out"></i><span>تسجيل الخروج</span></a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <button id="menuBtn" class="menu-btn" aria-label="قائمة">
+    <i data-lucide="menu" style="width:18px;height:18px;stroke:#fff"></i>
   </button>
-
-  <div id="userMenu" class="user-menu">
-    <a href="profile.html" id="profileLink" style="display: none;">الملف الشخصي</a>
-    <a href="login.html" id="loginLink">تسجيل الدخول</a>
-    <a href="register.html" id="registerLink">إنشاء حساب</a>
-    <a href="#" id="logoutBtn" class="logout" style="display: none;">تسجيل الخروج</a>
-  </div>
-</div>
-
-<!-- Open sidebar button -->
-<button class="openbtn" onclick="openNav()">☰</button>
-
-<!-- Main content -->
-<div id="main">
-  <img src="http://machaeil-aloumma.web.app/alger.jpg" alt="الجزائر" class="hero-image" />
-  <img src="http://machaeil-aloumma.web.app/machaoumma.gif" alt="شعار مشاعل الأمة" class="logo" />
-  <h1>مشاعل الأمة - مشروع نهضة سفراء القيم</h1>
-  <p class="tagline">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة و التي ستحفظ مشعل الأمة و تحفظ العهد.</p>
-
-  <!-- المراحل -->
-  <div class="section-card">
-    <h3>المراحل التطويرية</h3>
-    <ol class="list-decimal list-inside space-y-1">
-      <li>مشعل القدوة - برامج تأسيسية للأطفال</li>
-      <li>مشعل السفير - تنمية مهارات المسؤولية</li>
-      <li>مشعل القائد - برامج قيادية وتطوعية</li>
-      <li>مشعل الرائد - مبادرات مجتمعية ومشروعات</li>
-      <li>مشعل الحكيم - برامج تكاملية واستشرافية</li>
-    </ol>
-  </div>
-
-  <!-- الفعاليات والموارد -->
-  <div class="section-card">
-    <h4>الفعاليات القادمة</h4>
-    <p>حفل تكريم المدارس المتميزة — 12 ديسمبر / ورشة بناء القدوات — 20 ديسمبر / مسابقة القصص التربوية — التسجيل مفتوح</p>
-  </div>
-
-  <div class="section-card">
-    <h4>الموارد المميزة</h4>
-    <p>قصص تربوية، تقارير، ودورات مختصرة قابلة للتحميل.</p>
-  </div>
-
-  <div class="section-card">
-    <h4>المجتمع والتواصل</h4>
-    <p>انضم إلى المنتديات المحلية ومجموعات العمل بين المدارس.</p>
-  </div>
-</div>
-
-<footer>
-  © 2025 مشاعل الأمة – جميع الحقوق محفوظة · 
-  <a href="about.html">من نحن</a> · 
-  <a href="contact.html">اتصل بنا</a>
-</footer>
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
+  <aside id="sidebar" class="sidebar" aria-label="القائمة الجانبية">
+    <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo" draggable="false" oncontextmenu="return false;">
+    <div class="title">مشاعل الأمة<br><small style="opacity:0.95;font-weight:600">سفراء القيم</small></div>
+    <nav class="nav" role="navigation" aria-label="روابط الموقع">
+      <a href="#"><i data-lucide="home"></i><span>الصفحة الرئيسية</span></a>
+      <a href="#"><i data-lucide="book-open"></i><span>الدورات التدريبية</span></a>
+      <a href="#"><i data-lucide="calendar"></i><span>الورش والفعاليّات</span></a>
+      <a href="#"><i data-lucide="library"></i><span>المكتبة التعليمية</span></a>
+      <a href="#"><i data-lucide="lightbulb"></i><span>المشاريع الطلابية</span></a>
+      <a href="#"><i data-lucide="users"></i><span>المجتمع والتواصل</span></a>
+      <a href="#"><i data-lucide="file-text"></i><span>السجل والنشاط</span></a>
+    </nav>
+  </aside>
+  <main class="content" role="main">
+    <section class="hero-section" aria-label="صورة الجزائر">
+      <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>مرحبًا بك في منصة مشاعل الأمة</h1>
+        <p>معًا لبناء جيل القدوة وصناعة النهضة 🇩🇿</p>
+      </div>
+    </section>
+    <section style="padding:24px;color:#ddd;">
+      <h2 style="margin-top:12px">محتوى تجريبي</h2>
+      <p>هذا مساحتك لوضع نصوص أو أقسام أخرى.</p>
+      <div style="height:900px"></div>
+    </section>
+  </main>
 <script>
-// تهيئة الحالة الافتراضية
-document.getElementById('profileLink').style.display = 'none';
-document.getElementById('logoutBtn').style.display = 'none';
-document.getElementById('loginLink').style.display = 'block';
-document.getElementById('registerLink').style.display = 'block';
+  lucide.createIcons();
 
-// Sidebar functions
-function openNav(){
-  document.getElementById("mySidebar").style.width = "250px";
-  document.getElementById("main").style.marginRight = "250px";
-}
-function closeNav(){
-  document.getElementById("mySidebar").style.width = "0";
-  document.getElementById("main").style.marginRight = "0";
-}
-
-// User menu toggle
-const userBtn = document.getElementById("userBtn");
-const userMenu = document.getElementById("userMenu");
-userBtn.onclick = () => userMenu.classList.toggle("show");
-window.onclick = e => {
-  if (!e.target.closest("#userBtn") && !e.target.closest("#userMenu"))
-    userMenu.classList.remove("show");
-};
-
-// Firebase (مع حماية)
-if (typeof firebase !== 'undefined') {
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_AUTH_DOMAIN",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_STORAGE_BUCKET",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-
-  const logoutBtn = document.getElementById('logoutBtn');
-  const loginLink = document.getElementById('loginLink');
-  const registerLink = document.getElementById('registerLink');
-  const profileLink = document.getElementById('profileLink');
-
-  firebase.auth().onAuthStateChanged(user => {
-    if (user) {
-      profileLink.style.display = 'block';
-      logoutBtn.style.display = 'block';
-      loginLink.style.display = 'none';
-      registerLink.style.display = 'none';
-    } else {
-      profileLink.style.display = 'none';
-      logoutBtn.style.display = 'none';
-      loginLink.style.display = 'block';
-      registerLink.style.display = 'block';
+  // القائمة المنسدلة لأيقونة المستخدم في الشريط العلوي
+  const fixedUserIcon = document.getElementById('fixedUserIcon');
+  const userMenuBar = document.getElementById('userMenuBar');
+  fixedUserIcon.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    userMenuBar.classList.toggle('show');
+  });
+  window.addEventListener('click', (e)=>{
+    if(!userMenuBar.contains(e.target) && !fixedUserIcon.contains(e.target)){
+      userMenuBar.classList.remove('show');
     }
   });
 
-  logoutBtn.onclick = e => {
-    e.preventDefault();
-    firebase.auth().signOut().then(() => {
-      alert('تم تسجيل الخروج بنجاح');
-      window.location.href = 'login.html';
-    }).catch(err => {
-      alert('حدث خطأ: ' + err.message);
+  // الشريط الجانبي للهامبرغر والموبايل
+  const menuBtn = document.getElementById('menuBtn');
+  const sidebar = document.getElementById('sidebar');
+  if(menuBtn){
+    menuBtn.addEventListener('click', (e)=>{
+      e.stopPropagation();
+      sidebar.classList.toggle('active');
+      if (sidebar.classList.contains('active') && window.innerWidth <= 900) {
+        document.body.style.overflow = 'hidden';
+      } else {
+        document.body.style.overflow = '';
+      }
     });
-  };
-}
+  }
+  window.addEventListener('click', (e)=>{
+    if(window.innerWidth <= 900 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !menuBtn.contains(e.target)){
+      sidebar.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+  window.addEventListener('resize', ()=>{
+    if(window.innerWidth > 900){
+      sidebar.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
 </script>
 </body>
 </html>
