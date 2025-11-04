@@ -11,6 +11,18 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
+    /* أيقونات الهيدر داكنة اللون دائمًا */
+header i[data-lucide] {
+  stroke: #fff !important; /* يجبر اللون على الأبيض */
+}
+
+/* الأزرار عند المرور تبقى الأيقونات واضحة */
+header .menu-btn:hover i,
+header .theme-btn:hover i,
+header .user-btn:hover i {
+  stroke: #fff !important;
+}
+
     :root{
       --accent:#facc15;
       --bg:#000;
