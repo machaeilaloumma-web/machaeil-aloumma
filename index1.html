@@ -389,22 +389,16 @@ header {
 lucide.createIcons();
 
 // اجعل أيقونات الهيدر داكنة اللون دائمًا
+// دالة لإجبار أيقونات الهيدر على البقاء باللون الأبيض
 function fixHeaderIcons() {
   document.querySelectorAll('header i[data-lucide]').forEach(icon => {
-    icon.setAttribute('stroke', '#fff'); // اللون الأبيض يجبر أيقونات Lucide على البقاء واضحة
+    icon.setAttribute('stroke', '#fff');
   });
 }
 
-// تطبيق فوراً
+// إنشاء أيقونات Lucide أول مرة
+lucide.createIcons();
 fixHeaderIcons();
-
-// أيضا عند تمرير الماوس على الأزرار
-document.querySelectorAll('header .menu-btn, header .theme-btn, header .user-btn').forEach(btn => {
-  btn.addEventListener('mouseenter', () => {
-    const icon = btn.querySelector('i[data-lucide]');
-    if(icon) icon.setAttribute('stroke', '#fff');
-  });
-});
 
 // الشريط الجانبي وأزرار التحكم
 const sidebar = document.getElementById('sidebar');
@@ -414,6 +408,7 @@ const userMenu = document.getElementById('userMenu');
 const themeBtn = document.getElementById('themeBtn');
 const overlay = document.getElementById('overlay');
 
+// تحديث أيقونة زر القائمة مع إصلاح اللون مباشرة
 function updateMenuIcon() {
   if (sidebar.classList.contains('hide')) {
     menuBtn.innerHTML = '<i data-lucide="menu"></i>';
@@ -421,54 +416,60 @@ function updateMenuIcon() {
     menuBtn.innerHTML = '<i data-lucide="x"></i>';
   }
   lucide.createIcons();
-  fixHeaderIcons(); // إعادة فرض اللون الأبيض بعد تحديث الأيقونات
+  fixHeaderIcons(); // ← هنا نعيد فرض اللون الأبيض
 }
 
-    menuBtn.addEventListener('click', () => {
-      sidebar.classList.toggle('hide');
-      updateMenuIcon();
-      overlay.classList.toggle('active');
-    });
+// فتح/إغلاق الشريط الجانبي
+menuBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('hide');
+  updateMenuIcon();
+  overlay.classList.toggle('active');
+});
 
-    overlay.addEventListener('click', () => {
-      sidebar.classList.add('hide');
-      updateMenuIcon();
-      overlay.classList.remove('active');
-    });
+// إغلاق القائمة عند النقر على الـ overlay
+overlay.addEventListener('click', () => {
+  sidebar.classList.add('hide');
+  updateMenuIcon();
+  overlay.classList.remove('active');
+});
 
-    userBtn.addEventListener('click', e => {
-      e.stopPropagation();
-      userMenu.classList.toggle('show');
-    });
-    window.addEventListener('click', e => {
-      if (!userMenu.contains(e.target) && !userBtn.contains(e.target)) {
-        userMenu.classList.remove('show');
-      }
-    });
+// قائمة المستخدم
+userBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  userMenu.classList.toggle('show');
+});
+window.addEventListener('click', e => {
+  if (!userMenu.contains(e.target) && !userBtn.contains(e.target)) {
+    userMenu.classList.remove('show');
+  }
+});
 
-    themeBtn.addEventListener('click', () => {
-      if (document.documentElement.getAttribute('data-theme') === 'light') {
-        document.documentElement.removeAttribute('data-theme');
-        themeBtn.innerHTML = '<i data-lucide="moon"></i>';
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        themeBtn.innerHTML = '<i data-lucide="sun"></i>';
-      }
-      lucide.createIcons();
-    });
+// تبديل النمط الليلي/النهاري
+themeBtn.addEventListener('click', () => {
+  if (document.documentElement.getAttribute('data-theme') === 'light') {
+    document.documentElement.removeAttribute('data-theme');
+    themeBtn.innerHTML = '<i data-lucide="moon"></i>';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeBtn.innerHTML = '<i data-lucide="sun"></i>';
+  }
+  lucide.createIcons();
+  fixHeaderIcons(); // ← إعادة فرض اللون الأبيض بعد تغيير أيقونة الوضع
+});
 
-    function checkWidth() {
-      if (window.innerWidth <= 900) {
-        sidebar.classList.add('hide');
-      } else {
-        sidebar.classList.remove('hide');
-        overlay.classList.remove('active');
-      }
-      updateMenuIcon();
-    }
+// التحكم في الشريط الجانبي حسب عرض الشاشة
+function checkWidth() {
+  if (window.innerWidth <= 900) {
+    sidebar.classList.add('hide');
+  } else {
+    sidebar.classList.remove('hide');
+    overlay.classList.remove('active');
+  }
+  updateMenuIcon();
+}
 
-    checkWidth();
-    window.addEventListener('resize', checkWidth);
+checkWidth();
+window.addEventListener('resize', checkWidth);
     const closeSidebarBtn = document.getElementById('closeSidebarBtn');
 
 if (closeSidebarBtn) {
