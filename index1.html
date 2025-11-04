@@ -50,6 +50,22 @@
   z-index: 200;
   transition: transform .3s ease;
 }
+    .layout {
+  display: flex;
+}
+
+.sidebar {
+  position: relative;
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+}
+
+main {
+  flex: 1;
+  margin: 0;
+  padding: 28px;
+}
+
     .sidebar.hide{transform:translateX(100%)}
 
     .logo{width:120px;border-radius:10px;margin-bottom:8px}
@@ -204,6 +220,15 @@
   </header>
 
   <!-- الشريط الجانبي -->
+  <div class="layout">
+  <aside id="sidebar" class="sidebar">
+    <!-- محتوى القائمة الجانبية كما هو -->
+  </aside>
+
+  <main>
+    <!-- الصورة alger.jpg وما بعدها -->
+  </main>
+</div>
   <aside id="sidebar" class="sidebar">
     <button class="close-btn" id="closeSidebarBtn">✖</button>
     <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo">
