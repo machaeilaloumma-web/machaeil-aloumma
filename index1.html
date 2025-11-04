@@ -189,37 +189,51 @@
   <script>
     lucide.createIcons();
 
-    const sidebar=document.getElementById('sidebar');
-    const menuBtn=document.getElementById('menuBtn');
-    const userBtn=document.getElementById('userBtn');
-    const userMenu=document.getElementById('userMenu');
-    const themeBtn=document.getElementById('themeBtn');
+    const sidebar = document.getElementById('sidebar');
+    const menuBtn = document.getElementById('menuBtn');
+    const userBtn = document.getElementById('userBtn');
+    const userMenu = document.getElementById('userMenu');
+    const themeBtn = document.getElementById('themeBtn');
 
     // تبديل الشريط الجانبي
-    menuBtn.addEventListener('click',()=>{sidebar.classList.toggle('hide')});
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('hide');
+    });
 
     // قائمة المستخدم
-    userBtn.addEventListener('click',e=>{
+    userBtn.addEventListener('click', e => {
       e.stopPropagation();
       userMenu.classList.toggle('show');
     });
-    window.addEventListener('click',e=>{
-      if(!userMenu.contains(e.target) && !userBtn.contains(e.target)){
+    window.addEventListener('click', e => {
+      if (!userMenu.contains(e.target) && !userBtn.contains(e.target)) {
         userMenu.classList.remove('show');
       }
     });
 
     // تبديل النمط الليلي/النهاري
-    themeBtn.addEventListener('click',()=>{
-      if(document.documentElement.getAttribute('data-theme')==='light'){
+    themeBtn.addEventListener('click', () => {
+      if (document.documentElement.getAttribute('data-theme') === 'light') {
         document.documentElement.removeAttribute('data-theme');
-        themeBtn.innerHTML='<i data-lucide="moon"></i>';
-      }else{
-        document.documentElement.setAttribute('data-theme','light');
-        themeBtn.innerHTML='<i data-lucide="sun"></i>';
+        themeBtn.innerHTML = '<i data-lucide="moon"></i>';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        themeBtn.innerHTML = '<i data-lucide="sun"></i>';
       }
       lucide.createIcons();
     });
+
+    // دالة لإخفاء أو إظهار الشريط الجانبي حسب عرض الشاشة
+    function checkWidth() {
+      if (window.innerWidth <= 900) {
+        sidebar.classList.add('hide');
+      } else {
+        sidebar.classList.remove('hide');
+      }
+    }
+
+    checkWidth(); // تحقق عند تحميل الصفحة
+    window.addEventListener('resize', checkWidth); // تحقق عند تغيير حجم النافذة
   </script>
 </body>
 </html>
