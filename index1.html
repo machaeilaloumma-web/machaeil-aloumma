@@ -4,7 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>مشاعل الأمة – سفراء القيم</title>
+  <!-- خط عربي -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     :root{
@@ -16,7 +18,6 @@
     *{box-sizing:border-box}
     html,body{height:100%;margin:0;font-family:'Noto Kufi Arabic', system-ui, sans-serif;background:#000;color:#fff;direction:rtl}
     a{color:inherit}
-
     body::before{
       content:"";
       position:fixed; inset:0; z-index:0;
@@ -26,10 +27,10 @@
       filter: brightness(0.75);
     }
     .page-overlay{ position:fixed; inset:0; background:var(--overlay); z-index:1; }
-
     .sidebar{
       position:fixed;
-      top:0; right:0;
+      top:0;
+      right:0;
       width:var(--sidebar-w);
       height:100vh;
       background: linear-gradient(180deg, rgba(17,17,17,0.96), rgba(9,9,9,0.96));
@@ -42,9 +43,7 @@
       align-items:center;
       gap:12px;
       overflow:hidden;
-      transition: transform .28s ease;
     }
-
     .sidebar .logo{
       width:120px; height:auto; border-radius:12px; display:block;
       border:1px solid rgba(255,255,255,0.06);
@@ -62,13 +61,11 @@
     .nav a svg{ width:20px; height:20px; stroke:#fff; flex-shrink:0 }
     .nav a:hover{ background: rgba(255,255,255,0.04); transform: translateX(-4px); color: var(--accent) }
     .nav a:hover svg{ stroke: var(--accent) }
-
     .menu-btn{
       position:fixed; top:14px; right:14px; z-index:250;
       width:44px; height:44px; display:none; align-items:center; justify-content:center;
       background:var(--glass); border-radius:8px; border:1px solid rgba(255,255,255,0.06); cursor:pointer;
     }
-
     .user-container{ position:fixed; top:14px; left:14px; z-index:250; display:flex; align-items:flex-start }
     .user-icon{
       width:44px; height:44px; display:flex; align-items:center; justify-content:center;
@@ -87,34 +84,36 @@
     .user-menu a svg{ width:16px; height:16px; stroke:#fff }
     .user-menu a:hover{ background: rgba(255,255,255,0.03); color: var(--accent) }
     .user-menu a:hover svg{ stroke: var(--accent) }
-
     .content{
       margin-right: calc(var(--sidebar-w));
       padding:28px;
       min-height:100vh;
       position:relative;
       z-index:100;
-      min-width:0;
-      transition: margin-right .22s;
     }
-
     .hero-section{ position:relative; width:100%; height:100vh; overflow:hidden; display:block; }
     .hero-section img{ width:100%; height:100%; object-fit:cover; filter: brightness(0.85); display:block }
     .hero-overlay{ position:absolute; inset:0; background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.25)); z-index:2 }
     .hero-content{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:3; text-align:center; padding:10px }
     .hero-content h1{ font-size:2rem; margin:6px 0; font-weight:700; color:#fff; text-shadow:0 6px 22px rgba(0,0,0,0.6) }
     .hero-content p{ color:#ddd; font-size:1.05rem; margin-top:8px }
-
     @media (max-width:900px){
-      .sidebar{ transform: translateX(100%); width:84%; max-width:320px; }
+      .sidebar{ transform: translateX(100%); width:84%; max-width:320px; transition: transform .28s ease; }
       .sidebar.active{ transform: translateX(0) }
-      .content{ margin-right:0; padding:14px; min-width:0; }
+      .content{ margin-right:0; padding:18px }
       .menu-btn{ display:flex }
     }
-    @media (max-width:550px){
-      .hero-content h1{ font-size:1.25rem; }
-      .hero-content p{ font-size:0.89rem; }
-      .sidebar .logo{ width:70px; }
+    /* تحسين توافق قسم الهيرو والصورة على الشاشات الصغيرة */
+    @media (max-width:600px) {
+      .hero-section {
+        height: auto;
+        max-height: 60vh;
+      }
+      .hero-section img {
+        height: auto;
+        max-height: 60vh;
+        object-fit: contain;
+      }
     }
     .nav::-webkit-scrollbar{ width:7px }
     .nav::-webkit-scrollbar-thumb{ background: rgba(255,255,255,0.06); border-radius:6px }
@@ -158,6 +157,7 @@
         <p>معًا لبناء جيل القدوة وصناعة النهضة 🇩🇿</p>
       </div>
     </section>
+    <!-- محتوى إضافي للتجربة -->
     <section style="padding:24px;color:#ddd;">
       <h2 style="margin-top:12px">محتوى تجريبي</h2>
       <p>هذا مساحتك لوضع نصوص أو أقسام أخرى.</p>
@@ -165,23 +165,18 @@
     </section>
   </main>
 <script>
+  // تفعيل أيقونات Lucide
   lucide.createIcons();
-
+  // عناصر
   const menuBtn = document.getElementById('menuBtn');
   const sidebar = document.getElementById('sidebar');
   const userIcon = document.getElementById('userIcon');
   const userMenu = document.getElementById('userMenu');
-  // زر الهامبرغر: يفتح الشريط في الموبايل ويوقف التمرير
+  // هامبرغر: يفتح الشريط في الموبايل
   if(menuBtn){
     menuBtn.addEventListener('click', (e)=>{
       e.stopPropagation();
       sidebar.classList.toggle('active');
-      // يمنع التمرير عند فتح الشريط في الموبايل
-      if (sidebar.classList.contains('active') && window.innerWidth <= 900) {
-        document.body.style.overflow = 'hidden';
-      } else {
-        document.body.style.overflow = '';
-      }
     });
   }
   // أيقونة المستخدم: تفتح القائمة وتدوّر الأيقونة
@@ -196,10 +191,9 @@
       userMenu.classList.remove('show');
       userIcon.classList.remove('active');
     }
-    // إذا الشريط مفتوح على الموبايل وانقرت خارج الشريط والزر، أغلقه وأعد التمرير
+    // إذا الشريط مفتوح على الموبايل وانقرت خارج الشريط والزر، أغلقه
     if(window.innerWidth <= 900 && sidebar.classList.contains('active') && !sidebar.contains(e.target) && !menuBtn.contains(e.target)){
       sidebar.classList.remove('active');
-      document.body.style.overflow = '';
     }
   });
   // عند تغيير حجم النافذة تأكد من إعادة الحالة الملائمة
@@ -212,4 +206,3 @@
 </script>
 </body>
 </html>
-
