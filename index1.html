@@ -223,6 +223,34 @@ header {
   background: #222; /* داكن صلب */
   color: var(--text);
 }
+/* ==== إصلاح النصوص والأيقونات لتكون واضحة على الخلفية الداكنة ==== */
+
+/* نصوص داخل الهيدر وأزرار التحكم تبقى بيضاء دائمًا */
+header,
+.menu-btn,
+.theme-btn,
+.user-btn,
+.search-bar input {
+  color: #fff !important;
+}
+
+/* أيقونات Lucide داخل الهيدر تبقى بيضاء دائمًا */
+header i[data-lucide],
+header svg {
+  stroke: #fff !important;
+  fill: none !important; /* إزالة أي تعبئة قد تظهر */
+}
+
+/* نصوص البحث داخل الهيدر */
+.search-bar input {
+  background: rgba(0,0,0,0.15) !important; /* خلفية داكنة لطيفة */
+  color: #fff !important; /* النص يبقى أبيض */
+}
+
+/* نصوص المستخدم والقائمة تبقى واضحة على الخلفية الداكنة */
+.user-menu a {
+  color: #fff !important;
+}
 
 /* تأثير عند المرور بالفأرة */
 .menu-btn:hover,
