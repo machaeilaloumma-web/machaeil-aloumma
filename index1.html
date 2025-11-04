@@ -400,29 +400,16 @@ function forceWhiteIcons() {
 // نفّذ فورًا
 forceWhiteIcons();
 
-// كل مرة تنشئ فيها أيقونات جديدة (مثل تغيير زر القائمة)
-function updateMenuIcon() {
-  if (sidebar.classList.contains('hide')) {
-    menuBtn.innerHTML = '<i data-lucide="menu"></i>';
-  } else {
-    menuBtn.innerHTML = '<i data-lucide="x"></i>';
-  }
-  lucide.createIcons();
-  forceWhiteIcons(); // أعد تلوين الأيقونات بعد الإنشاء
+// دالة لإجبار أيقونات الهيدر على البقاء باللون الأبيض
+function fixHeaderIcons() {
+  document.querySelectorAll('header i[data-lucide]').forEach(icon => {
+    icon.setAttribute('stroke', '#fff');
+  });
 }
 
-// تطبيق نفس الشيء عند تبديل الوضع الليلي/النهاري أو أي تغيير ديناميكي
-themeBtn.addEventListener('click', () => {
-  if (document.documentElement.getAttribute('data-theme') === 'light') {
-    document.documentElement.removeAttribute('data-theme');
-    themeBtn.innerHTML = '<i data-lucide="moon"></i>';
-  } else {
-    document.documentElement.setAttribute('data-theme', 'light');
-    themeBtn.innerHTML = '<i data-lucide="sun"></i>';
-  }
-  lucide.createIcons();
-  forceWhiteIcons();
-});
+// إنشاء أيقونات Lucide أول مرة
+lucide.createIcons();
+fixHeaderIcons();
 
 // الشريط الجانبي وأزرار التحكم
 const sidebar = document.getElementById('sidebar');
@@ -432,21 +419,7 @@ const userMenu = document.getElementById('userMenu');
 const themeBtn = document.getElementById('themeBtn');
 const overlay = document.getElementById('overlay');
 
-// إنشاء أيقونات Lucide
-lucide.createIcons();
-
-// اجعل كل أيقونات الهيدر والفوتر باللون الأبيض دائمًا
-function forceWhiteIcons() {
-  document.querySelectorAll('header i[data-lucide], header svg, footer i[data-lucide], footer svg').forEach(icon => {
-    icon.setAttribute('stroke', '#fff'); // اللون الأبيض
-    icon.setAttribute('fill', 'none');   // إزالة أي تعبئة قد تظهر
-  });
-}
-
-// نفّذ فورًا بعد الإنشاء
-forceWhiteIcons();
-
-// تحديث أيقونة زر القائمة مع إعادة فرض اللون الأبيض
+// تحديث أيقونة زر القائمة مع إصلاح اللون مباشرة
 function updateMenuIcon() {
   if (sidebar.classList.contains('hide')) {
     menuBtn.innerHTML = '<i data-lucide="menu"></i>';
@@ -454,7 +427,7 @@ function updateMenuIcon() {
     menuBtn.innerHTML = '<i data-lucide="x"></i>';
   }
   lucide.createIcons();
-  forceWhiteIcons(); // إعادة تلوين الأيقونات بعد التغيير
+  fixHeaderIcons(); // ← هنا نعيد فرض اللون الأبيض
 }
 
 // فتح/إغلاق الشريط الجانبي
@@ -492,7 +465,7 @@ themeBtn.addEventListener('click', () => {
     themeBtn.innerHTML = '<i data-lucide="sun"></i>';
   }
   lucide.createIcons();
-  forceWhiteIcons(); // إعادة فرض اللون الأبيض بعد تغيير أيقونة الوضع
+  fixHeaderIcons(); // ← إعادة فرض اللون الأبيض بعد تغيير أيقونة الوضع
 });
 
 // التحكم في الشريط الجانبي حسب عرض الشاشة
@@ -508,7 +481,6 @@ function checkWidth() {
 
 checkWidth();
 window.addEventListener('resize', checkWidth);
-
     const closeSidebarBtn = document.getElementById('closeSidebarBtn');
 
 if (closeSidebarBtn) {
