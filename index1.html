@@ -38,32 +38,39 @@
 
     /* ===== الشريط الجانبي ===== */
     .sidebar{
-  position: relative; /* ← كان fixed */
-  width: var(--sidebar-w);
-  background: linear-gradient(180deg,rgba(17,17,17,0.96),rgba(9,9,9,0.96));
-  backdrop-filter: blur(8px);
-  box-shadow: -2px 0 20px rgba(0,0,0,0.6);
+      position:fixed;top:0;right:0;width:var(--sidebar-w);height:100vh;
+      background:linear-gradient(180deg,rgba(17,17,17,0.96),rgba(9,9,9,0.96));
+      backdrop-filter:blur(8px);
+      box-shadow:-2px 0 20px rgba(0,0,0,0.6);
+      display:flex;flex-direction:column;align-items:center;
+      padding:22px 14px;z-index:200;transition:transform .3s ease;
+    }
+    .close-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 9999;
+  width: 36px;
+  height: 36px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  padding: 22px 14px;
-  z-index: 200;
-  transition: transform .3s ease;
-}
-    .layout {
-  display: flex;
-}
-
-.sidebar {
-  position: relative;
-  width: var(--sidebar-w);
-  flex-shrink: 0;
+  justify-content: center;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: var(--text);
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background .18s, transform .12s;
 }
 
-main {
-  flex: 1;
-  margin: 0;
-  padding: 28px;
+.close-btn:hover {
+  background: rgba(255,255,255,0.08);
+  transform: scale(1.05);
+}
+
+@media (min-width: 901px){
+  .close-btn { display: none; } /* يخفي الزر على الحواسيب */
 }
 
     .sidebar.hide{transform:translateX(100%)}
@@ -109,34 +116,6 @@ main {
     /* ===== المحتوى ===== */
     main{margin-top:64px;margin-right:var(--sidebar-w);padding:28px;min-height:100vh;transition:.3s}
     @media(max-width:900px){main{margin-right:0}}
-
-    .close-btn {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  z-index: 9999;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-  color: var(--text);
-  border-radius: 8px;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background .18s, transform .12s;
-}
-
-.close-btn:hover {
-  background: rgba(255,255,255,0.08);
-  transform: scale(1.05);
-}
-
-@media (min-width: 901px){
-  .close-btn { display: none; } /* يخفي الزر على الحواسيب */
-}
 
     /* ===== الصورة والعنوان ===== */
     .hero {
@@ -220,15 +199,6 @@ main {
   </header>
 
   <!-- الشريط الجانبي -->
-  <div class="layout">
-  <aside id="sidebar" class="sidebar">
-    <!-- محتوى القائمة الجانبية كما هو -->
-  </aside>
-
-  <main>
-    <!-- الصورة alger.jpg وما بعدها -->
-  </main>
-</div>
   <aside id="sidebar" class="sidebar">
     <button class="close-btn" id="closeSidebarBtn">✖</button>
     <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo">
@@ -255,8 +225,8 @@ main {
     </div>
 
     <section style="margin-top:40px;">
-      <h1>مشاعل الأمة مشروع نهضة - سفراء القيم</h1>
-      <p style="margin-top:8px;color:#ccc">منصة وطنية لتأهيل القدوات وغرس القيم في الأجيال القادمة و التي ستحمش مشعل الامة و تحفظ العهد.</p>
+      <h2>محتوى تجريبي</h2>
+      <p style="margin-top:8px;color:#ccc">هذه المساحة مخصصة لإضافة الأقسام القادمة أو النصوص والمواد التعليمية.</p>
       <div style="height:800px"></div>
     </section>
   </main>
@@ -349,4 +319,3 @@ if (closeSidebarBtn) {
   </script>
 </body>
 </html>
-
