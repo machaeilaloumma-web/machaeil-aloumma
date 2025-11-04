@@ -12,16 +12,18 @@
 
   <style>
     /* أيقونات الهيدر داكنة اللون دائمًا */
-header i[data-lucide] {
-  stroke: #fff !important; /* يجبر اللون على الأبيض */
+/* أيقونات الهيدر داكنة دائمًا */
+header svg {
+  stroke: #fff !important;  /* اللون الأبيض يجبر أيقونات Lucide على البقاء واضحة */
 }
 
 /* الأزرار عند المرور تبقى الأيقونات واضحة */
-header .menu-btn:hover i,
-header .theme-btn:hover i,
-header .user-btn:hover i {
+header .menu-btn:hover svg,
+header .theme-btn:hover svg,
+header .user-btn:hover svg {
   stroke: #fff !important;
 }
+
 
     :root{
       --accent:#facc15;
