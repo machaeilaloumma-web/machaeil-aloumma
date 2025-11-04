@@ -387,6 +387,21 @@ header {
 
   <script>
     lucide.createIcons();
+    // بعد إنشاء أيقونات Lucide
+lucide.createIcons();
+
+// اجعل أيقونات الهيدر داكنة اللون دائمًا
+document.querySelectorAll('header i[data-lucide]').forEach(icon => {
+  icon.setAttribute('stroke', '#fff'); // اللون الأبيض يجبر أيقونات Lucide على البقاء واضحة
+});
+
+// أيضا عند تمرير الماوس على الأزرار
+document.querySelectorAll('header .menu-btn, header .theme-btn, header .user-btn').forEach(btn => {
+  btn.addEventListener('mouseenter', () => {
+    const icon = btn.querySelector('i[data-lucide]');
+    if(icon) icon.setAttribute('stroke', '#fff');
+  });
+});
 
     const sidebar = document.getElementById('sidebar');
     const menuBtn = document.getElementById('menuBtn');
