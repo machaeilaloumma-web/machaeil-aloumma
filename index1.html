@@ -10,207 +10,207 @@
 
   <style>
     :root{
+      --sidebar-w:250px;
       --accent:#facc15;
-      --bg:#000;
-      --text:#fff;
-      --glass:rgba(255,255,255,0.05);
-      --overlay:rgba(0,0,0,0.6);
-      transition:all .3s ease;
-    }
-    [data-theme="light"]{
-      --bg:#fafafa;
-      --text:#111;
-      --glass:rgba(0,0,0,0.05);
-      --overlay:rgba(255,255,255,0.6);
+      --glass:rgba(255,255,255,0.04);
+      --overlay:rgba(0,0,0,0.55);
     }
 
     *{box-sizing:border-box;margin:0;padding:0}
-    body{
-      font-family:'Noto Kufi Arabic',sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
+    html,body{
+      height:100%;
+      font-family:'Noto Kufi Arabic',system-ui,sans-serif;
+      background:#000;
+      color:#fff;
+      direction:rtl;
     }
+    a{color:inherit;text-decoration:none}
 
     body::before{
-      content:"";position:fixed;inset:0;z-index:-1;
-      background:url('https://machaeil-aloumma.vercel.app/alger.jpg') center/cover no-repeat;
-      filter:brightness(0.6);
+      content:"";
+      position:fixed;inset:0;z-index:0;
+      background-image:url('https://machaeil-aloumma.vercel.app/alger.jpg');
+      background-size:cover;
+      background-position:center;
+      filter:brightness(0.75);
     }
 
-    header{
-      position:fixed;top:0;right:0;left:0;height:64px;
-      display:flex;align-items:center;justify-content:space-between;
-      padding:0 14px;background:var(--overlay);backdrop-filter:blur(6px);
-      z-index:150;
-      box-shadow:0 2px 12px rgba(0,0,0,0.3);
-    }
+    .page-overlay{position:fixed;inset:0;background:var(--overlay);z-index:1;}
 
-    /* شعار داخل الشريط العلوي */
-    .header-logo{
-      display:flex;align-items:center;gap:8px;
-    }
-    .header-logo img{
-      width:42px;height:42px;border-radius:8px;object-fit:cover;
-    }
-    .header-logo span{
-      font-weight:700;font-size:0.9rem;
-      display:none; /* يظهر فقط في الشاشات المتوسطة فما فوق */
-    }
-
-    .menu-btn,.theme-btn,.user-btn{
-      width:40px;height:40px;display:flex;align-items:center;justify-content:center;
-      border-radius:8px;background:var(--glass);
-    }
-    .menu-btn:hover,.theme-btn:hover,.user-btn:hover{background:rgba(255,255,255,0.1)}
-    .search-bar{flex:1;margin:0 12px;position:relative}
-    .search-bar input{
-      width:100%;padding:9px 40px 9px 12px;border-radius:8px;border:none;
-      outline:none;background:var(--glass);color:var(--text);
-    }
-    .search-bar svg{position:absolute;top:50%;left:12px;transform:translateY(-50%)}
-
-    .layout{
-      display:flex;flex-direction:row;margin-top:64px;min-height:100vh;
-    }
-
+    /* === الشريط الجانبي === */
     .sidebar{
-      width:250px;background:rgba(17,17,17,0.95);
-      backdrop-filter:blur(8px);padding:20px 14px;
-      display:flex;flex-direction:column;align-items:center;gap:12px;
-      transition:transform .3s ease;
+      position:relative;
+      width:var(--sidebar-w);
+      min-height:100%;
+      background:linear-gradient(180deg,rgba(17,17,17,0.96),rgba(9,9,9,0.96));
+      padding:20px 14px;
+      box-shadow:-2px 0 18px rgba(0,0,0,0.6);
+      backdrop-filter:blur(6px);
+      z-index:200;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
     }
-    .sidebar.hide{display:none}
-    .logo{width:120px;border-radius:10px;margin-bottom:8px}
-    .title{text-align:center;font-weight:700;margin-bottom:10px}
-    .nav{width:100%;display:flex;flex-direction:column;gap:8px}
-    .nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;transition:.2s}
+    .sidebar .logo{
+      width:120px;height:auto;border-radius:12px;display:block;
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .sidebar .title{
+      text-align:center;font-size:1rem;font-weight:600;color:#fff;line-height:1.2;
+      margin-top:6px;margin-bottom:6px;
+    }
+    .nav{width:100%;margin-top:6px;display:flex;flex-direction:column;gap:6px;padding-bottom:14px}
+    .nav a{
+      display:flex;align-items:center;gap:10px;padding:10px 12px;color:#e6e6e6;
+      border-radius:10px;transition:background .18s,transform .12s;font-size:0.96rem;
+    }
     .nav a svg{width:20px;height:20px;stroke:#fff;flex-shrink:0}
-    .nav a:hover{background:var(--glass);color:var(--accent);transform:translateX(-4px)}
+    .nav a:hover{background:rgba(255,255,255,0.04);transform:translateX(-4px);color:var(--accent)}
     .nav a:hover svg{stroke:var(--accent)}
 
-    main{flex:1;padding:28px;overflow:auto}
+    /* === القائمة في الموبايل === */
+    .menu-btn{
+      position:fixed;top:14px;right:14px;z-index:250;
+      width:44px;height:44px;display:none;align-items:center;justify-content:center;
+      background:var(--glass);border-radius:8px;border:1px solid rgba(255,255,255,0.06);cursor:pointer;
+    }
+    .menu-btn:hover{background:rgba(255,255,255,0.08)}
 
-    .hero{
-      position:relative;width:100%;height:60vh;max-height:600px;border-radius:18px;overflow:hidden;
+    /* === الشعار العلوي للموبايل === */
+    .mobile-logo{
+      position:fixed;top:10px;left:10px;z-index:250;
+      display:flex;align-items:center;gap:8px;
+      background:rgba(0,0,0,0.4);
+      padding:6px 10px;border-radius:8px;backdrop-filter:blur(6px);
+    }
+    .mobile-logo img{
+      width:36px;height:36px;border-radius:6px;object-fit:cover;
+    }
+    .mobile-logo span{
+      font-weight:600;font-size:0.95rem;color:#fff;
+      text-shadow:0 0 8px rgba(0,0,0,0.8);
+    }
+
+    /* === المحتوى === */
+    .content{
+      margin-right:var(--sidebar-w);
+      padding:28px;
+      position:relative;
+      z-index:100;
+    }
+
+    .hero-section{
+      position:relative;width:100%;height:85vh;overflow:hidden;border-radius:14px;
       display:flex;align-items:center;justify-content:center;
     }
-    .hero img{
-      width:100%;height:100%;object-fit:cover;
+    .hero-section img{
+      width:100%;height:100%;object-fit:cover;filter:brightness(0.85);
+      transition:height .3s ease;
     }
-    .hero .overlay{position:absolute;inset:0;background:rgba(0,0,0,0.4)}
-    .hero .content{
-      position:absolute;z-index:2;text-align:center;color:#fff;
-      padding:0 10px;
+    .hero-overlay{
+      position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.7),rgba(0,0,0,0.25));z-index:2;
     }
-    .hero h1{font-size:2rem;font-weight:700}
-    .hero p{font-size:1.1rem;margin-top:8px;color:#eee}
+    .hero-content{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      z-index:3;text-align:center;padding:10px;
+    }
+    .hero-content h1{font-size:2rem;margin:6px 0;font-weight:700;color:#fff;text-shadow:0 6px 22px rgba(0,0,0,0.6)}
+    .hero-content p{color:#ddd;font-size:1.05rem;margin-top:8px}
 
-    footer{
-      background:rgba(17,17,17,0.9);padding:20px;text-align:center;margin-top:50px;
-      border-top:1px solid rgba(255,255,255,0.05);backdrop-filter:blur(8px)
+    /* === الموبايل === */
+    @media (max-width:900px){
+      .sidebar{display:none;}
+      .menu-btn{display:flex;}
+      .content{margin-right:0;padding:18px;}
     }
-    footer a{color:var(--accent);margin:0 6px}
-    footer .social{margin-top:10px}
-    footer .social a{margin:0 6px;opacity:0.8}
-    footer .social a:hover{opacity:1;color:var(--accent)}
+    @media (max-width:600px){
+      .hero-section{
+        height:auto;
+        max-height:60vh;
+      }
+      .hero-section img{
+        height:auto;
+        max-height:60vh;
+        object-fit:cover;
+      }
+    }
 
-    /* استجابة */
-    @media(max-width:900px){
-      .sidebar{display:none;position:fixed;top:64px;right:0;width:80%;max-width:320px;height:calc(100vh - 64px);z-index:300;background:rgba(20,20,20,0.96);}
-      .sidebar.show{display:flex}
-      .header-logo span{display:none}
-      main{padding:18px}
-    }
-    @media(min-width:600px){
-      .header-logo span{display:inline}
-    }
+    .nav::-webkit-scrollbar{width:7px}
+    .nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:6px}
   </style>
 </head>
+
 <body>
-  <header>
-    <div class="header-logo">
-      <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار">
-      <span>مشاعل الأمة</span>
-    </div>
-    <button id="menuBtn" class="menu-btn" title="القائمة"><i data-lucide="menu"></i></button>
-    <div class="search-bar">
-      <input type="text" placeholder="ابحث في المنصة..." aria-label="بحث">
-      <i data-lucide="search"></i>
-    </div>
-    <button id="themeBtn" class="theme-btn" title="تبديل النمط"><i data-lucide="moon"></i></button>
-    <button id="userBtn" class="user-btn" title="حسابي"><i data-lucide="user"></i></button>
-  </header>
+  <div class="page-overlay" aria-hidden="true"></div>
 
-  <div class="layout">
-    <aside id="sidebar" class="sidebar">
-      <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo">
-      <div class="title">مشاعل الأمة<br><small style="opacity:0.9;font-weight:600">سفراء القيم</small></div>
-      <nav class="nav">
-        <a href="#"><i data-lucide="home"></i>الصفحة الرئيسية</a>
-        <a href="#"><i data-lucide="book-open"></i>الدورات التدريبية</a>
-        <a href="#"><i data-lucide="calendar"></i>الورش والفعاليات</a>
-        <a href="#"><i data-lucide="library"></i>المكتبة التعليمية</a>
-        <a href="#"><i data-lucide="lightbulb"></i>المشاريع الطلابية</a>
-        <a href="#"><i data-lucide="users"></i>المجتمع والتواصل</a>
-        <a href="#"><i data-lucide="file-text"></i>السجل والنشاط</a>
-      </nav>
-    </aside>
-
-    <main>
-      <section class="hero">
-        <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
-        <div class="overlay"></div>
-        <div class="content">
-          <h1>مرحبًا بك في منصة مشاعل الأمة</h1>
-          <p>معًا لبناء جيل القدوة وصناعة النهضة 🇩🇿</p>
-        </div>
-      </section>
-
-      <section style="margin-top:40px;">
-        <h2>محتوى تجريبي</h2>
-        <p style="margin-top:8px;color:#ccc">هذه المساحة مخصصة لإضافة الأقسام القادمة أو النصوص والمواد التعليمية.</p>
-        <div style="height:800px"></div>
-      </section>
-
-      <footer>
-        <div>© 2025 مشاعل الأمة – جميع الحقوق محفوظة</div>
-        <div class="social">
-          <a href="#"><i data-lucide="facebook"></i></a>
-          <a href="#"><i data-lucide="twitter"></i></a>
-          <a href="#"><i data-lucide="instagram"></i></a>
-          <a href="#"><i data-lucide="youtube"></i></a>
-        </div>
-      </footer>
-    </main>
+  <!-- شعار الموبايل -->
+  <div class="mobile-logo">
+    <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار">
+    <span>مشاعل الأمة</span>
   </div>
+
+  <!-- زر القائمة -->
+  <button id="menuBtn" class="menu-btn" aria-label="قائمة">
+    <i data-lucide="menu" style="width:18px;height:18px;stroke:#fff"></i>
+  </button>
+
+  <!-- القائمة الجانبية -->
+  <aside id="sidebar" class="sidebar" aria-label="القائمة الجانبية">
+    <img src="https://machaeil-aloumma.vercel.app/مشاعل الأمة.gif" alt="شعار مشاعل الأمة" class="logo" draggable="false" oncontextmenu="return false;">
+    <div class="title">مشاعل الأمة<br><small style="opacity:0.95;font-weight:600">سفراء القيم</small></div>
+    <nav class="nav">
+      <a href="#"><i data-lucide="home"></i><span>الصفحة الرئيسية</span></a>
+      <a href="#"><i data-lucide="book-open"></i><span>الدورات التدريبية</span></a>
+      <a href="#"><i data-lucide="calendar"></i><span>الورش والفعاليّات</span></a>
+      <a href="#"><i data-lucide="library"></i><span>المكتبة التعليمية</span></a>
+      <a href="#"><i data-lucide="lightbulb"></i><span>المشاريع الطلابية</span></a>
+      <a href="#"><i data-lucide="users"></i><span>المجتمع والتواصل</span></a>
+      <a href="#"><i data-lucide="file-text"></i><span>السجل والنشاط</span></a>
+    </nav>
+  </aside>
+
+  <!-- المحتوى -->
+  <main class="content" role="main">
+    <section class="hero-section" aria-label="صورة الجزائر">
+      <img src="https://machaeil-aloumma.vercel.app/alger.jpg" alt="الجزائر">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>مرحبًا بك في منصة مشاعل الأمة</h1>
+        <p>معًا لبناء جيل القدوة وصناعة النهضة 🇩🇿</p>
+      </div>
+    </section>
+
+    <section style="padding:24px;color:#ddd;">
+      <h2 style="margin-top:12px">محتوى تجريبي</h2>
+      <p>هذه المساحة مخصصة لإضافة نصوص أو أقسام لاحقة.</p>
+      <div style="height:900px"></div>
+    </section>
+  </main>
 
   <script>
     lucide.createIcons();
-
-    const sidebar=document.getElementById('sidebar');
     const menuBtn=document.getElementById('menuBtn');
-    const themeBtn=document.getElementById('themeBtn');
+    const sidebar=document.getElementById('sidebar');
 
-    menuBtn.addEventListener('click',()=>{
-      sidebar.classList.toggle('show');
+    // فتح/إغلاق القائمة في الموبايل
+    menuBtn.addEventListener('click',(e)=>{
+      e.stopPropagation();
+      sidebar.style.display = sidebar.style.display==='flex' ? 'none' : 'flex';
+      sidebar.style.position = 'fixed';
+      sidebar.style.top='0';
+      sidebar.style.right='0';
+      sidebar.style.height='100vh';
+      sidebar.style.background='linear-gradient(180deg,rgba(17,17,17,0.97),rgba(9,9,9,0.97))';
+      sidebar.style.overflowY='auto';
+      sidebar.style.zIndex='300';
     });
 
+    // إغلاق القائمة عند النقر خارجها
     window.addEventListener('click',(e)=>{
-      if(window.innerWidth<=900 && sidebar.classList.contains('show') && !sidebar.contains(e.target) && !menuBtn.contains(e.target)){
-        sidebar.classList.remove('show');
+      if(window.innerWidth<=900 && sidebar.style.display==='flex' && !sidebar.contains(e.target) && !menuBtn.contains(e.target)){
+        sidebar.style.display='none';
       }
-    });
-
-    themeBtn.addEventListener('click',()=>{
-      if(document.documentElement.getAttribute('data-theme')==='light'){
-        document.documentElement.removeAttribute('data-theme');
-        themeBtn.innerHTML='<i data-lucide="moon"></i>';
-      }else{
-        document.documentElement.setAttribute('data-theme','light');
-        themeBtn.innerHTML='<i data-lucide="sun"></i>';
-      }
-      lucide.createIcons();
     });
   </script>
 </body>
